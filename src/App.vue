@@ -1,43 +1,45 @@
-<script setup>
+<script>
+import { defineComponent } from 'vue';
+import { useSettingsStore } from '@/stores/settings'
+import ToolbarComponent from './components/ToolbarComponent.vue';
+import { chromeStorage } from './plugins/chromeStorage';
+
+export default defineComponent({
+  components: {
+    ToolbarComponent
+  },
+  data() {
+    return {
+      settings: useSettingsStore()
+    }
+  },
+  beforeCreate() {
+    chromeStorage.get('gridWidth').then((value) => {
+      this.settings.setGridWidth(value ?? '85');
+    }),
+    chromeStorage.get('gridGap').then((value) => {
+      this.settings.setGridGap(value ?? '4');
+    }),
+    chromeStorage.get('tileCornerRadius').then((value) => {
+      this.settings.setTileCornerRadius(value ?? '10');
+    }),
+    chromeStorage.get('tileLabelPosition').then((value) => {
+      this.settings.setTileLabelPosition(value ?? 'bottom right');
+    })
+  }
+})
 </script>
 
+
+
 <template>
-  <div class="flex flex-col gap-2">
-    <button class="btn">Button</button>
-    <button class="btn btn-neutral">Neutral</button>
-    <button class="btn btn-primary">Primary</button>
-    <button class="btn btn-secondary">Secondary</button>
-    <button class="btn btn-accent">Accent</button>
-    <button class="btn btn-ghost">Ghost</button>
-    <button class="btn btn-link">Link</button>
+  <div class="app flex flex-col w-100">
+    <ToolbarComponent />
+    <div> 
+      bla bla bla
+    </div>
   </div>
 </template>
 
 <style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
 </style>

@@ -1,0 +1,15 @@
+{
+  "manifest_version": 3,
+  "name": "QuickTiles",
+  "description": "Quick Tiles Home Page for Chromium browsers",
+  "version": "0.0.1",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "permissions": [
+    "storage"
+  ]
+}
