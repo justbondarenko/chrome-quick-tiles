@@ -75,6 +75,18 @@ export default defineComponent({
       }),
       chromeStorage.get('tileLabelPosition').then((value) => {
         this.settings.setTileLabelPosition(value ?? 'bottom right');
+      }),
+      chromeStorage.get('showBookmarksLabel').then((value) => {
+        this.settings.showBookmarksLabel = value ?? false;
+      }),
+      chromeStorage.get('showRecentlyClosedLabel').then((value) => {
+        this.settings.showRecentlyClosedLabel = value ?? false;
+      }),
+      chromeStorage.get('showNewTileLabel').then((value) => {
+        this.settings.showNewTileLabel = value ?? false;
+      }),
+      chromeStorage.get('showSettingsLabel').then((value) => {
+        this.settings.showSettingsLabel = value ?? false;
       })
   },
   methods : {
@@ -90,7 +102,9 @@ export default defineComponent({
 <template>
   <div class="app flex w-100 h-screen" :class="[flexOrientation()]">
     <ToolbarComponent />
-    <TilesGrid class="grow" />
+    <div class="grow">
+      <TilesGrid />
+    </div>
   </div>
 </template>
 

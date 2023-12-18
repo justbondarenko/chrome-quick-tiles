@@ -8,7 +8,11 @@ export const useSettingsStore = defineStore('settings', {
       gridGap: '',
       tileCornerRadius: '',
       tileLabelPosition: '',
-      toolbarPosition: ''
+      toolbarPosition: '',
+      showBookmarksLabel: true,
+      showRecentlyClosedLabel: true,
+      showNewTileLabel: false,
+      showSettingsLabel: false,
     }
   },
   actions: {
@@ -31,6 +35,29 @@ export const useSettingsStore = defineStore('settings', {
     async setToolbarPosition(value) {
       this.toolbarPosition = value;
       return await chromeStorage.set('toolbarPosition', value);
+    },
+    async toggleLabelFor(value) {
+      switch (value) {
+        case 'bookmarks':
+          this.showBookmarksLabel = !this.showBookmarksLabel;
+          await chromeStorage.set('showBookmarksLabel', value);
+          break;
+        case 'recentlyClosed':
+          this.showRecentlyClosedLabel = !this.showRecentlyClosedLabel;
+          await chromeStorage.set('showRecentlyClosedLabel', value);
+          break;
+        case 'newTile':
+          this.showNewTileLabel = !this.showNewTileLabel;
+          await chromeStorage.set('showNewTileLabel', value);
+          break;
+        case 'settings':
+          this.showSettingsLabel = !this.showSettingsLabel;
+          await chromeStorage.set('showSettingsLabel', value);
+          break;
+        default:
+          return 
+      }
     }
+
   }
 })

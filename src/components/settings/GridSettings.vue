@@ -27,7 +27,7 @@ export default {
 
 <template>
   <div class="collapse bg-base-100">
-    <input type="radio" name="my-accordion-1" checked />
+    <input type="radio" name="settings-accordion" />
     <div class="collapse-title text-xl font-medium">
       Page settings
     </div>
