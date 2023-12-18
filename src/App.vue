@@ -2,11 +2,13 @@
 import { defineComponent } from 'vue';
 import { useSettingsStore } from '@/stores/settings'
 import ToolbarComponent from './components/ToolbarComponent.vue';
+import TilesGrid from '@/components/tiles/TilesGrid.vue';
 import { chromeStorage } from './plugins/chromeStorage';
 
 export default defineComponent({
   components: {
-    ToolbarComponent
+    ToolbarComponent,
+    TilesGrid
   },
   data() {
     return {
@@ -77,9 +79,7 @@ export default defineComponent({
 <template>
   <div class="app flex flex-col w-100">
     <ToolbarComponent />
-    <div> 
-      bla bla bla
-    </div>
+    <TilesGrid />
   </div>
 </template>
 

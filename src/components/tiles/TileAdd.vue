@@ -12,7 +12,7 @@
         <p class="prose-2xl">New Tile</p>
         <div class="divider" />
         <div class="new-tile-wrapper w-full p-1 flex flex-col gap-4 h-full overflow-y-auto">
-          <TileBase :settings-store="settingsStore" :label="label" :url="url" :bg-color="bgColor" :font-color="fontColor" :size="size"
+          <TileElement :settings-store="settingsStore" :label="label" :url="url" :bg-color="bgColor" :font-color="fontColor" :size="size"
             class="pointer-events-none mx-auto" />
           <div class="flex flex-col gap-2">
             <div class="flex flex-col w-100">
@@ -59,13 +59,13 @@
 
 <script>
 import { useSettingsStore } from '@/stores/settings'
-import TileBase from './TileBase.vue';
+import TileElement from './TileElement.vue';
 // import fetch from 'fetch';
 
 export default {
   name: 'TileAdd',
   components: {
-    TileBase
+    TileElement
   },
 
   data() {
