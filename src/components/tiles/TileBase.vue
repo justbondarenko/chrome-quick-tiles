@@ -14,11 +14,7 @@ export default {
     },
     cornerRadius: {
       type: String,
-    },
-    labelPosition: {
-      type: String,
-      default: 'borrom right'
-    },
+    },  
     size: {
       type: String,
       required: true
@@ -41,6 +37,9 @@ export default {
   methods: {
     style: function() {
       return`color: ${this.fontColor};background-color: ${this.bgColor};border-radius: ${this.settingsStore.tileCornerRadius}px !important;`
+    },
+    labelPosition: function () {
+      return this.settingsStore.tileLabelPosition;
     }
   }
 }
@@ -54,7 +53,7 @@ export default {
     :href="url"
     :style="style()"
   >
-    <span class="label" :class="[labelPosition]">{{ label }}</span>
+    <span class="label" :class="[settingsStore.tileLabelPosition]">{{ label }}</span>
   </a>
 </template>
 
