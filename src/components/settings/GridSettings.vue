@@ -14,6 +14,13 @@ export default {
     onGridGapChange(value) {
       return this.settingsStore.setGridGap(value);
     },
+    onToolbarPositionChange(value) {
+      console.log(value)
+      return this.settingsStore.setToolbarPosition(value ? 'top' : 'bottom');
+    },
+    toolbarPositions() {
+      return ['top', 'bottom']
+    }
   }
 }
 </script>
@@ -34,6 +41,14 @@ export default {
         <label class="w-1/3 mb-1 whitespace-nowrap">Grid gap: {{ settingsStore.gridGap }}px</label>
         <input type="range" min="2" max="50" class="range range-xs" step="1" :value="settingsStore.gridGap"
           @input="onGridGapChange($event.target.value)" />
+      </div>
+      <div class="page-settings-item hover:bg-zinc-100">
+        <label class="mb-1 whitespace-nowrap">Toolbar position:</label>
+        <div class="flex gap-1 items-center">
+          <div class="join w-fit">
+            <input v-for="option of toolbarPositions()" :key="option" class="join-item btn btn-sm"  type="radio" name="size-options" :aria-label="option.toUpperCase()" :checked="settingsStore.toolbarPosition === option" @click="settingsStore.setToolbarPosition(option)" />
+          </div>
+        </div>
       </div>
     </div>
   </div>

@@ -28,7 +28,7 @@ export default {
 </script>
 
 <template>
-  <div class="tiles-grid flex overflow-y-auto flex-wrap mx-auto" :style="style()">
+  <div class="tiles-grid flex overflow-y-auto flex-wrap mx-auto py-4" :style="style()">
     <TileElement v-for="item, index of itemsStore.items" :key="index" :url="item.url" :label="item.label" :bg-color="item.bgColor" :font-color="item.fontColor" :size="item.size" @setSize="setSize(item, $event)" @remove="remove(item)"/>
   </div>
 </template>
