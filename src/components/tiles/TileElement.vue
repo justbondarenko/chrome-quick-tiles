@@ -1,8 +1,10 @@
 <script>
 import { useSettingsStore } from '@/stores/settings'
-
 export default {
   name: 'TileElement',
+  components: {
+    
+  },
   props: {
     label: {
       type: String,
@@ -14,10 +16,10 @@ export default {
     },
     cornerRadius: {
       type: String,
-    },  
+    },
     size: {
       type: String,
-      required: true
+      default: 's'
     },
     bgColor: {
       type: String,
@@ -27,16 +29,17 @@ export default {
       type: String,
       default: 'white'
     },
-    
+
   },
   data() {
     return {
-      settingsStore: useSettingsStore()
+      settingsStore: useSettingsStore(),
+      active: false
     }
   },
   methods: {
-    style: function() {
-      return`color: ${this.fontColor};background-color: ${this.bgColor};border-radius: ${this.settingsStore.tileCornerRadius}px !important;`
+    style: function () {
+      return `color: ${this.fontColor};background-color: ${this.bgColor};border-radius: ${this.settingsStore.tileCornerRadius}px !important;`
     },
     labelPosition: function () {
       return this.settingsStore.tileLabelPosition;
@@ -45,7 +48,7 @@ export default {
       return this.settingsStore.tileLabelPosition === 'top right' ? 'bottom right' : 'top right';
     },
     changeSize() {
-      this.$emit('setSize', this.size === 's' ? 'm' : 's') 
+      this.$emit('setSize', this.size === 's' ? 'm' : 's')
     }
   }
 }
@@ -53,17 +56,20 @@ export default {
 
 
 <template>
-  <a 
-    class="btn tile p-1 group" 
-    :class="[size]" 
-    :href="url"
-    :style="style()"
-  >
+  <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
     <span class="label absolute" :class="labelPosition()">{{ label }}</span>
     <div class="controls absolute hidden group-hover:inline-flex" :class="controlsPosition()">
-      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('remove')"><FontAwesomeIcon :icon="['fas', 'trash']" /></button>
-      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="changeSize()"><FontAwesomeIcon :icon="['fas', size === 's' ? 'chevron-right' : 'chevron-left']" /></button>
-    </div>  
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('edit')">
+        <FontAwesomeIcon :icon="['fas', 'edit']" />
+      </button>
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('remove')">
+        <FontAwesomeIcon :icon="['fas', 'trash']" />
+      </button>
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="changeSize()">
+        <FontAwesomeIcon :icon="['fas', size === 's' ? 'chevron-right' : 'chevron-left']" />
+      </button>
+    </div>
+    
   </a>
 </template>
 
@@ -86,15 +92,19 @@ $base: 128px;
     height: $base;
     width: $base * 2;
   }
+
   .top {
     top: 10px;
   }
+
   .right {
     right: 10px;
   }
+
   .left {
     left: 10px;
   }
+
   .bottom {
     bottom: 10px;
   }
@@ -102,6 +112,4 @@ $base: 128px;
 </style>
 ../store/settings
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
