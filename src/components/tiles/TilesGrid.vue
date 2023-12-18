@@ -14,6 +14,12 @@ export default {
   methods: {
     style: function () {
       return `gap:${this.settingsStore.gridGap}px;max-width:${this.settingsStore.gridWidth}%;`
+    },
+    setSize(item, size) {
+      this.itemsStore.setSize(item, size);
+    },
+    remove(item) {
+      this.itemsStore.remove(item);
     }
   }
 }
@@ -23,7 +29,7 @@ export default {
 
 <template>
   <div class="tiles-grid flex overflow-y-auto flex-wrap mx-auto" :style="style()">
-    <TileElement v-for="item, index of itemsStore.items" :key="index" :url="item.url" :label="item.label" :bg-color="item.bgColor" :font-color="item.fontColor" :size="item.size" />
+    <TileElement v-for="item, index of itemsStore.items" :key="index" :url="item.url" :label="item.label" :bg-color="item.bgColor" :font-color="item.fontColor" :size="item.size" @setSize="setSize(item, $event)" @remove="remove(item)"/>
   </div>
 </template>
 

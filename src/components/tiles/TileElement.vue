@@ -40,6 +40,12 @@ export default {
     },
     labelPosition: function () {
       return this.settingsStore.tileLabelPosition;
+    },
+    controlsPosition: function () {
+      return this.settingsStore.tileLabelPosition === 'top right' ? 'bottom right' : 'top right';
+    },
+    changeSize() {
+      this.$emit('setSize', this.size === 's' ? 'm' : 's') 
     }
   }
 }
@@ -48,12 +54,16 @@ export default {
 
 <template>
   <a 
-    class="btn tile p-1" 
+    class="btn tile p-1 group" 
     :class="[size]" 
     :href="url"
     :style="style()"
   >
-    <span class="label" :class="[settingsStore.tileLabelPosition]">{{ label }}</span>
+    <span class="label absolute" :class="labelPosition()">{{ label }}</span>
+    <div class="controls absolute hidden group-hover:inline-flex" :class="controlsPosition()">
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('remove')"><FontAwesomeIcon :icon="['fas', 'trash']" /></button>
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="changeSize()"><FontAwesomeIcon :icon="['fas', size === 's' ? 'chevron-right' : 'chevron-left']" /></button>
+    </div>  
   </a>
 </template>
 
@@ -65,6 +75,7 @@ $base: 128px;
   color: white;
   position: relative;
   border: none;
+  transition: width 0.2s ease-in-out, left 0.2s ease-in-out;
 
   &.s {
     height: $base;
@@ -75,21 +86,17 @@ $base: 128px;
     height: $base;
     width: $base * 2;
   }
-
-  > .label {
-    position: absolute;
-    &.top {
-      top: 10px;
-    }
-    &.right {
-      right: 20px;
-    }
-    &.left {
-      left: 20px;
-    }
-    &.bottom {
-      bottom: 10px;
-    }
+  .top {
+    top: 10px;
+  }
+  .right {
+    right: 10px;
+  }
+  .left {
+    left: 10px;
+  }
+  .bottom {
+    bottom: 10px;
   }
 }
 </style>
