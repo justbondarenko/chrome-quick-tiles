@@ -1,5 +1,5 @@
 <script>
-import TileBase from '../tiles/TileBase.vue';
+import TileElement from '../tiles/TileElement.vue';
 
 export default {
     name: 'TileSettings',
@@ -23,7 +23,7 @@ export default {
             return this.settingsStore.setGridGap(value);
         }
     },
-    components: { TileBase }
+    components: { TileElement }
 }
 </script>
 
@@ -34,7 +34,7 @@ export default {
         Tile settings
       </div>
       <div class="collapse-content">
-        <TileBase class="pointer-events-none" label="Tile Preview" size="m" bg-color="black"
+        <TileElement class="pointer-events-none" label="Tile Preview" size="m" bg-color="black"
           :label-position="settingsStore.tileLabelPosition" url="http://google.com"
           :corner-radius="settingsStore.tileCornerRadius + 'px'" />
         

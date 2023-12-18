@@ -48,7 +48,7 @@ export default {
 
 <template>
   <a 
-    class="btn tile" 
+    class="btn tile p-1" 
     :class="[size]" 
     :href="url"
     :style="style()"
