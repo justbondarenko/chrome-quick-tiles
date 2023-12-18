@@ -1,8 +1,11 @@
 <template>
   <div class="flex gap-4 p-4">
     <div class="ml-0 mr-2 flex flex-row gap-4">
-      <button class="btn"><FontAwesomeIcon :icon="['fas', 'bookmark']" class="fa-fw"/> <template v-if="settingsStore.showBookmarksLabel">Bookmarks</template></button>
-      <button class="btn"><FontAwesomeIcon :icon="['fas', 'clock-rotate-left']" class="fa-fw"/> <template v-if="settingsStore.showRecentlyClosedLabel">Recently closed</template></button>
+      <BookmarksDrawer />
+      <button class="btn">
+        <FontAwesomeIcon :icon="['fas', 'clock-rotate-left']" class="fa-fw" /> <template
+          v-if="settingsStore.showRecentlyClosedLabel">Recently closed</template>
+      </button>
     </div>
     <div class="mr-0 ml-auto flex flex-row gap-4">
       <TileAdd @saveTile="saveTile" />
@@ -12,6 +15,7 @@
 </template>
 
 <script>
+import BookmarksDrawer from './bookmarks/BookmarksDrawer.vue';
 import SettingsSidebar from './settings/SettingsSidebar.vue';
 import TileAdd from './tiles/TileAdd.vue';
 import { useItemsStore } from '@/stores/items'
@@ -20,7 +24,8 @@ import { useSettingsStore } from '@/stores/settings'
 export default {
   components: {
     SettingsSidebar,
-    TileAdd
+    TileAdd,
+    BookmarksDrawer
   },
   data() {
     return {
@@ -36,5 +41,4 @@ export default {
 }
 </script>
 
-<style lang="scss"> 
-</style>
+<style lang="scss"></style>
