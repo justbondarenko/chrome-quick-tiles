@@ -2,7 +2,7 @@
   <div class="drawer">
     <input id="bookmarks-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
-      <label for="bookmarks-drawer" class="btn drawer-button"><FontAwesomeIcon :icon="['far', 'bookmark']" />Bookmarks</label>
+      <label for="bookmarks-drawer" class="btn drawer-button"><FontAwesomeIcon :icon="['far', 'bookmark']" /><template v-if="settingsStore.showBookmarksLabel">Bookmarks</template></label>
     </div>
     <div class="drawer-side z-50">
       <label for="bookmarks-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
@@ -15,10 +15,16 @@
 
 <script>
 import BookmarksList from './BookmarksList.vue';
+import { useSettingsStore } from '@/stores/settings'
 
 
 export default {
   name: 'BookmarksDrawer',
-  components: { BookmarksList }
+  components: { BookmarksList },
+  data() {
+    return {
+      settingsStore: useSettingsStore()
+    }
+  }
 }
 </script>
