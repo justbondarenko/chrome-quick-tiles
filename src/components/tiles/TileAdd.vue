@@ -36,17 +36,17 @@
                 <input v-for="option of getAvailableSizes()" :key="option" class="join-item btn btn-sm"  type="radio" name="size-options" :aria-label="option.toUpperCase()" :checked="innerSize===option" @click="innerSize=option"/>
               </div>
             </div>
-            <div class="flex flex-col w-100">
-              <div class="label">
+            <div class="color-pickers flex flex-col justify-between px-1 mt-2 w-100">
+              <div class="flex flex-row items-center h-12">
                 <span class="label-text">Background color</span>
+                <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha lang="En"
+                  v-model:pureColor="innerBgColor" />
               </div>
-              <input type="text" placeholder="Any CSS color" class="input input-bordered w-full max-w-xs" v-model="innerBgColor" :disabled="!innerUrl" />
-            </div>
-            <div class="flex flex-col w-100">
-              <div class="label">
+              <div class="flex flex-row items-center h-12">
                 <span class="label-text">Label color</span>
+                <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha lang="En"
+                  v-model:pureColor="innerFontColor" />
               </div>
-              <input type="text" placeholder="Any CSS color" class="input input-bordered w-full max-w-xs" v-model="innerFontColor" :disabled="!innerUrl" />
             </div>
           </div>
         </div>
