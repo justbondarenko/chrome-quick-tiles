@@ -57,6 +57,28 @@ export const useSettingsStore = defineStore('settings', {
         default:
           return 
       }
+    },
+    async setLabelFor(key, value) {
+      switch (value) {
+        case 'bookmarks':
+          this.showBookmarksLabel = value;
+          await chromeStorage.set('showBookmarksLabel', value);
+          break;
+        case 'recentlyClosed':
+          this.showRecentlyClosedLabel = value;
+          await chromeStorage.set('showRecentlyClosedLabel', value);
+          break;
+        case 'newTile':
+          this.showNewTileLabel = value;
+          await chromeStorage.set('showNewTileLabel', value);
+          break;
+        case 'settings':
+          this.showSettingsLabel = value;
+          await chromeStorage.set('showSettingsLabel', value);
+          break;
+        default:
+          return 
+      }
     }
 
   }

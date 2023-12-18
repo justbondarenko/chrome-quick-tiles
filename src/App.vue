@@ -77,16 +77,16 @@ export default defineComponent({
         this.settings.setTileLabelPosition(value ?? 'bottom right');
       }),
       chromeStorage.get('showBookmarksLabel').then((value) => {
-        this.settings.showBookmarksLabel = value ?? false;
+        this.settings.setLabelFor('bookmarks', value ?? false);
       }),
       chromeStorage.get('showRecentlyClosedLabel').then((value) => {
-        this.settings.showRecentlyClosedLabel = value ?? false;
+        this.settings.setLabelFor('bookmarks', value ?? false);
       }),
       chromeStorage.get('showNewTileLabel').then((value) => {
-        this.settings.showNewTileLabel = value ?? false;
+        this.settings.setLabelFor('bookmarks', value ?? false);
       }),
       chromeStorage.get('showSettingsLabel').then((value) => {
-        this.settings.showSettingsLabel = value ?? false;
+        this.settings.setLabelFor('bookmarks', value ?? false);
       })
   },
   methods : {
