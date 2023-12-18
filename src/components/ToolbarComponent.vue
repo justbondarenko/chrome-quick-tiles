@@ -5,7 +5,7 @@
       <button class="btn"><FontAwesomeIcon :icon="['fas', 'clock-rotate-left']" class="fa-fw"/> Recently closed</button>
     </div>
     <div class="mr-0 ml-auto flex flex-row gap-4">
-      <TileAdd />
+      <TileAdd @saveTile="saveTile" />
       <SettingsSidebar />
     </div>
   </div>
@@ -14,15 +14,23 @@
 <script>
 import SettingsSidebar from './settings/SettingsSidebar.vue';
 import TileAdd from './tiles/TileAdd.vue';
+import { useItemsStore } from '@/stores/items'
+
 export default {
   components: {
     SettingsSidebar,
     TileAdd
   },
-
-  setup() {
-    
+  data() {
+    return {
+      itemsStore: useItemsStore(),
+    }
   },
+  methods: {
+    saveTile(value) {
+      this.itemsStore.addItem(value)
+    }
+  }
 }
 </script>
 
