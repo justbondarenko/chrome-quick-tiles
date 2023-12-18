@@ -4,6 +4,7 @@
     <div class="drawer-content">
       <label for="new-tile-drawer" class="btn drawer-button">
         <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'plus' }" />
+        <template v-if="settingsStore.showNewTileLabel">Add link</template>
       </label>
     </div>
     <div class="drawer-side z-50">
