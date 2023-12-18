@@ -17,42 +17,42 @@ export default defineComponent({
       settings: useSettingsStore(),
       items: useItemsStore(),
       mockItems: [
-  {
-    "id": uuid(),
-    "label": "Facebook",
-    "url": "https://www.facebook.com",
-    "bgColor": "#1877F2",
-    "size": "s"
-  },
-  {
-    "id": uuid(),
-    "url": "https://www.twitter.com",
-    "label": "Twitter",
-    "bgColor": "#1DA1F2",
-    "size": "m"
-  },
-  {
-    "id": uuid(),
-    "url": "https://www.instagram.com",
-    "label": "Instagram",
-    "bgColor": "#C13584",
-    "size": "s"
-  },
-  {
-    "id": uuid(),
-    "url": "https://www.linkedin.com",
-    "label": "LinkedIn",
-    "bgColor": "#0A66C2",
-    "size": "m"
-  },
-  {
-    "id": uuid(),
-    "url": "https://www.youtube.com",
-    "label": "YouTube",
-    "bgColor": "#FF0000",
-    "size": "s"
-  }
-]
+        {
+          "id": uuid(),
+          "label": "Facebook",
+          "url": "https://www.facebook.com",
+          "bgColor": "#1877F2",
+          "size": "s"
+        },
+        {
+          "id": uuid(),
+          "url": "https://www.twitter.com",
+          "label": "Twitter",
+          "bgColor": "#1DA1F2",
+          "size": "m"
+        },
+        {
+          "id": uuid(),
+          "url": "https://www.instagram.com",
+          "label": "Instagram",
+          "bgColor": "#C13584",
+          "size": "s"
+        },
+        {
+          "id": uuid(),
+          "url": "https://www.linkedin.com",
+          "label": "LinkedIn",
+          "bgColor": "#0A66C2",
+          "size": "m"
+        },
+        {
+          "id": uuid(),
+          "url": "https://www.youtube.com",
+          "label": "YouTube",
+          "bgColor": "#FF0000",
+          "size": "s"
+        }
+      ]
     }
   },
   beforeCreate() {
@@ -61,18 +61,26 @@ export default defineComponent({
         ? this.items.setItems(value)
         : chromeStorage.set('links', JSON.stringify(this.mockItems))
     }),
-    chromeStorage.get('gridWidth').then((value) => {
-      this.settings.setGridWidth(value ?? '85');
-    }),
-    chromeStorage.get('gridGap').then((value) => {
-      this.settings.setGridGap(value ?? '4');
-    }),
-    chromeStorage.get('tileCornerRadius').then((value) => {
-      this.settings.setTileCornerRadius(value ?? '10');
-    }),
-    chromeStorage.get('tileLabelPosition').then((value) => {
-      this.settings.setTileLabelPosition(value ?? 'bottom right');
-    })
+      chromeStorage.get('toolbarPosition').then((value) => {
+        this.settings.setToolbarPosition(value ?? 'top');
+      }),
+      chromeStorage.get('gridWidth').then((value) => {
+        this.settings.setGridWidth(value ?? '85');
+      }),
+      chromeStorage.get('gridGap').then((value) => {
+        this.settings.setGridGap(value ?? '4');
+      }),
+      chromeStorage.get('tileCornerRadius').then((value) => {
+        this.settings.setTileCornerRadius(value ?? '10');
+      }),
+      chromeStorage.get('tileLabelPosition').then((value) => {
+        this.settings.setTileLabelPosition(value ?? 'bottom right');
+      })
+  },
+  methods : {
+    flexOrientation() {
+      return this.settings.toolbarPosition === 'top' ? 'flex-col' : 'flex-col-reverse'
+    }
   }
 })
 </script>
@@ -80,9 +88,9 @@ export default defineComponent({
 
 
 <template>
-  <div class="app flex flex-col w-100">
+  <div class="app flex w-100 h-screen" :class="[flexOrientation()]">
     <ToolbarComponent />
-    <TilesGrid />
+    <TilesGrid class="grow" />
   </div>
 </template>
 

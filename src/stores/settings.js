@@ -7,7 +7,8 @@ export const useSettingsStore = defineStore('settings', {
       gridWidth: '',
       gridGap: '',
       tileCornerRadius: '',
-      tileLabelPosition: ''
+      tileLabelPosition: '',
+      toolbarPosition: ''
     }
   },
   actions: {
@@ -26,6 +27,10 @@ export const useSettingsStore = defineStore('settings', {
     async setTileLabelPosition(value) {
       this.tileLabelPosition = value;
       return await chromeStorage.set('tileLabelPosition', value);
+    },
+    async setToolbarPosition(value) {
+      this.toolbarPosition = value;
+      return await chromeStorage.set('toolbarPosition', value);
     }
   }
 })
