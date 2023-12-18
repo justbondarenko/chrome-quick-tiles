@@ -1,6 +1,7 @@
 <script>
 import { defineComponent } from 'vue';
 import { useSettingsStore } from '@/stores/settings'
+import { useItemsStore } from '@/stores/items';
 import ToolbarComponent from './components/ToolbarComponent.vue';
 import TilesGrid from '@/components/tiles/TilesGrid.vue';
 import { chromeStorage } from './plugins/chromeStorage';
@@ -13,6 +14,7 @@ export default defineComponent({
   data() {
     return {
       settings: useSettingsStore(),
+      items: useItemsStore(),
       mockItems: [
   {
     "id": 1,
@@ -55,8 +57,8 @@ export default defineComponent({
   beforeCreate() {
     chromeStorage.get('links').then((value) => {
       value
-        ? console.log(value)
-        : chromeStorage.set('links', this.mockItems)
+        ? this.items.setItems(value)
+        : chromeStorage.set('links', JSON.stringify(this.mockItems))
     }),
     chromeStorage.get('gridWidth').then((value) => {
       this.settings.setGridWidth(value ?? '85');

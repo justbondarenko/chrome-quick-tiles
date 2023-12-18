@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-success btn-outline mt-4">
+        <button class="btn btn-success btn-outline mt-4" @click="save">
           <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'floppy-disk' }" /> Save
         </button>
       </div>
@@ -59,6 +59,7 @@
 
 <script>
 import { useSettingsStore } from '@/stores/settings'
+import { useItemsStore } from '@/stores/items'
 import TileElement from './TileElement.vue';
 // import fetch from 'fetch';
 
@@ -71,6 +72,7 @@ export default {
   data() {
     return {
       settingsStore: useSettingsStore(),
+      itemsStore: useItemsStore(),
       label: "",
       url: "",
       fontColor: "white",
@@ -81,6 +83,16 @@ export default {
   methods: {
     getAvailableSizes() {
       return ['s', 'm']
+    },
+    save() {
+      this.itemsStore.addItem({
+        url: this.url,
+        label: this.label,
+        fontColor: this.fontColor,
+        bgColor: this.bgColor,
+        size: this.size
+      })
+      document.getElementsByClassName('drawer-toggle')[0].checked = false;
     }
   },
 }
