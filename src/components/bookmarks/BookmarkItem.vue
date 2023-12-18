@@ -1,6 +1,6 @@
 <template>
   <li><a :href="url">
-      <FontAwesomeIcon :icon="icon()" /> <span class="bookmark-label">{{ title }}</span>
+      <FontAwesomeIcon :icon="icon()" /> <span class="bookmark-label ml-1">{{ title }}</span>
     </a></li>
 </template>
 
@@ -35,9 +35,8 @@ export default {
     },
     icon() {
       let base = this.baseDomain();
-      if (base === 'last') {
-        base = 'lastfm'
-      }
+      if (base === 'last') { base = 'lastfm' }
+      if (base === 'stackoverflow') { base = 'stack-overflow'}
       return this.icons.includes(base) ? ['fab', base] : ['far', 'bookmark'];
     }
   },

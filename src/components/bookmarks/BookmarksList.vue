@@ -13,7 +13,6 @@
 
 
 <script>
-import { useSettingsStore } from '@/stores/settings'
 import BookmarkFolder from './BookmarkFolder.vue'
 import BookmarkItem from './BookmarkItem.vue'
 export default {
@@ -21,7 +20,6 @@ export default {
   components: { BookmarkFolder, BookmarkItem },
   data() {
     return {
-      settingsStore: useSettingsStore(),
       open: false,
       tree: [] 
     }
