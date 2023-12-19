@@ -2,8 +2,8 @@
   <div class="drawer">
     <input id="recents-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
-      <label for="recents-drawer" class="btn drawer-button"><FontAwesomeIcon :icon="['fas', 'clock-rotate-left']" class="fa-fw" /> <template
-          v-if="settingsStore.showRecentlyClosedLabel">Recently closed</template></label>
+      <label for="recents-drawer" class="btn drawer-button"><FontAwesomeIcon :icon="['fas', 'clock-rotate-left']" class="fa-fw" /> <span
+          v-if="settingsStore.showRecentlyClosedLabel">Recently closed</span></label>
     </div>
     <div class="drawer-side z-50">
       <label for="recents-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
