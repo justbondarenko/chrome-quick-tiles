@@ -1,15 +1,7 @@
 <template>
-  <div class="drawer">
-    <input id="bookmarks-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">
-      <label for="bookmarks-drawer" class="btn drawer-button"><FontAwesomeIcon :icon="['far', 'bookmark']" /><template v-if="settingsStore.showBookmarksLabel">Bookmarks</template></label>
-    </div>
-    <div class="drawer-side z-50">
-      <label for="bookmarks-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-      <div class="p-4 w-96 h-full bg-base-200 text-base-content flex flex-col overflow-y-auto">
-        <BookmarksList />
-      </div>
-    </div>
+  <div class="dropdown" :class="{'dropdown-top': settingsStore.toolbarPosition === 'bottom' }" >
+    <div tabindex="0" role="button" class="btn flex-nowrap"><FontAwesomeIcon :icon="['far', 'bookmark']" /><template v-if="settingsStore.showBookmarksLabel">Bookmarks</template></div>
+    <BookmarksList tabindex="0" :class="{'mb-2': settingsStore.toolbarPosition === 'bottom', 'mt-2': settingsStore.toolbarPosition === 'top'}" class="bookmarks-list dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-80 mt-2 overflow-y-auto" />
   </div>
 </template>
 
@@ -23,8 +15,14 @@ export default {
   components: { BookmarksList },
   data() {
     return {
-      settingsStore: useSettingsStore()
+      settingsStore: useSettingsStore(),
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.bookmarks-list {
+  max-height: 95vh;
+}
+</style>

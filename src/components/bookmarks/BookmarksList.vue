@@ -1,5 +1,6 @@
 <template>
-  <ul class="menu bg-base-200 w-full rounded-box">
+  <ul class="menu bg-base-200 rounded-box">
+    <li class="pointer-events-none"><a>Bookmarks</a></li>
     <template v-for="item of tree" :key="item.dateAdded">
       <template v-if="item.children">
         <BookmarkFolder :items="item.children" :title="item.title" />

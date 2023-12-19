@@ -1,6 +1,7 @@
 <template>
   <li><a :href="url">
       <FontAwesomeIcon :icon="icon()" /> <span class="bookmark-label ml-1">{{ title }}</span>
+      <span v-if="lastVisit" class="ml-1 opacity-40"> {{ lastVisit }}</span>
     </a></li>
 </template>
 
@@ -15,6 +16,10 @@ export default {
     title: {
       type: String,
       required: true
+    },
+    lastVisit: {
+      type: String,
+      required: false
     }
   },
   data() {
