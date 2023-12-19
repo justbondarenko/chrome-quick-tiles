@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     timeAgo: function (timeStamp) {
-      console.log(timeStamp)
       let now = new Date(),
         secondsPast = (now.getTime() - timeStamp) / 1000;
       if(secondsPast < 60){
