@@ -40,19 +40,19 @@ export const useSettingsStore = defineStore('settings', {
       switch (value) {
         case 'bookmarks':
           this.showBookmarksLabel = !this.showBookmarksLabel;
-          await chromeStorage.set('showBookmarksLabel', value);
+          await chromeStorage.set('showBookmarksLabel', this.showBookmarksLabel);
           break;
         case 'recentlyClosed':
           this.showRecentlyClosedLabel = !this.showRecentlyClosedLabel;
-          await chromeStorage.set('showRecentlyClosedLabel', value);
+          await chromeStorage.set('showRecentlyClosedLabel', this.showRecentlyClosedLabel);
           break;
         case 'newTile':
           this.showNewTileLabel = !this.showNewTileLabel;
-          await chromeStorage.set('showNewTileLabel', value);
+          await chromeStorage.set('showNewTileLabel', this.this.showNewTileLabel);
           break;
         case 'settings':
           this.showSettingsLabel = !this.showSettingsLabel;
-          await chromeStorage.set('showSettingsLabel', value);
+          await chromeStorage.set('showSettingsLabel', this.showSettingsLabel);
           break;
         default:
           return 
