@@ -45,7 +45,7 @@ export default {
       return this.settingsStore.tileLabelPosition;
     },
     controlsPosition: function () {
-      return this.settingsStore.tileLabelPosition === 'top right' ? 'bottom right' : 'top right';
+      return ['top right', 'top left'].includes(this.settingsStore.tileLabelPosition) ? 'bottom right' : 'top right';
     },
     changeSize() {
       this.$emit('setSize', this.size === 's' ? 'm' : 's')
