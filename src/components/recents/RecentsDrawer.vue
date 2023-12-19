@@ -1,16 +1,8 @@
 <template>
-  <div class="drawer">
-    <input id="recents-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">
-      <label for="recents-drawer" class="btn drawer-button"><FontAwesomeIcon :icon="['fas', 'clock-rotate-left']" class="fa-fw" /> <span
-          v-if="settingsStore.showRecentlyClosedLabel">Recently closed</span></label>
-    </div>
-    <div class="drawer-side z-50">
-      <label for="recents-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-      <div class="p-4 w-96 h-full bg-base-200 text-base-content flex flex-col overflow-y-auto">
-        <RecentsList />
-      </div>
-    </div>
+  <div class="dropdown" :class="{'dropdown-top': settingsStore.toolbarPosition === 'bottom' }" >
+    <div tabindex="0" role="button" class="btn flex-nowrap"><FontAwesomeIcon :icon="['fas', 'clock-rotate-left']" class="fa-fw" /> <span
+          v-if="settingsStore.showRecentlyClosedLabel">Recently closed</span></div>
+    <RecentsList tabindex="0" :class="{'mb-2': settingsStore.toolbarPosition === 'bottom', 'mt-2': settingsStore.toolbarPosition === 'top'}" class="bookmarks-list dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-96 mt-2 overflow-y-auto" />
   </div>
 </template>
 

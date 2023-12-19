@@ -1,6 +1,6 @@
 <template>
-  <ul class="menu bg-base-200 w-full rounded-box">
-    <BookmarkItem v-for="item of tree" :key="item.id" :url="item.url" :title="item.title" />
+  <ul class="menu bg-base-200 rounded-box">
+    <BookmarkItem v-for="item of tree" :key="item.id" :url="item.url" :title="item.title" :last-visit="timeAgo(item.lastVisitTime)" />
   </ul>
 </template>
 
@@ -13,6 +13,28 @@ export default {
   data() {
     return {
       tree: [] 
+    }
+  },
+  methods: {
+    timeAgo: function (timeStamp) {
+      console.log(timeStamp)
+      let now = new Date(),
+        secondsPast = (now.getTime() - timeStamp) / 1000;
+      if(secondsPast < 60){
+        return `${parseInt(secondsPast)}s ago`;
+      }
+      if(secondsPast < 3600){
+        return `${parseInt(secondsPast / 60)}m ago`;
+      }
+      if(secondsPast <= 86400){
+        return `${parseInt(secondsPast / 3600)}h ago`;
+      }
+      if(secondsPast > 86400){
+        let day = now.getDate(),
+            month = now.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ",""),
+            year = now.getFullYear() == timeStamp.getFullYear() ? "" :  " "+now.getFullYear();
+        return `Day ${day} ${month}${year}`;
+      }
     }
   },
   beforeMount() {
