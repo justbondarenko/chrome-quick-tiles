@@ -13,44 +13,44 @@
         <p class="prose-2xl">New Tile</p>
         <div class="divider" />
         <div class="new-tile-wrapper w-full p-1 flex flex-col gap-4 h-full overflow-y-auto">
-          <TileElement :settings-store="settingsStore" :label="innerLabel" :url="innerUrl" :bg-color="innerBgColor" :font-color="innerFontColor" :size="innerSize"
+          <TileElement :label="label" :url="url" :bg-color="bgColor" :font-color="fontColor" :size="size"
             class="pointer-events-none mx-auto" />
           <div class="flex flex-col gap-2">
             <div class="flex flex-col w-100">
               <div class="label">
                 <span class="label-text">URL</span>
               </div>
-              <input type="text" placeholder="https://" class="input input-bordered w-full max-w-xs" v-model="innerUrl" />
+              <input type="text" placeholder="https://" class="input input-bordered w-full max-w-xs" v-model="url" />
             </div>
             <div class="flex flex-col w-100">
               <div class="label">
                 <span class="label-text">Label / Page title</span>
               </div>
-              <input type="text" placeholder="Page title" class="input input-bordered w-full max-w-xs" v-model="innerLabel" :disabled="!innerUrl" />
+              <input type="text" placeholder="Page title" class="input input-bordered w-full max-w-xs" v-model="label" :disabled="!url" />
             </div>
             <div class="flex flex-col w-100">
               <div class="label">
                 <span class="label-text">Size</span>
               </div>
               <div class="join w-fit">
-                <input v-for="option of getAvailableSizes()" :key="option" class="join-item btn btn-sm"  type="radio" name="size-options" :aria-label="option.toUpperCase()" :checked="innerSize===option" @click="innerSize=option"/>
+                <input v-for="option of getAvailableSizes()" :key="option" class="join-item btn btn-sm"  type="radio" name="size-options" :aria-label="option.toUpperCase()" :checked="size===option" @click="size=option"/>
               </div>
             </div>
             <div class="color-pickers flex flex-col justify-between px-1 mt-2 w-100">
               <div class="flex flex-row items-center h-12">
                 <span class="label-text">Background color</span>
                 <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha lang="En"
-                  v-model:pureColor="innerBgColor" />
+                  v-model:pureColor="bgColor" />
               </div>
               <div class="flex flex-row items-center h-12">
                 <span class="label-text">Label color</span>
                 <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha lang="En"
-                  v-model:pureColor="innerFontColor" />
+                  v-model:pureColor="fontColor" />
               </div>
             </div>
           </div>
         </div>
-        <button class="btn btn-success btn-outline mt-4" @click="save" :disabled="!(!!innerUrl && !!innerLabel)">
+        <button class="btn btn-success btn-outline mt-4" @click="save" :disabled="!url">
           <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'floppy-disk' }" /> Save
         </button>
       </div>
@@ -61,38 +61,20 @@
 <script>
 import { useSettingsStore } from '@/stores/settings'
 import TileElement from './TileElement.vue';
-// import fetch from 'fetch';
 
 export default {
   name: 'TileAdd',
   components: {
     TileElement
   },
-  props: {
-    label: {
-      type: String,
-    },
-    url: {
-      type: String,
-    },
-    size: {
-      type: String,
-    },
-    bgColor: {
-      type: String,
-    },
-    fontColor: {
-      type: String,
-    },
-  },
   data() {
     return {
       settingsStore: useSettingsStore(),
-      innerLabel: this.label ?? "",
-      innerUrl: this.url ?? "",
-      innerFontColor: this.fontColor ?? "white",
-      innerBgColor: this.bgColor ?? "black",
-      innerSize: this.size ?? "m",
+      label: '',
+      url: '',
+      fontColor: 'white',
+      bgColor: 'black',
+      size: 'm',
     };
   },
   methods: {
@@ -101,11 +83,11 @@ export default {
     },
     save() {
       const item = {
-        url: this.innerUrl,
-        label: this.innerLabel,
-        fontColor: this.innerFontColor,
-        bgColor: this.innerBgColor,
-        size: this.innerSize
+        url: this.url,
+        label: this.label,
+        fontColor: this.fontColor,
+        bgColor: this.bgColor,
+        size: this.size
       };
       this.$emit('saveTile', item)
       document.getElementById('new-tile-drawer').checked = false;
