@@ -1,5 +1,6 @@
 <template>
-  <ul class="menu bg-base-200 rounded-box">
+  <ul class="menu bg-base-200 rounded-box gap-1">
+    <li class="pointer-events-none"><a>Recently closed</a></li>
     <BookmarkItem v-for="item of tree" :key="item.id" :url="item.url" :title="item.title" :last-visit="timeAgo(item.lastVisitTime)" />
   </ul>
 </template>

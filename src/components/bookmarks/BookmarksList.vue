@@ -1,15 +1,17 @@
 <template>
-  <ul class="menu bg-base-200 rounded-box">
-    <li class="pointer-events-none"><a>Bookmarks</a></li>
-    <template v-for="item of tree" :key="item.dateAdded">
-      <template v-if="item.children">
-        <BookmarkFolder :items="item.children" :title="item.title" />
+  <div class="list-wrapper">
+    <ul class="flex-nowrap overflow-y-auto">
+      <li class="pointer-events-none"><a>Bookmarks</a></li>
+      <template v-for="item of tree" :key="item.dateAdded">
+        <template v-if="item.children">
+          <BookmarkFolder :items="item.children" :title="item.title" />
+        </template>
+        <template v-if="item.url">
+          <BookmarkItem :url="item.url" :title="item.title" />
+        </template>
       </template>
-      <template v-if="item.url">
-        <BookmarkItem :url="item.url" :title="item.title" />
-      </template>
-    </template>
-  </ul>
+    </ul>
+  </div>
 </template>
 
 
@@ -38,6 +40,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.list-wrapper {
+  max-height: 85vh;
+}
+
 ::v-deep ul, li {
   max-width: 100%;
 }
