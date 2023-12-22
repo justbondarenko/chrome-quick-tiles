@@ -1,8 +1,11 @@
 <template>
-  <li><a :href="url">
-      <FontAwesomeIcon :icon="icon()" /> <span class="bookmark-label ml-1">{{ title }}</span>
+  <li>
+    <a :href="url">
+      <FontAwesomeIcon :icon="icon()" />
+      <span class="bookmark-label ml-1 max-w-72 text-ellipsis overflow-hidden">{{ title }}</span>
       <span v-if="lastVisit" class="ml-1 opacity-40"> {{ lastVisit }}</span>
-    </a></li>
+    </a>
+  </li>
 </template>
 
 <script>
@@ -54,7 +57,7 @@ export default {
 
 <style lang="scss">
 .bookmark-label {
-  word-break: break-all;
+  white-space: nowrap;
 }
 </style>
 
