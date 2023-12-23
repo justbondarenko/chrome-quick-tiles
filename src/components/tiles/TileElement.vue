@@ -41,6 +41,9 @@ export default {
     style: function () {
       return `color: ${this.fontColor};background-color: ${this.bgColor};border-radius: ${this.settingsStore.tileCornerRadius}px !important;`
     },
+    textAlign() {
+      return this.settingsStore.tileLabelPosition.includes('right') ? 'text-right' : 'text-left'
+    },
     labelPosition: function () {
       return this.settingsStore.tileLabelPosition;
     },
@@ -57,7 +60,7 @@ export default {
 
 <template>
   <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
-    <span class="label absolute" :class="labelPosition()">{{ label }}</span>
+    <span class="label absolute" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
     <div class="controls absolute invisible pointer-events-none group-hover:visible group-hover:pointer-events-auto group-hover:delay-300" :class="controlsPosition()">
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('edit')">
         <FontAwesomeIcon :icon="['fas', 'edit']" />
@@ -112,7 +115,9 @@ $base: 128px;
     bottom: 10px;
   }
 }
-</style>
-../store/settings
 
-<style lang="scss"></style>
+.move-handle:active:hover {
+  cursor:grabbing
+}
+
+</style>
