@@ -41,11 +41,7 @@ export default {
       settingsStore: useSettingsStore(),
       imgStore: useImageStore(),
       active: false,
-      img: null
     }
-  },
-  mounted() {
-    chromeStorage.getLocal(this.id).then((res) => this.img = res);
   },
   methods: {
     style: function () {
@@ -74,8 +70,8 @@ export default {
 
 <template>
   <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
-    <div v-if="img" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
-      <img class="w-full h-full" :src="img" :alt="`Tile background for ${label}`" />
+    <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
+      <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
     </div>
     <span class="label absolute" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
     <div class="controls absolute invisible pointer-events-none group-hover:visible group-hover:pointer-events-auto group-hover:delay-300" :class="controlsPosition()">

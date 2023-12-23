@@ -9,7 +9,6 @@ export default {
   },
   methods: {
     onToolbarPositionChange(value) {
-      console.log(value)
       return this.settingsStore.setToolbarPosition(value ? 'top' : 'bottom');
     },
     toolbarPositions() {
@@ -49,19 +48,6 @@ export default {
               <input type="checkbox" class="toggle toggle-sm" :checked="settingsStore.showRecentlyClosedLabel" @input="settingsStore.toggleLabelFor('recentlyClosed')"/>
             </label>
           </div>
-          <!-- <div class="form-control w-52">
-            <label class="cursor-pointer label">
-              <span class="label-text">Add New Tile</span> 
-              <input type="checkbox" class="toggle" :checked="settingsStore.showNewTileLabel" @input="settingsStore.toggleLabelFor('newTile')"/>
-            </label>
-          </div>
-          <div class="form-control w-52">
-            <label class="cursor-pointer label">
-              <span class="label-text">Settings</span> 
-              <input type="checkbox" class="toggle" :checked="settingsStore.showSettingsLabel" @input="settingsStore.toggleLabelFor('settings')"/>
-            </label>
-          </div> -->
-          
         </div>
       </div>
     </div>

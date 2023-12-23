@@ -27,6 +27,13 @@ export const chromeStorage = {
       });
     });
   },
+  getLocalAll() {
+    return new Promise((resolve) => {
+      chrome.storage.local.get().then((result) => {
+        resolve(result);
+      });
+    });
+  },
   remove(key) {
     return new Promise((resolve) => {
       chrome.storage.sync.remove(key, () => {
