@@ -90,6 +90,11 @@ export default defineComponent({
       }),
       chromeStorage.get('showSettingsLabel').then((value) => {
         this.settings.setLabelFor('bookmarks', value ?? false);
+      }),
+      chromeStorage.getLocalAll().then((res) => {
+        for (const [key, value] of Object.entries(res)) {
+          this.images.set(key, value);
+        }
       })
     ])
   },

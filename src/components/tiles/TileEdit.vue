@@ -21,7 +21,7 @@
         <template v-if="useImageBg">
           <label class="form-control w-full max-w-100">
             <div class="label">
-              <span class="label-text">Image with dimensions W:{{ size === 's' ? '128' : '256' }}px H:128px (up to 250kb)</span>
+              <span><FontAwesomeIcon :icon="['fas', 'triangle-exclamation']" class="mr-2 mx-2" />Images are saved locally and are not synced between devices.</span>
             </div>
             <input id="bgImageFileUpload" type="file" accept="image/*" class="file-input file-input-bordered file-input-md w-full max-w-100" @change="onFile($event.target.files[0])"/>
           </label>
@@ -53,14 +53,14 @@
         </template>
         <div class="color-pickers flex justify-between px-1 mt-2 w-100">
           <template v-if="!useImageBg">
-          <div class="flex flex-row items-center w-1/3 h-12">
-            <span class="label-text">Background color</span>
+          <div class="flex flex-row gap-2 items-center w-1/2 h-12">
+            <span class="label-text">Background</span>
             <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha
               lang="En" v-model:pureColor="innerBgColor" />
           </div>
           </template>
-          <div class="flex flex-row items-center w-1/3 h-12">
-            <span class="label-text">Label color</span>
+          <div class="flex flex-row gap-2 items-center w-1/2 h-12">
+            <span class="label-text">Label</span>
             <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha
               lang="En" v-model:pureColor="innerFontColor" />
           </div>
@@ -79,6 +79,7 @@
 
 <script>
 import { useItemsStore } from '@/stores/items'
+import { useImageStore } from '@/stores/image'
 import { chromeStorage } from '@/plugins/chromeStorage';
 import { Cropper } from "vue-advanced-cropper";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -112,6 +113,7 @@ export default {
   data() {
     return {
       itemsStore: useItemsStore(),
+      imageStore: useImageStore(),
       innerLabel: this.label,
       innerUrl: this.url,
       innerFontColor: this.fontColor,
@@ -135,11 +137,11 @@ export default {
       })
 
       if (this.useImageBg) {
-        chromeStorage.setLocal(this.id, this.innerBgImg64)
-          .then(() => console.log('BG Image set'));
+        this.imageStore.set(this.id, this.innerBgImg64);
+        console.log('BG Image set');
       } else {
-        chromeStorage.removeLocal(this.id)
-          .then(() => console.log('BG Image removed'));
+        this.imageStore.remove(this.id);
+        console.log('BG Image removed');
       }
       this.$emit('close');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
     },

@@ -15,7 +15,6 @@ export default {
       return this.settingsStore.setGridGap(value);
     },
     onToolbarPositionChange(value) {
-      console.log(value)
       return this.settingsStore.setToolbarPosition(value ? 'top' : 'bottom');
     },
     toolbarPositions() {
