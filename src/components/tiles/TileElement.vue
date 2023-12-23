@@ -58,7 +58,7 @@ export default {
 <template>
   <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
     <span class="label absolute" :class="labelPosition()">{{ label }}</span>
-    <div class="controls absolute hidden group-hover:inline-flex" :class="controlsPosition()">
+    <div class="controls absolute invisible pointer-events-none group-hover:visible group-hover:pointer-events-auto group-hover:delay-300" :class="controlsPosition()">
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('edit')">
         <FontAwesomeIcon :icon="['fas', 'edit']" />
       </button>
@@ -67,6 +67,9 @@ export default {
       </button>
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="changeSize()">
         <FontAwesomeIcon :icon="['fas', size === 's' ? 'chevron-right' : 'chevron-left']" />
+      </button>
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle" @click.prevent="">
+        <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />
       </button>
     </div>
     
