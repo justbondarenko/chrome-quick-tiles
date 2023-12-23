@@ -1,18 +1,20 @@
 <script>
+import draggable from 'vuedraggable'
 import TileElement from './TileElement.vue'
 import TileEdit from './TileEdit.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
 export default {
   name: 'TilesGrid',
-  components: { TileElement, TileEdit },
+  components: { TileElement, TileEdit, draggable },
   data() {
     return {
       settingsStore: useSettingsStore(),
       itemsStore: useItemsStore(),
       showEdit: false,
       itemToEdit: null,
-      removing: null
+      removing: null,
+      drag: false,
     }
   },
   methods: {
@@ -34,10 +36,9 @@ export default {
       this.showEdit = id;
     },
     closeEditModal() {
-      this.itemToEdit = null;
       this.showEdit = null;
-    }
-
+      this.itemToEdit = null;
+    },
   }
 }
 
@@ -45,8 +46,38 @@ export default {
 </script>
 
 <template>
+  <draggable 
+    v-model="itemsStore.items" 
+    tag="div"
+    group="tiles" 
+    handle=".move-handle"
+    ghost-class="tile-ghost"
+	  dragClass="tile-drag"
+    item-key="id"
+    class="tiles-grid flex overflow-y-auto flex-wrap mx-auto p-4"
+    :style="style()"  
+    @start="drag=true" 
+    @end="drag=false" 
+    @update="itemsStore.save()"
+  >
+    <template #item="{element}">
+      <TileElement 
+        :class="[{
+          'outline-blue-500 outline-3 outline-dashed outline-offset-4': showEdit === element.id,
+          'animate__animated animate__rotateOutUpRight animate__faster': removing === element.id,
+        }]"
+        :url="element.url"
+        :label="element.label"
+        :bg-color="element.bgColor"
+        :font-color="element.fontColor"
+        :size="element.size"
+        @setSize="setSize(element, $event)"
+        @remove="remove(element)"
+        @edit="edit(element.id)"
+      />
+    </template>
+  </draggable>
   <div class="tiles-grid flex overflow-y-auto flex-wrap mx-auto p-4" :style="style()">
-    <TileElement v-for="item, index of itemsStore.items" :key="index" :class="[{'outline-blue-500 outline-3 outline-dashed outline-offset-4': showEdit === item.id, 'animate__animated animate__rotateOutUpRight animate__faster': removing === item.id}]" :url="item.url" :label="item.label" :bg-color="item.bgColor" :font-color="item.fontColor" :size="item.size" @setSize="setSize(item, $event)" @remove="remove(item)" @edit="edit(item.id)"/>
     <input type="checkbox" id="my_modal_6" class="modal-toggle" :checked="showEdit" />
     <div class="modal" role="dialog">
       <div class="modal-box">
@@ -59,6 +90,18 @@ export default {
 <style lang="scss" scoped>
 .tiles-grid {
   min-width: 260px;
+}
+
+.tile-ghost {
+  border: 2px dotted gray !important;
+  background-color: transparent !important;
+  > * {
+    visibility: hidden;
+  }
+}
+
+.tile-drag {
+  opacity: 0.5;
 }
 
 </style>
