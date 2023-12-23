@@ -26,7 +26,7 @@ export default {
       Toolbar settings
     </div>
     <div class="collapse-content flex flex-col gap-2">
-      <div class="page-settings-item hover:bg-zinc-100">
+      <div class="page-settings-item hover:bg-base-200">
         <label class="mb-1 whitespace-nowrap">Toolbar position:</label>
         <div class="flex gap-1 items-center">
           <div class="join w-fit">
@@ -34,7 +34,7 @@ export default {
           </div>
         </div>
       </div>
-      <div class="page-settings-item hover:bg-zinc-100">
+      <div class="page-settings-item hover:bg-base-200">
         <label class="mb-1 whitespace-nowrap">Show labels for:</label>
         <div class="flex flex-col gap-2">
           <div class="form-control w-100">

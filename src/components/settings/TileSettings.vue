@@ -39,13 +39,13 @@ export default {
           :corner-radius="settingsStore.tileCornerRadius + 'px'" />
         
         <div class="card-body p-0 mt-3">
-          <div class="page-settings-item hover:bg-zinc-100">
+          <div class="page-settings-item hover:bg-base-200">
             <span>Label position:</span>
             <div class="mt-1 rounded-md border-transparent p-3 grid grid-cols-2 grid-rows-2 gap-5">
               <input v-for="position, index of positions()" :key="index" type="radio" name="label-position" class="radio" @input="settingsStore.setTileLabelPosition(position.value)" :checked="position.checked" />
             </div>
           </div>
-          <div class="page-settings-item hover:bg-zinc-100">
+          <div class="page-settings-item hover:bg-base-200">
             <label class="w-1/3 mb-1 whitespace-nowrap">
               Tile corner radius: {{ settingsStore.tileCornerRadius }}px
             </label>
