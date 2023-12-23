@@ -5,7 +5,7 @@
       <RecentsDrawer />
     </div>
     <div class="mr-0 ml-auto flex flex-row gap-4">
-      <TileAdd @saveTile="saveTile" />
+      <TileAdd :key="addTileKey" @saveTile="saveTile" />
       <SettingsSidebar />
     </div>
   </div>
@@ -30,11 +30,13 @@ export default {
     return {
       itemsStore: useItemsStore(),
       settingsStore: useSettingsStore(),
+      addTileKey: 0
     }
   },
   methods: {
     saveTile(value) {
-      this.itemsStore.addItem(value)
+      this.itemsStore.addItem(value).then(() => this.addTileKey++);
+      
     }
   }
 }
