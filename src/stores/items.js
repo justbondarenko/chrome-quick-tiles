@@ -4,23 +4,17 @@ import { v4 as uuid } from 'uuid';
 export const useItemsStore = defineStore('items', {
   state: () => {
     return {
-      items: [
-        {
-        "id": uuid(),
-        "label": "Facebook",
-        "url": "https://www.facebook.com",
-        "bgColor": "#1877F2",
-        "size": "s"
-        }
-      ],
+      items: [],
     }
   },
   actions: {
     setItems(items) {
-      this.items = JSON.parse(items);
+      this.items = items;
     },
     async addItem(item) {
-      item.id = uuid();
+      if (!item.id) {
+        item.id = uuid();
+      }
       this.items.push(item);
       this.save()
     },
