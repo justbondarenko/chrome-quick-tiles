@@ -23,6 +23,7 @@
     "pinia": "^2.1.7",
     "uuid": "^9.0.1",
     "vue": "^3.3.11",
+    "vue-advanced-cropper": "^2.8.8",
     "vue-axios": "^3.5.2",
     "vue3-colorpicker": "^2.2.3",
     "vuedraggable": "^4.1.0"
