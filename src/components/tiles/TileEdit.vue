@@ -23,8 +23,33 @@
             <div class="label">
               <span class="label-text">Image with dimensions W:{{ size === 's' ? '128' : '256' }}px H:128px (up to 250kb)</span>
             </div>
-            <input id="bgImageFileUpload" type="file" accept="image/*" class="file-input file-input-bordered file-input-md w-full max-w-100" @change="onFilesChange($event.target.files[0])"/>
+            <input id="bgImageFileUpload" type="file" accept="image/*" class="file-input file-input-bordered file-input-md w-full max-w-100" @change="onFile($event.target.files[0])"/>
           </label>
+          <div v-if="file" class="cropper-wrapper relative">
+            <div class="cropper-btns z-10 p-3 rounded-md flex absolute bottom-3 right-3">
+              <div class="join">
+                <button class="join-item btn btn-sm" @click="rotate(-90)"><FontAwesomeIcon :icon="['fas', 'rotate-left']"/></button>
+                <button class="join-item btn btn-sm" @click="rotate(90)"><FontAwesomeIcon :icon="['fas', 'rotate-right']"/></button>
+              </div>
+              <div class="divider divider-horizontal" />
+              <div class="join">
+                <button class="join-item btn btn-sm" @click="zoom(1.5)"><FontAwesomeIcon :icon="['fas', 'magnifying-glass-plus']"/></button>
+                <button class="join-item btn btn-sm" @click="zoom(0.5)"><FontAwesomeIcon :icon="['fas', 'magnifying-glass-minus']"/></button>
+              </div>
+            </div>
+
+            <Cropper
+              ref="cropper"
+              :src="file.src"
+              class="cropper mt-2"
+              :stencil-props="{
+                aspectRatio: 2,
+                movable: true,
+                resizable: true
+              }"
+              @change="cropperChange"
+            />
+          </div>
         </template>
         <div class="color-pickers flex justify-between px-1 mt-2 w-100">
           <template v-if="!useImageBg">
@@ -55,8 +80,11 @@
 <script>
 import { useItemsStore } from '@/stores/items'
 import { chromeStorage } from '@/plugins/chromeStorage';
+import { Cropper } from "vue-advanced-cropper";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
+  components: { Cropper, FontAwesomeIcon },
   props: {
     id: {
       type: String,
@@ -90,7 +118,8 @@ export default {
       innerBgColor: this.bgColor,
       useImageBg: false,
       innerBgImg64: '',
-      imageBgFile: null
+      imageBgFile: null,
+      file: null,
     };
   },
   mounted() {
@@ -135,24 +164,39 @@ export default {
         reader.onerror = reject;
       })
     },
-    onFilesChange: async function (f) {
-      if (f.size > 250000) {
-        alert('Maximum file size up to 250kb')
-        return 
-      }
-      await this.getBase64(f).then((base64) => {
-        this.innerBgImg64 = base64;
-        this.innerBgColor = null;
-        navigator.clipboard.writeText(base64);
-      });
+    onFile(file) {
+      const blob = URL.createObjectURL(file);
+      this.file = {
+        src: blob,
+        type: file.type,
+      };
     },
+    cropperChange(result) {
+      this.innerBgImg64 = result.canvas.toDataURL(this.file.type)
+    },
+    zoom(factor) {
+			this.$refs.cropper.zoom(factor);;
+		},
+		rotate(angle) {
+			this.$refs.cropper.rotate(angle);
+		},
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .vc-color-wrap {
   margin: auto auto;
+}
+
+.cropper-wrapper {
+  > .cropper-btns {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  > .cropper {
+    max-height: 400px;
+  }
 }
 </style>
 
