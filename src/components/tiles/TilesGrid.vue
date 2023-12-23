@@ -4,6 +4,8 @@ import TileElement from './TileElement.vue'
 import TileEdit from './TileEdit.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
+import { chromeStorage } from '@/plugins/chromeStorage';
+
 export default {
   name: 'TilesGrid',
   components: { TileElement, TileEdit, draggable },
@@ -66,6 +68,7 @@ export default {
           'outline-blue-500 outline-3 outline-dashed outline-offset-4': showEdit === element.id,
           'animate__animated animate__rotateOutUpRight animate__faster': removing === element.id,
         }]"
+        :id="element.id"
         :url="element.url"
         :label="element.label"
         :bg-color="element.bgColor"
@@ -81,7 +84,7 @@ export default {
     <input type="checkbox" id="my_modal_6" class="modal-toggle" :checked="showEdit" />
     <div class="modal" role="dialog">
       <div class="modal-box">
-        <TileEdit v-if="itemToEdit" :id="itemToEdit.id" :label="itemToEdit.label" :url="itemToEdit.url" :bg-color="itemToEdit.bgColor" :font-color="itemToEdit.fontColor" @close="closeEditModal" />
+        <TileEdit v-if="itemToEdit" :id="itemToEdit.id" :label="itemToEdit.label" :url="itemToEdit.url" :bg-color="itemToEdit.bgColor" :font-color="itemToEdit.fontColor" :size="itemToEdit.size" @close="closeEditModal" />
       </div>
     </div>
   </div>

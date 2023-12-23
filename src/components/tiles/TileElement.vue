@@ -1,11 +1,17 @@
 <script>
 import { useSettingsStore } from '@/stores/settings'
+import { useImageStore } from '@/stores/image';
+import { chromeStorage } from '@/plugins/chromeStorage';
+
 export default {
   name: 'TileElement',
   components: {
-    
   },
   props: {
+    id: {
+      type: String,
+      required: true
+    },
     label: {
       type: String,
       required: true
@@ -29,17 +35,25 @@ export default {
       type: String,
       default: 'white'
     },
-
   },
   data() {
     return {
       settingsStore: useSettingsStore(),
-      active: false
+      imgStore: useImageStore(),
+      active: false,
+      img: null
     }
+  },
+  mounted() {
+    chromeStorage.getLocal(this.id).then((res) => this.img = res);
   },
   methods: {
     style: function () {
-      return `color: ${this.fontColor};background-color: ${this.bgColor};border-radius: ${this.settingsStore.tileCornerRadius}px !important;`
+      const styles = [`border-radius: ${this.settingsStore.tileCornerRadius}px !important;`];
+      styles.push(`background-color: ${this.bgColor};`)
+      styles.push(`color: ${this.fontColor};`)
+      
+      return styles.join('');
     },
     textAlign() {
       return this.settingsStore.tileLabelPosition.includes('right') ? 'text-right' : 'text-left'
@@ -60,6 +74,9 @@ export default {
 
 <template>
   <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
+    <div v-if="img" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
+      <img class="w-full h-full" :src="img" :alt="`Tile background for ${label}`" />
+    </div>
     <span class="label absolute" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
     <div class="controls absolute invisible pointer-events-none group-hover:visible group-hover:pointer-events-auto group-hover:delay-300" :class="controlsPosition()">
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('edit')">
@@ -89,6 +106,22 @@ $base: 128px;
   border: none;
   transition: width 0.2s ease-in-out, left 0.2s ease-in-out;
 
+  > .image-wrapper {
+    position: absolute;
+    width: inherit;
+    height: inherit;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+
+    > img { 
+      object-fit: cover;
+      object-position: center;
+      min-width: 100%; 
+      min-height: 100%;
+    }
+  }
+
   &.s {
     height: $base;
     width: $base;
@@ -97,6 +130,10 @@ $base: 128px;
   &.m {
     height: $base;
     width: $base * 2;
+
+    > .image-wrapper {
+      width: $base * 2;
+    }
   }
 
   .top {

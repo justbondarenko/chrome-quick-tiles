@@ -39,7 +39,6 @@ export const useItemsStore = defineStore('items', {
     update(id, newData) {
       const existingItem = this.items.find(el => id === el.id);
       for (const [key, value] of Object.entries(newData)) {
-        console.log('upd ' + key)
         existingItem[key] = value;
       }
       this.save()

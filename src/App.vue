@@ -2,6 +2,7 @@
 import { defineComponent } from 'vue';
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items';
+import { useImageStore } from '@/stores/image';
 import ToolbarComponent from './components/ToolbarComponent.vue';
 import TilesGrid from '@/components/tiles/TilesGrid.vue';
 import { chromeStorage } from './plugins/chromeStorage';
@@ -16,6 +17,7 @@ export default defineComponent({
     return {
       settings: useSettingsStore(),
       items: useItemsStore(),
+      images: useImageStore(),
       mockItems: [
         {
           "id": uuid(),
@@ -56,38 +58,40 @@ export default defineComponent({
     }
   },
   beforeCreate() {
-    chromeStorage.get('links').then((value) => {
-      value
-        ? this.items.setItems(value)
-        : chromeStorage.set('links', JSON.stringify(this.mockItems))
-    }),
-    chromeStorage.get('toolbarPosition').then((value) => {
-      this.settings.setToolbarPosition(value ?? 'top');
-    }),
-    chromeStorage.get('gridWidth').then((value) => {
-      this.settings.setGridWidth(value ?? '85');
-    }),
-    chromeStorage.get('gridGap').then((value) => {
-      this.settings.setGridGap(value ?? '4');
-    }),
-    chromeStorage.get('tileCornerRadius').then((value) => {
-      this.settings.setTileCornerRadius(value ?? '10');
-    }),
-    chromeStorage.get('tileLabelPosition').then((value) => {
-      this.settings.setTileLabelPosition(value ?? 'bottom right');
-    }),
-    chromeStorage.get('showBookmarksLabel').then((value) => {
-      this.settings.setLabelFor('bookmarks', value ?? false);
-    }),
-    chromeStorage.get('showRecentlyClosedLabel').then((value) => {
-      this.settings.setLabelFor('bookmarks', value ?? false);
-    }),
-    chromeStorage.get('showNewTileLabel').then((value) => {
-      this.settings.setLabelFor('bookmarks', value ?? false);
-    }),
-    chromeStorage.get('showSettingsLabel').then((value) => {
-      this.settings.setLabelFor('bookmarks', value ?? false);
-    })
+    Promise.all([
+      chromeStorage.get('links').then((value) => {
+        value
+          ? this.items.setItems(value)
+          : chromeStorage.set('links', JSON.stringify(this.mockItems))
+      }),
+      chromeStorage.get('toolbarPosition').then((value) => {
+        this.settings.setToolbarPosition(value ?? 'top');
+      }),
+      chromeStorage.get('gridWidth').then((value) => {
+        this.settings.setGridWidth(value ?? '85');
+      }),
+      chromeStorage.get('gridGap').then((value) => {
+        this.settings.setGridGap(value ?? '10');
+      }),
+      chromeStorage.get('tileCornerRadius').then((value) => {
+        this.settings.setTileCornerRadius(value ?? '10');
+      }),
+      chromeStorage.get('tileLabelPosition').then((value) => {
+        this.settings.setTileLabelPosition(value ?? 'bottom right');
+      }),
+      chromeStorage.get('showBookmarksLabel').then((value) => {
+        this.settings.setLabelFor('bookmarks', value ?? false);
+      }),
+      chromeStorage.get('showRecentlyClosedLabel').then((value) => {
+        this.settings.setLabelFor('bookmarks', value ?? false);
+      }),
+      chromeStorage.get('showNewTileLabel').then((value) => {
+        this.settings.setLabelFor('bookmarks', value ?? false);
+      }),
+      chromeStorage.get('showSettingsLabel').then((value) => {
+        this.settings.setLabelFor('bookmarks', value ?? false);
+      })
+    ])
   },
   methods : {
     flexOrientation() {
