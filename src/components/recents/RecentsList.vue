@@ -1,8 +1,10 @@
 <template>
-  <ul class="menu bg-base-200 rounded-box gap-1">
-    <li class="pointer-events-none"><a>Recently closed</a></li>
-    <BookmarkItem v-for="item of tree" :key="item.id" :url="item.url" :title="item.title" :last-visit="timeAgo(item.lastVisitTime)" />
-  </ul>
+  <div class="recents-wrapper">
+    <ul class="flex-nowrap overflow-y-auto">
+      <li class="pointer-events-none"><a>Recently closed <span class="opacity-40">(15)</span></a></li>
+      <BookmarkItem v-for="item of tree" :key="item.id" :url="item.url" :title="item.title" :last-visit="timeAgo(item.lastVisitTime)" />
+    </ul>
+  </div>
 </template>
 
 
@@ -39,7 +41,7 @@ export default {
   },
   beforeMount() {
     // eslint-disable-next-line
-    chrome.history.search({ maxResults: 10, text: "" }, (items) => {
+    chrome.history.search({ maxResults: 15, text: "" }, (items) => {
       this.tree = items;
     });
   }
@@ -49,6 +51,10 @@ export default {
 <style lang="scss" scoped>
 ::v-deep ul, li {
   max-width: 100%;
+}
+
+.recents-wrapper {
+  max-height: 85vh;
 }
 </style>
 
