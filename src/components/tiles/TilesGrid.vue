@@ -48,6 +48,7 @@ export default {
 
 <template>
   <draggable 
+    v-if="itemsStore.items.length" 
     v-model="itemsStore.items" 
     tag="div"
     group="tiles" 
@@ -79,12 +80,14 @@ export default {
       />
     </template>
   </draggable>
-  <div class="tiles-grid flex overflow-y-auto flex-wrap mx-auto p-4" :style="style()">
-    <input type="checkbox" id="my_modal_6" class="modal-toggle" :checked="showEdit" />
-    <div class="modal" role="dialog">
-      <div class="modal-box">
-        <TileEdit v-if="itemToEdit" :id="itemToEdit.id" :label="itemToEdit.label" :url="itemToEdit.url" :bg-color="itemToEdit.bgColor" :font-color="itemToEdit.fontColor" :size="itemToEdit.size" @close="closeEditModal" />
-      </div>
+  <div v-else class="min-w-72 max-w-96 h-36 mt-12 mx-auto py-4 px-6 flex flex-col gap-4 border-2 rounded-md border-dashed prose items-start justify-center">
+    <span>You have no bookmarks added.</span>
+    <span>Click <button class="btn btn-square btn-sm pointer-events-none mx-1"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'plus' }" /></button> button in {{ settingsStore.toolbarPosition }} right corner of your screen to add first bookmark. <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'square-arrow-up-right'}" size="xl" class="ml-2" :class="{'rotate-90': settingsStore.toolbarPosition === 'bottom'}"/></span>
+  </div>
+  <input type="checkbox" id="my_modal_6" class="modal-toggle" :checked="showEdit" />
+  <div class="modal" role="dialog">
+    <div class="modal-box">
+      <TileEdit v-if="itemToEdit" :id="itemToEdit.id" :label="itemToEdit.label" :url="itemToEdit.url" :bg-color="itemToEdit.bgColor" :font-color="itemToEdit.fontColor" :size="itemToEdit.size" @close="closeEditModal" />
     </div>
   </div>
 </template>
