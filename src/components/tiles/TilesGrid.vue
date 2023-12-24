@@ -4,7 +4,6 @@ import TileElement from './TileElement.vue'
 import TileEdit from './TileEdit.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
-import { chromeStorage } from '@/plugins/chromeStorage';
 
 export default {
   name: 'TilesGrid',
@@ -100,6 +99,7 @@ export default {
   background-color: transparent !important;
   > * {
     visibility: hidden;
+    opacity: 0;
   }
 }
 

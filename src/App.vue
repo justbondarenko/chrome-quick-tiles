@@ -7,14 +7,17 @@ import ToolbarComponent from './components/ToolbarComponent.vue';
 import TilesGrid from '@/components/tiles/TilesGrid.vue';
 import { chromeStorage } from './plugins/chromeStorage';
 import { v4 as uuid } from 'uuid';
+import FirstLaunch from '@/components/FirstLaunch.vue';
 
 export default defineComponent({
   components: {
     ToolbarComponent,
-    TilesGrid
+    TilesGrid,
+    FirstLaunch
   },
   data() {
     return {
+      showUaModal: false,
       settings: useSettingsStore(),
       items: useItemsStore(),
       images: useImageStore(),
@@ -95,6 +98,7 @@ export default defineComponent({
       if (value) {
         this.items.setItems(JSON.parse(value))
       } else {
+        this.showUaModal = true;
         const imgs = this.mockItems.map((item) => {
           return {
             id: item.link.id,
@@ -128,6 +132,10 @@ export default defineComponent({
       <TilesGrid />
     </div>
   </div>
+    <input type="checkbox" id="first-launch" class="modal-toggle" :checked="showUaModal" />
+    <div class="modal" role="dialog">
+      <FirstLaunch @close="showUaModal = false"/>
+    </div>
 </template>
 
 <style scoped>
