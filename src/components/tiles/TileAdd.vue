@@ -37,12 +37,12 @@
               </div>
             </div>
             <div class="color-pickers flex flex-col justify-between px-1 mt-2 w-100">
-              <div class="flex flex-row items-center h-12">
+              <div class="flex flex-row items-center h-12 gap-3">
                 <span class="label-text">Background color</span>
                 <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha lang="En"
                   v-model:pureColor="bgColor" />
               </div>
-              <div class="flex flex-row items-center h-12">
+              <div class="flex flex-row items-center h-12 gap-3">
                 <span class="label-text">Label color</span>
                 <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha lang="En"
                   v-model:pureColor="fontColor" />

@@ -128,7 +128,7 @@ export default defineComponent({
 <template>
   <div class="app flex w-100 h-screen" :class="[flexOrientation()]">
     <ToolbarComponent />
-    <div class="grow">
+    <div class="grow p-6">
       <TilesGrid />
     </div>
   </div>

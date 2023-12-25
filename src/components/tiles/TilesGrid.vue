@@ -80,9 +80,9 @@ export default {
       />
     </template>
   </draggable>
-  <div v-else class="min-w-72 max-w-96 h-36 mt-12 mx-auto py-4 px-6 flex flex-col gap-4 border-2 rounded-md border-dashed prose items-start justify-center">
-    <span>You have no bookmarks added.</span>
-    <span>Click <button class="btn btn-square btn-sm pointer-events-none mx-1"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'plus' }" /></button> button in {{ settingsStore.toolbarPosition }} right corner of your screen to add first bookmark. <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'square-arrow-up-right'}" size="xl" class="ml-2" :class="{'rotate-90': settingsStore.toolbarPosition === 'bottom'}"/></span>
+  <div v-else class="w-3/5 h-fit mt-12 mx-auto py-12 px-16 flex flex-col gap-4 border-2 rounded-2xl border-dashed prose prose-md prose-slate items-start justify-center opacity-50">
+    <p class="lead">You have no bookmarks added.</p>
+    <p class="lead">Click <button class="btn btn-square btn-sm pointer-events-none mx-1"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'plus' }" /></button> button in {{ settingsStore.toolbarPosition }} right corner of your screen to add first bookmark.</p>
   </div>
   <input type="checkbox" id="my_modal_6" class="modal-toggle" :checked="showEdit" />
   <div class="modal" role="dialog">
