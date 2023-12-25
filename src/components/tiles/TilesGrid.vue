@@ -2,12 +2,13 @@
 import draggable from 'vuedraggable'
 import TileElement from './TileElement.vue'
 import TileEdit from './TileEdit.vue'
+import BookmarkImportFolder from '../bookmarks/BookmarkImportFolder.vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
 
 export default {
   name: 'TilesGrid',
-  components: { TileElement, TileEdit, draggable },
+  components: { TileElement, TileEdit, draggable, BookmarkImportFolder },
   data() {
     return {
       settingsStore: useSettingsStore(),
@@ -80,9 +81,13 @@ export default {
       />
     </template>
   </draggable>
-  <div v-else class="w-3/5 h-fit mt-12 mx-auto py-12 px-16 flex flex-col gap-4 border-2 rounded-2xl border-dashed prose prose-md prose-slate items-start justify-center opacity-50">
+  <div v-else class="w-3/5 h-fit mt-12 mx-auto py-12 px-16 flex flex-col border-2 rounded-2xl border-dashed prose prose-md prose-slate items-center justify-center opacity-50">
     <p class="lead">You have no bookmarks added.</p>
-    <p class="lead">Click <button class="btn btn-square btn-sm pointer-events-none mx-1"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'plus' }" /></button> button in {{ settingsStore.toolbarPosition }} right corner of your screen to add first bookmark.</p>
+    <p class="lead text-center">Click <button class="btn btn-square btn-sm pointer-events-none mx-1"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'plus' }" /></button> button in {{ settingsStore.toolbarPosition }} right corner of your screen<br/>to add first bookmark.</p>
+    <div class="divider">OR</div>
+    <p class="lead mb-1"> Select bookmark folder to import and create tiles.*</p>
+    <BookmarkImportFolder />
+    <span class="prose-sm"> * Only individual bookmarks from selected folder will be imported. Child folders will be ignored.</span>
   </div>
   <input type="checkbox" id="my_modal_6" class="modal-toggle" :checked="showEdit" />
   <div class="modal" role="dialog">

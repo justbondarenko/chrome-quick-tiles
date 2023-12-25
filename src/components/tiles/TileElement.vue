@@ -73,7 +73,7 @@ export default {
     <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
       <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
     </div>
-    <span class="label absolute" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
+    <span class="label absolute overflow-hidden whitespace-nowrap" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
     <div class="controls absolute invisible pointer-events-none group-hover:visible group-hover:pointer-events-auto group-hover:delay-300" :class="controlsPosition()">
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('edit')">
         <FontAwesomeIcon :icon="['fas', 'edit']" />
@@ -88,7 +88,6 @@ export default {
         <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />
       </button>
     </div>
-    
   </a>
 </template>
 
@@ -121,11 +120,20 @@ $base: 128px;
   &.s {
     height: $base;
     width: $base;
+
+    > .label {
+      max-width: 100px;
+      width: fit-content;
+    }
   }
 
   &.m {
     height: $base;
     width: $base * 2;
+    > .label {
+      max-width: 200px;
+      width: fit-content;
+    }
 
     > .image-wrapper {
       width: $base * 2;
