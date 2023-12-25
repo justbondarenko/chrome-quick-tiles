@@ -31,7 +31,7 @@ export default {
       setTimeout(() => {
         this.itemsStore.remove(item);
         this.removing = null
-      }, 1000)
+      }, 300)
     },
     edit(id) {
       this.itemToEdit = this.itemsStore.getItemById(id)
@@ -67,7 +67,7 @@ export default {
       <TileElement 
         :class="[{
           'outline-blue-500 outline-3 outline-dashed outline-offset-4': showEdit === element.id,
-          'animate__animated animate__rotateOutUpRight animate__faster': removing === element.id,
+          'animate__animated animate__fadeOut animate__faster': removing === element.id,
         }]"
         :id="element.id"
         :url="element.url"
