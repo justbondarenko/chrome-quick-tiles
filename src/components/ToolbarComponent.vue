@@ -35,8 +35,7 @@ export default {
   },
   methods: {
     saveTile(value) {
-      this.itemsStore.addItem(value).then(() => this.addTileKey++);
-      
+      this.itemsStore.addItem(value).then(() => this.addTileKey++); 
     }
   }
 }
