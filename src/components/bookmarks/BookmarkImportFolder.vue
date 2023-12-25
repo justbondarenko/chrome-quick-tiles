@@ -3,8 +3,7 @@
     <summary class="btn flex-nowrap">
       <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'folder' }" />Select & import
     </summary>
-    <ul
-      class="overflow-y-auto p-2 shadow-md menu dropdown-content bg-base-200 rounded-box mt-1">
+    <ul class="overflow-y-auto p-2 shadow-md menu dropdown-content bg-base-200 rounded-box mt-1">
       <li class="pointer-events-none">All non-empty folders</li>
       <li v-for="item, index in extractFolders()" :key="index" class="w-48" @click="onItemClick(item)">
         <span>
@@ -47,10 +46,13 @@ export default {
       let elements = [];
 
       function extract(obj) {
-        if (obj.children && obj.children.length) {
-          elements.push(obj);
-        }
         if (obj.children && obj.children.length > 0) {
+          let hasUrls = obj.children.some(child => {
+            return !!child.url;
+          });
+          if (hasUrls) {
+            elements.push(obj);
+          }
           obj.children.forEach(child => {
             extract(child);
           });
