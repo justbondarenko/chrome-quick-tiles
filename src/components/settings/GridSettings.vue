@@ -38,7 +38,7 @@ export default {
       </div>
       <div class="page-settings-item hover:bg-base-200">
         <label class="w-1/3 mb-1 whitespace-nowrap">Grid gap: {{ settingsStore.gridGap }}px</label>
-        <input type="range" min="2" max="50" class="range range-xs" step="1" :value="settingsStore.gridGap"
+        <input type="range" min="5" max="25" class="range range-xs" step="1" :value="settingsStore.gridGap"
           @input="onGridGapChange($event.target.value)" />
       </div>
     </div>

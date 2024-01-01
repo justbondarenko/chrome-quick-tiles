@@ -140,10 +140,6 @@ $base: 128px;
       max-width: 200px;
       width: fit-content;
     }
-
-    > .image-wrapper {
-      width: $base * 2;
-    }
   }
 
   .top {
