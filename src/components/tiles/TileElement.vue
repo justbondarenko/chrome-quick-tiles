@@ -78,7 +78,7 @@ export default {
 
 <template>
   <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
-    <img v-if="settingsStore.tileFaviconSize" :src="favicon(settingsStore.tileFaviconSize)" class="favicon absolute rounded-md" :class="faviconPosition()" alt="favicon" />
+    <img v-if="settingsStore.tileFaviconSize && url" :src="favicon(settingsStore.tileFaviconSize)" class="favicon absolute rounded-md" :class="faviconPosition()" alt="favicon" />
     <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
       <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
     </div>
