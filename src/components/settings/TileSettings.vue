@@ -17,7 +17,7 @@ export default {
           return positions;
       },
       favIconSizes() {
-          const sizes = [{ value: 16, }, { value: 32 }, { value: 0 }];
+          const sizes = [{ value: 16, }, { value: 24 }, { value: 32 }, { value: 0 }];
           sizes.forEach((size) => {
               size.checked = size.value === this.settingsStore.tileFaviconSize;
           });
@@ -58,7 +58,7 @@ export default {
             <label class="w-1/3 mb-1 whitespace-nowrap">
               Favicon size: {{ settingsStore.tileFaviconSize }}px
             </label>
-            <div class="mt-1 rounded-md border-transparent grid grid-cols-3 grid-rows-1 p-3">
+            <div class="mt-1 rounded-md border-transparent grid grid-cols-4 grid-rows-1 p-3">
               <label v-for="size, index of favIconSizes()" :key="index" class="label cursor-pointer flex flex-col gap-2 flex-nowrap">
                 <input type="radio" name="radio-10" class="radio" @input="settingsStore.setTileFaviconSize(size.value)" :checked="size.checked"  />
                 <span class="label-text">{{ size.value ? `${size.value} px ` : 'Hide'}}</span> 
