@@ -43,7 +43,6 @@
               :src="file.src"
               class="cropper mt-2"
               :stencil-props="{
-                aspectRatio: 2,
                 movable: true,
                 resizable: true
               }"
