@@ -10,6 +10,7 @@ export const useSettingsStore = defineStore('settings', {
       tileLabelPosition: '',
       toolbarPosition: '',
       tileFaviconSize: 0,
+      hideTileLabel: true,
       showBookmarksLabel: true,
       showRecentlyClosedLabel: true,
       showNewTileLabel: false,
@@ -28,6 +29,10 @@ export const useSettingsStore = defineStore('settings', {
     async setTileCornerRadius(value) {
       this.tileCornerRadius = value;
       return await chromeStorage.set('tileCornerRadius', value);
+    },
+    async setHideTileLabel(value) {
+      this.hideTileLabel = value;
+      return await chromeStorage.set('hideTileLabel', value);
     },
     async setTileLabelPosition(value) {
       this.tileLabelPosition = value;

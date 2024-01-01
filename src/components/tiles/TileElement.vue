@@ -82,7 +82,7 @@ export default {
     <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
       <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
     </div>
-    <span class="label absolute overflow-hidden whitespace-nowrap" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
+    <span v-if="!settingsStore.hideTileLabel" class="label absolute overflow-hidden whitespace-nowrap" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
     <div class="controls hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none" :class="controlsPosition()">
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle" @click.prevent="">
         <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />
@@ -112,6 +112,7 @@ $base: 128px;
 
   &:hover {
     transform: scale(1.05);
+    transition: all 0.3s ease-out;
     > .controls {
       width: 30px;
       visibility: visible;

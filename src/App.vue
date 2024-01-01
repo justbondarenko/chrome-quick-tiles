@@ -75,6 +75,9 @@ export default defineComponent({
       chromeStorage.get('tileFaviconSize').then((value) => {
         this.settings.setTileFaviconSize(value ?? '24');
       }),
+      chromeStorage.get('hideTileLabel').then((value) => {
+        this.settings.setHideTileLabel(value ?? true);
+      }),
       chromeStorage.get('tileLabelPosition').then((value) => {
         this.settings.setTileLabelPosition(value ?? 'bottom right');
       }),
