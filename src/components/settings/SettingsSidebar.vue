@@ -9,15 +9,16 @@
     </div>
     <div class="drawer-side z-50">
       <label for="settings-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-      <div class="p-4 w-fit h-full bg-base-200 text-base-content flex flex-col">
+      <div class="p-4 w-fit h-full max-h-screen overflow-auto bg-base-200 text-base-content flex flex-col">
         <p class="prose-2xl">Settings</p>
         <div class="divider" />
         <div class="settings-wrapper flex flex-col gap-4 h-full">
           <GridSettings :settings-store="settingsStore" />
           <ToolbarSettings :settings-store="settingsStore" />
           <TileSettings :settings-store="settingsStore" />
-          <MyContacts :settings-store="settingsStore" class="mt-auto" />
+          <ExportImport :settings-store="settingsStore" />
         </div>
+        <MyContacts :settings-store="settingsStore" class="mt-auto" />
       </div>
     </div>
   </div>
@@ -28,6 +29,7 @@ import { useSettingsStore } from '@/stores/settings'
 import GridSettings from './GridSettings.vue';
 import ToolbarSettings from './ToolbarSettings.vue';
 import TileSettings from './TileSettings.vue';
+import ExportImport from './ExportImport.vue';
 import MyContacts from './MyContacts.vue';
 
 export default {
@@ -47,7 +49,7 @@ export default {
           return this.settingsStore.setTileLabelPosition(value);
       },
     },
-    components: { GridSettings, ToolbarSettings, TileSettings, MyContacts }
+    components: { GridSettings, ToolbarSettings, TileSettings, ExportImport, MyContacts }
 }
 </script>
 

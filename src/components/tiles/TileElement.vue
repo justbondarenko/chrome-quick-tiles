@@ -1,7 +1,6 @@
 <script>
 import { useSettingsStore } from '@/stores/settings'
 import { useImageStore } from '@/stores/image';
-import { chromeStorage } from '@/plugins/chromeStorage';
 
 export default {
   name: 'TileElement',
@@ -45,10 +44,10 @@ export default {
   },
   methods: {
     style: function () {
-      const styles = [`border-radius: ${this.settingsStore.tileCornerRadius}px !important;`];
-      styles.push(`background-color: ${this.bgColor};`)
-      styles.push(`color: ${this.fontColor};`)
-      
+      const width = this.size === 's' ? 128 : 128 * 2 + Number(this.settingsStore.gridGap);
+      const styles = [`border-radius: ${this.settingsStore.tileCornerRadius}px !important; width: ${width}px;`];
+      styles.push(`background-color: ${this.bgColor};`);
+      styles.push(`color: ${this.fontColor};`);
       return styles.join('');
     },
     textAlign() {
@@ -60,8 +59,17 @@ export default {
     controlsPosition: function () {
       return ['top right', 'top left'].includes(this.settingsStore.tileLabelPosition) ? 'bottom right' : 'top right';
     },
+    faviconPosition() {
+      return ['top right', 'top left'].includes(this.settingsStore.tileLabelPosition) ? 'bottom-3 left-3' : 'top-3 left-3';
+    },
     changeSize() {
       this.$emit('setSize', this.size === 's' ? 'm' : 's')
+    },
+    favicon(size) {
+      const url = new URL(chrome.runtime.getURL("/_favicon/"));
+      url.searchParams.set("pageUrl", this.url);
+      url.searchParams.set("size", size);
+      return url.toString();
     }
   }
 }
@@ -70,6 +78,7 @@ export default {
 
 <template>
   <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
+    <img v-if="settingsStore.tileFaviconSize" :src="favicon(settingsStore.tileFaviconSize)" class="favicon absolute" :class="faviconPosition()" alt="favicon" />
     <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
       <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
     </div>
@@ -100,7 +109,6 @@ $base: 128px;
   position: relative;
   border: none;
   transition: width 0.2s ease-in-out, left 0.2s ease-in-out;
-
   > .image-wrapper {
     position: absolute;
     width: inherit;
@@ -119,7 +127,6 @@ $base: 128px;
 
   &.s {
     height: $base;
-    width: $base;
 
     > .label {
       max-width: 100px;
@@ -129,7 +136,6 @@ $base: 128px;
 
   &.m {
     height: $base;
-    width: $base * 2;
     > .label {
       max-width: 200px;
       width: fit-content;
