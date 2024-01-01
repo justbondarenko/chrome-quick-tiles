@@ -78,23 +78,23 @@ export default {
 
 <template>
   <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
-    <img v-if="settingsStore.tileFaviconSize" :src="favicon(settingsStore.tileFaviconSize)" class="favicon absolute" :class="faviconPosition()" alt="favicon" />
+    <img v-if="settingsStore.tileFaviconSize" :src="favicon(settingsStore.tileFaviconSize)" class="favicon absolute rounded-md" :class="faviconPosition()" alt="favicon" />
     <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
       <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
     </div>
     <span class="label absolute overflow-hidden whitespace-nowrap" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
-    <div class="controls absolute invisible pointer-events-none group-hover:visible group-hover:pointer-events-auto group-hover:delay-300" :class="controlsPosition()">
-      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('edit')">
-        <FontAwesomeIcon :icon="['fas', 'edit']" />
-      </button>
-      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('remove')">
-        <FontAwesomeIcon :icon="['fas', 'trash']" />
+    <div class="controls hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none" :class="controlsPosition()">
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle" @click.prevent="">
+        <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />
       </button>
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="changeSize()">
         <FontAwesomeIcon :icon="['fas', size === 's' ? 'chevron-right' : 'chevron-left']" />
       </button>
-      <button class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle" @click.prevent="">
-        <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('remove')">
+        <FontAwesomeIcon :icon="['fas', 'trash']" />
+      </button>
+      <button class="btn btn-ghost btn-square btn-xs hover:scale-110" @click.prevent="$emit('edit')">
+        <FontAwesomeIcon :icon="['fas', 'edit']" />
       </button>
     </div>
   </a>
@@ -109,6 +109,27 @@ $base: 128px;
   position: relative;
   border: none;
   transition: width 0.2s ease-in-out, left 0.2s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+    > .controls {
+      width: 30px;
+      visibility: visible;
+      transition-delay: .75s;
+      pointer-events: auto;
+      display: flex;
+      flex-direction: row-reverse;
+      gap: 1px;
+      flex-wrap: nowrap;
+      align-items: flex-end;
+      overflow: hidden;
+      transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
+      &:hover {
+        width: fit-content;
+      }
+    }
+  }
+
   > .image-wrapper {
     position: absolute;
     width: inherit;
