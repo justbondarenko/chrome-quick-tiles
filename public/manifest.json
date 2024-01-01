@@ -9,10 +9,32 @@
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
+  "cross_origin_opener_policy": {
+    "value": "same-origin"
+  },
+  "host_permissions": [
+    "https://www.google.com/"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "_favicon/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": [
+        "*"
+      ]
+    }
+  ],
   "permissions": [
     "storage",
     "unlimitedStorage",
     "bookmarks",
-    "history"
+    "history",
+    "favicon",
+    "tabs",
+    "topSites"
   ]
 }

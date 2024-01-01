@@ -67,10 +67,13 @@ export default defineComponent({
         this.settings.setGridWidth(value ?? '85');
       }),
       chromeStorage.get('gridGap').then((value) => {
-        this.settings.setGridGap(value ?? '10');
+        this.settings.setGridGap(value ?? 10);
       }),
       chromeStorage.get('tileCornerRadius').then((value) => {
         this.settings.setTileCornerRadius(value ?? '10');
+      }),
+      chromeStorage.get('tileFaviconSize').then((value) => {
+        this.settings.setTileFaviconSize(value ?? '32');
       }),
       chromeStorage.get('tileLabelPosition').then((value) => {
         this.settings.setTileLabelPosition(value ?? 'bottom right');

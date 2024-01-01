@@ -5,10 +5,11 @@ export const useSettingsStore = defineStore('settings', {
   state: () => {
     return {
       gridWidth: '',
-      gridGap: '',
+      gridGap: 0,
       tileCornerRadius: '',
       tileLabelPosition: '',
       toolbarPosition: '',
+      tileFaviconSize: 0,
       showBookmarksLabel: true,
       showRecentlyClosedLabel: true,
       showNewTileLabel: false,
@@ -32,9 +33,29 @@ export const useSettingsStore = defineStore('settings', {
       this.tileLabelPosition = value;
       return await chromeStorage.set('tileLabelPosition', value);
     },
+    async setTileFaviconSize(value) {
+      this.tileFaviconSize = value;
+      return await chromeStorage.set('tileFaviconSize', value);
+    },
     async setToolbarPosition(value) {
       this.toolbarPosition = value;
       return await chromeStorage.set('toolbarPosition', value);
+    },
+    async setShowBookmarksLabel(value) {
+      this.showBookmarksLabel = value;
+      return await chromeStorage.set('showBookmarksLabel', value);
+    },
+    async setShowRecentlyClosedLabel(value) {
+      this.showRecentlyClosedLabel = value;
+      return await chromeStorage.set('showRecentlyClosedLabel', value);
+    },
+    async setShowNewTileLabel(value) {
+      this.showNewTileLabel = value;
+      return await chromeStorage.set('showNewTileLabel', value);
+    },
+    async setShowSettingsLabel(value) {
+      this.showSettingsLabel = value;
+      return await chromeStorage.set('showSettingsLabel', value);
     },
     async toggleLabelFor(value) {
       switch (value) {

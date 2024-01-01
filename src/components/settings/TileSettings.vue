@@ -9,19 +9,20 @@ export default {
         }
     },
     methods: {
-        positions() {
-            const positions = [{ value: 'top left' }, { value: 'top right' }, { value: 'bottom left' }, { value: 'bottom right' }];
-            positions.forEach((p) => {
-                p.checked = p.value === this.settingsStore.tileLabelPosition;
-            });
-            return positions;
-        },
-        onGridWidthChange(value) {
-            return this.settingsStore.setGridWidth(value);
-        },
-        onGridGapChange(value) {
-            return this.settingsStore.setGridGap(value);
-        }
+      positions() {
+          const positions = [{ value: 'top left' }, { value: 'top right' }, { value: 'bottom left' }, { value: 'bottom right' }];
+          positions.forEach((p) => {
+              p.checked = p.value === this.settingsStore.tileLabelPosition;
+          });
+          return positions;
+      },
+      favIconSizes() {
+          const sizes = [{ value: 16, }, { value: 32 }, { value: 0 }];
+          sizes.forEach((size) => {
+              size.checked = size.value === this.settingsStore.tileFaviconSize;
+          });
+          return sizes;
+      },
     },
     components: { TileElement }
 }
@@ -51,6 +52,17 @@ export default {
             </label>
             <div class="flex flex-row gap-2 items-center">
               <input type="range" min="0" max="30" :value="settingsStore.tileCornerRadius" class="range range-xs" step="1" @input="settingsStore.setTileCornerRadius($event.target.value)"/>
+            </div>
+          </div>
+          <div class="page-settings-item hover:bg-base-200">
+            <label class="w-1/3 mb-1 whitespace-nowrap">
+              Favicon size: {{ settingsStore.tileFaviconSize }}px
+            </label>
+            <div class="mt-1 rounded-md border-transparent grid grid-cols-3 grid-rows-1 p-3">
+              <label v-for="size, index of favIconSizes()" :key="index" class="label cursor-pointer flex flex-col gap-2 flex-nowrap">
+                <input type="radio" name="radio-10" class="radio" @input="settingsStore.setTileFaviconSize(size.value)" :checked="size.checked"  />
+                <span class="label-text">{{ size.value ? `${size.value} px ` : 'Hide'}}</span> 
+              </label>
             </div>
           </div>
         </div>
