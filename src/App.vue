@@ -64,16 +64,16 @@ export default defineComponent({
         this.settings.setToolbarPosition(value ?? 'top');
       }),
       chromeStorage.get('gridWidth').then((value) => {
-        this.settings.setGridWidth(value ?? '85');
+        this.settings.setGridWidth(value ?? '95');
       }),
       chromeStorage.get('gridGap').then((value) => {
-        this.settings.setGridGap(value ?? 10);
+        this.settings.setGridGap(value ?? 15);
       }),
       chromeStorage.get('tileCornerRadius').then((value) => {
         this.settings.setTileCornerRadius(value ?? '10');
       }),
       chromeStorage.get('tileFaviconSize').then((value) => {
-        this.settings.setTileFaviconSize(value ?? '32');
+        this.settings.setTileFaviconSize(value ?? '24');
       }),
       chromeStorage.get('tileLabelPosition').then((value) => {
         this.settings.setTileLabelPosition(value ?? 'bottom right');
