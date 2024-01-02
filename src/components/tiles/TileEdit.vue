@@ -124,7 +124,12 @@ export default {
     };
   },
   mounted() {
-    chromeStorage.getLocal(this.id).then((img) => this.useImageBg = !!img);
+    chromeStorage.getLocal(this.id).then((img) => {
+      if (img) {
+        this.useImageBg = !!img
+        this.innerBgImg64 = img
+      }
+    });
   },
   methods: {
     save() {
@@ -142,7 +147,7 @@ export default {
         this.imageStore.remove(this.id);
         console.log('BG Image removed');
       }
-      this.$emit('close');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        
+      this.$emit('close');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     },
     imageUrlToBase64: async function (url) {
       const data = await fetch(url);
