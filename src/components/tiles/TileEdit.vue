@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col gap-2 w-full">
-    <div class="flex flex-col">
+  <div class="flex flex-col gap- w-full">
+    <div class="flex flex-col gap-2">
       <div class="flex flex-col w-100">
         <div class="label">
           <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'link' }" class="mr-1" /> URL</span>
@@ -19,6 +19,9 @@
           <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'rss' }" class="mr-1" /> RSS Feed</span>
         </div>
         <input type="text" placeholder="https://" class="input input-bordered w-full" v-model="innerRssFeed" />
+         <div v-if="innerRssFeed !== rssFeed" class="label">
+          <span class="label-text-alt text-red-600 font-semibold">RSS field will be updated on page reload</span>
+        </div>
       </div>
       <label class="label cursor-pointer mt-2">
         <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'far', iconName: 'image' }" class="mr-1" /> Use background image</span>
@@ -146,16 +149,15 @@ export default {
       this.itemsStore.update(this.id, {
         label: this.innerLabel,
         url: this.innerUrl,
+        rssFeed: this.innerRssFeed,
         fontColor: this.innerFontColor,
         bgColor: this.innerBgColor,
       })
 
       if (this.useImageBg) {
         this.imageStore.set(this.id, this.innerBgImg64);
-        console.log('BG Image set');
       } else {
         this.imageStore.remove(this.id);
-        console.log('BG Image removed');
       }
       this.$emit('close');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
     },

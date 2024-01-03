@@ -14,7 +14,7 @@ export default {
   },
   setup() {
     return {
-      modules: [Autoplay, Pagination],
+      modules: [Autoplay, Pagination ],
     };
   },
   props: {
@@ -94,7 +94,12 @@ export default {
       axios.get(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(this.rssFeed)}`)
         .then(response => {
           if (response.data.status === 'ok') {
-            this.rssItems = response.data.items;
+            this.rssItems = response.data.items.map((item) => {
+              if (item.title.length > 100) {
+                item.title = item.title.slice(0,100) + "..."
+              }
+              return item
+            });
           } else {
             console.error('Error fetching RSS feed:', response.data.message);
           }
@@ -117,35 +122,40 @@ export default {
 
 <template>
   <a class="btn tile p-1 group" :class="[size]" :href="getUrl()" :style="style()">
-    <img v-if="settingsStore.tileFaviconSize && url" :src="favicon(settingsStore.tileFaviconSize)"
-      class="favicon absolute rounded-md" :class="faviconPosition()" alt="favicon" />
+    <div class="favicon-wrapper z-[1] flex flex-row flex-nowrap w-fit gap-2 absolute items-center" :class="faviconPosition()">
+      <img v-if="settingsStore.tileFaviconSize && url" :src="favicon(settingsStore.tileFaviconSize)"
+      class="favicon rounded-md"  alt="favicon" />
+      <FontAwesomeIcon v-if="rssFeed && rssItems" :icon="{ prefix: 'fas', iconName: 'rss' }" />
+    </div>
+    <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%"
+      :style="`border-radius:${this.settingsStore.tileCornerRadius}px`">
+      <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
+    </div>
     <template v-if="rssItems">
       <Swiper 
         class="h-full w-full"
+        :spaceBetween="30"
         :autoplay="{
-          delay: 5000,
+          delay: Math.floor(Math.random() * (7001 - 4000)) + 4000,
           disableOnInteraction: true
         }"
+        :direction="'vertical'"
         :loop="true"
         :modules="modules"
         @activeIndexChange="onIndexChange"
       >
         <SwiperSlide v-for="item, index of rssItems" :virtual-index="index" :key="index">
           <div class="slide-content flex h-full w-full items-end">
-            <span class="w-full max-h-2/3 mt-auto mb-0 p-1 text-right leading-5" v-text="item.title" />
+            <span class="w-full max-h-60% min-h-fit mt-auto mb-0 p-1 text-right leading-5 overflow-hidden text-ellipsis" v-text="item.title" />
           </div>
         </SwiperSlide>
       </Swiper>
     </template>
     <template v-else>
-      <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%"
-        :style="`border-radius:${this.settingsStore.tileCornerRadius}px`">
-        <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
-      </div>
       <span v-if="!settingsStore.hideTileLabel" class="label absolute overflow-hidden whitespace-nowrap"
         :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
     </template>
-    <div class="controls z-[1] hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none"
+    <div class="controls z-[2] hover:bg-slate-100 hover:text-slate-800 p-1 rounded-lg absolute invisible pointer-events-none"
       :class="controlsPosition()">
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle" @click.prevent="">
         <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />

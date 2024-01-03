@@ -106,9 +106,9 @@ export default {
 .tile-ghost {
   border: 2px dotted gray !important;
   background-color: transparent !important;
-  > * {
-    visibility: hidden;
-    opacity: 0;
+  > *, .image-wrapper {
+    visibility: hidden !important;
+    opacity: 0 !important;
   }
 }
 

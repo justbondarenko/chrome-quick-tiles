@@ -3,7 +3,11 @@ export default {
   content: ["./src/**/*.{html,vue,js}"],
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      maxHeight: {
+        '60%': '60%'
+      }
+    },
   },
   plugins: [require("daisyui"), require('@tailwindcss/typography'),],
   daisyui: {
