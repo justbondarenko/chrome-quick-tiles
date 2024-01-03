@@ -76,7 +76,7 @@ export default defineComponent({
         this.settings.setTileFaviconSize(value ?? '24');
       }),
       chromeStorage.get('hideTileLabel').then((value) => {
-        this.settings.setHideTileLabel(value ?? true);
+        this.settings.setHideTileLabel(value ?? false);
       }),
       chromeStorage.get('tileLabelPosition').then((value) => {
         this.settings.setTileLabelPosition(value ?? 'bottom right');
@@ -132,9 +132,9 @@ export default defineComponent({
 
 
 <template>
-  <div class="app flex w-100 h-screen" :class="[flexOrientation()]">
-    <ToolbarComponent />
-    <div class="grow p-6">
+  <div class="app flex w-100 h-screen relative">
+    <ToolbarComponent class="absolute left-0 right-0 w-full" :class="settings.toolbarPosition === 'top' ? 'top-0' : 'bottom-0'"/>
+    <div class="grid-wrapper w-full h-fit p-6 my-auto">
       <TilesGrid />
     </div>
   </div>
@@ -145,4 +145,8 @@ export default defineComponent({
 </template>
 
 <style scoped>
+.app {
+  padding-top: 96px;
+  padding-bottom: 96px;
+}
 </style>
