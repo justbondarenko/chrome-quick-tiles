@@ -3,19 +3,25 @@
     <div class="flex flex-col">
       <div class="flex flex-col w-100">
         <div class="label">
-          <span class="label-text">URL</span>
+          <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'link' }" class="mr-1" /> URL</span>
         </div>
         <input type="text" placeholder="https://" class="input input-bordered w-full" v-model="innerUrl" />
       </div>
       <div class="flex flex-col w-100">
         <div class="label">
-          <span class="label-text">Label / Page title</span>
+          <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'font' }" class="mr-1" /> Label</span>
         </div>
         <input type="text" placeholder="Page title" class="input input-bordered w-full" v-model="innerLabel"
           :disabled="!innerUrl" />
       </div>
+      <div class="flex flex-col w-100">
+        <div class="label">
+          <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'rss' }" class="mr-1" /> RSS Feed</span>
+        </div>
+        <input type="text" placeholder="Page title" class="input input-bordered w-full" v-model="innerRssFeed" />
+      </div>
       <label class="label cursor-pointer mt-2">
-        <span class="label-text">Use background image</span>
+        <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'far', iconName: 'image' }" class="mr-1" /> Use background image</span>
         <input type="checkbox" :checked="useImageBg" v-model="useImageBg" class="checkbox" />
       </label>
         <template v-if="useImageBg">
@@ -53,13 +59,13 @@
         <div class="color-pickers flex justify-between px-1 mt-2 w-100">
           <template v-if="!useImageBg">
           <div class="flex flex-row gap-2 items-center w-1/2 h-12">
-            <span class="label-text">Background</span>
+            <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'fill-drip' }" class="mr-1" /> Background</span>
             <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha
               lang="En" v-model:pureColor="innerBgColor" />
           </div>
           </template>
           <div class="flex flex-row gap-2 items-center w-1/2 h-12">
-            <span class="label-text">Label</span>
+            <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'swatchbook' }" class="mr-1" /> Label</span>
             <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha
               lang="En" v-model:pureColor="innerFontColor" />
           </div>
@@ -115,6 +121,7 @@ export default {
       imageStore: useImageStore(),
       innerLabel: this.label,
       innerUrl: this.url,
+      innerRssFeed: this.rssFeed,
       innerFontColor: this.fontColor,
       innerBgColor: this.bgColor,
       useImageBg: false,

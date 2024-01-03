@@ -75,6 +75,7 @@ export default {
         :bg-color="element.bgColor"
         :font-color="element.fontColor"
         :size="element.size"
+        :rssFeed="element.rssFeed"
         @setSize="setSize(element, $event)"
         @remove="remove(element)"
         @edit="edit(element.id)"

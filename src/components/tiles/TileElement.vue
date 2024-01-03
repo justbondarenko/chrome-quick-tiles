@@ -1,6 +1,8 @@
 <script>
 import { useSettingsStore } from '@/stores/settings'
 import { useImageStore } from '@/stores/image';
+import axios from 'axios';
+import Parser from 'rss-parser';
 
 export default {
   name: 'TileElement',
@@ -18,6 +20,9 @@ export default {
     url: {
       type: String,
       required: true
+    },
+    rssFeed: {
+      type: String,
     },
     cornerRadius: {
       type: String,
@@ -40,7 +45,11 @@ export default {
       settingsStore: useSettingsStore(),
       imgStore: useImageStore(),
       active: false,
+      rssItems: []
     }
+  },
+  async mounted() {
+    if (this.rssFeed) { await this.getRssItems(); }
   },
   methods: {
     style: function () {
@@ -70,6 +79,24 @@ export default {
       url.searchParams.set("pageUrl", this.url);
       url.searchParams.set("size", size);
       return url.toString();
+    },
+    async getRssItems() {
+      axios.get(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(this.rssFeed)}`)
+        .then(response => {
+          if (response.data.status === 'ok') {
+            this.rssItems = response.data.items;
+          } else {
+            console.error('Error fetching RSS feed:', response.data.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching RSS feed:', error);
+        });
+    },
+    clickHandler() {
+      if (!this.rssItems) { window.location.href = this.url }
+      window.location.href = this.currentItem.url;
+
     }
   }
 }
@@ -77,13 +104,22 @@ export default {
 
 
 <template>
-  <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
-    <img v-if="settingsStore.tileFaviconSize && url" :src="favicon(settingsStore.tileFaviconSize)" class="favicon absolute rounded-md" :class="faviconPosition()" alt="favicon" />
-    <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%" :style="`border-radius:${this.settingsStore.tileCornerRadius}px`" >
-      <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
-    </div>
-    <span v-if="!settingsStore.hideTileLabel" class="label absolute overflow-hidden whitespace-nowrap" :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
-    <div class="controls hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none" :class="controlsPosition()">
+  <div class="btn tile p-1 group" :class="[size]" :href="url" :style="style()" @click="clickHandler">
+    <img v-if="settingsStore.tileFaviconSize && url" :src="favicon(settingsStore.tileFaviconSize)"
+      class="favicon absolute rounded-md" :class="faviconPosition()" alt="favicon" />
+    <template v-if="rssItems.length">
+      here will be rss
+    </template>
+    <template v-else>
+      <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%"
+        :style="`border-radius:${this.settingsStore.tileCornerRadius}px`">
+        <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
+      </div>
+      <span v-if="!settingsStore.hideTileLabel" class="label absolute overflow-hidden whitespace-nowrap"
+        :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
+    </template>
+    <div class="controls hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none"
+      :class="controlsPosition()">
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle" @click.prevent="">
         <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />
       </button>
@@ -97,7 +133,7 @@ export default {
         <FontAwesomeIcon :icon="['fas', 'edit']" />
       </button>
     </div>
-  </a>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -113,7 +149,8 @@ $base: 128px;
   &:hover {
     transform: scale(1.05);
     transition: all 0.3s ease-out;
-    > .controls {
+
+    >.controls {
       width: 30px;
       visibility: visible;
       transition-delay: .75s;
@@ -125,13 +162,14 @@ $base: 128px;
       align-items: flex-end;
       overflow: hidden;
       transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
+
       &:hover {
         width: fit-content;
       }
     }
   }
 
-  > .image-wrapper {
+  >.image-wrapper {
     position: absolute;
     width: inherit;
     height: inherit;
@@ -139,10 +177,10 @@ $base: 128px;
     left: 0;
     overflow: hidden;
 
-    > img { 
+    >img {
       object-fit: cover;
       object-position: center;
-      min-width: 100%; 
+      min-width: 100%;
       min-height: 100%;
     }
   }
@@ -150,7 +188,7 @@ $base: 128px;
   &.s {
     height: $base;
 
-    > .label {
+    >.label {
       max-width: 100px;
       width: fit-content;
     }
@@ -158,7 +196,8 @@ $base: 128px;
 
   &.m {
     height: $base;
-    > .label {
+
+    >.label {
       max-width: 200px;
       width: fit-content;
     }
@@ -182,7 +221,6 @@ $base: 128px;
 }
 
 .move-handle:active:hover {
-  cursor:grabbing
+  cursor: grabbing
 }
-
 </style>
