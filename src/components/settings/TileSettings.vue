@@ -32,9 +32,9 @@ export default {
 </script>
 
 <template>
-  <div class="collapse bg-base-100">
+  <div class="collapse collapse-arrow bg-base-100">
       <input type="radio" name="settings-accordion" />
-      <div class="collapse-title text-xl font-medium">
+      <div class="collapse-title text-lg font-medium">
         Tile settings
       </div>
       <div class="collapse-content">
