@@ -77,7 +77,7 @@
         <button class="btn btn-ghost mt-4 ml-0 mr-2" @click="$emit('close')">
           <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'xmark-circle' }" /> Close
         </button>
-        <button class="btn btn-success mt-4 mr-0 ml-auto" @click="save" :disabled="!(!!innerUrl)">
+        <button class="btn btn-success mt-4 mr-0 ml-auto" @click="save" :disabled="!innerUrl">
           <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'floppy-disk' }" /> Save
         </button>
       </div>
