@@ -24,6 +24,7 @@
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
     "rss-parser": "^3.13.0",
+    "swiper": "^11.0.5",
     "uuid": "^9.0.1",
     "vue": "^3.3.11",
     "vue-advanced-cropper": "^2.8.8",

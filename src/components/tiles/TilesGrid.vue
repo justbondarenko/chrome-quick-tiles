@@ -93,7 +93,7 @@ export default {
   <input type="checkbox" id="my_modal_6" class="modal-toggle" :checked="showEdit" />
   <div class="modal" role="dialog">
     <div class="modal-box">
-      <TileEdit v-if="itemToEdit" :id="itemToEdit.id" :label="itemToEdit.label" :url="itemToEdit.url" :bg-color="itemToEdit.bgColor" :font-color="itemToEdit.fontColor" :size="itemToEdit.size" @close="closeEditModal" />
+      <TileEdit v-if="itemToEdit" :id="itemToEdit.id" :label="itemToEdit.label" :url="itemToEdit.url" :rssFeed="itemToEdit.rssFeed" :bg-color="itemToEdit.bgColor" :font-color="itemToEdit.fontColor" :size="itemToEdit.size" @close="closeEditModal" />
     </div>
   </div>
 </template>

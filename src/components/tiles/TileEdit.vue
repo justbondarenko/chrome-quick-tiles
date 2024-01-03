@@ -18,7 +18,7 @@
         <div class="label">
           <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'rss' }" class="mr-1" /> RSS Feed</span>
         </div>
-        <input type="text" placeholder="Page title" class="input input-bordered w-full" v-model="innerRssFeed" />
+        <input type="text" placeholder="https://" class="input input-bordered w-full" v-model="innerRssFeed" />
       </div>
       <label class="label cursor-pointer mt-2">
         <span class="label-text"><FontAwesomeIcon :icon="{ prefix: 'far', iconName: 'image' }" class="mr-1" /> Use background image</span>
@@ -103,6 +103,9 @@ export default {
     url: {
       type: String,
       required: true
+    },
+    rssFeed: {
+      type: String,
     },
     bgColor: {
       type: String,

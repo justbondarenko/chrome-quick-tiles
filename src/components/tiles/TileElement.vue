@@ -2,11 +2,20 @@
 import { useSettingsStore } from '@/stores/settings'
 import { useImageStore } from '@/stores/image';
 import axios from 'axios';
-import Parser from 'rss-parser';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
 
 export default {
   name: 'TileElement',
   components: {
+    Swiper, SwiperSlide,
+  },
+  setup() {
+    return {
+      modules: [Autoplay, Pagination],
+    };
   },
   props: {
     id: {
@@ -45,7 +54,8 @@ export default {
       settingsStore: useSettingsStore(),
       imgStore: useImageStore(),
       active: false,
-      rssItems: []
+      rssItems: null,
+      activeSlideIndex: 0
     }
   },
   async mounted() {
@@ -93,10 +103,12 @@ export default {
           console.error('Error fetching RSS feed:', error);
         });
     },
-    clickHandler() {
-      if (!this.rssItems) { window.location.href = this.url }
-      window.location.href = this.currentItem.url;
-
+    onIndexChange(value) {
+      this.activeSlideIndex = value.activeIndex;
+    },
+    getUrl() {
+      if (this.rssFeed && this.rssItems) { return this.rssItems[this.activeSlideIndex].link };
+      return this.url
     }
   }
 }
@@ -104,11 +116,26 @@ export default {
 
 
 <template>
-  <div class="btn tile p-1 group" :class="[size]" :href="url" :style="style()" @click="clickHandler">
+  <a class="btn tile p-1 group" :class="[size]" :href="getUrl()" :style="style()">
     <img v-if="settingsStore.tileFaviconSize && url" :src="favicon(settingsStore.tileFaviconSize)"
       class="favicon absolute rounded-md" :class="faviconPosition()" alt="favicon" />
-    <template v-if="rssItems.length">
-      here will be rss
+    <template v-if="rssItems">
+      <Swiper 
+        class="h-full w-full"
+        :autoplay="{
+          delay: 5000,
+          disableOnInteraction: true
+        }"
+        :loop="true"
+        :modules="modules"
+        @activeIndexChange="onIndexChange"
+      >
+        <SwiperSlide v-for="item, index of rssItems" :virtual-index="index" :key="index">
+          <div class="slide-content flex h-full w-full items-end">
+            <span class="w-full max-h-2/3 mt-auto mb-0 p-1 text-right leading-5" v-text="item.title" />
+          </div>
+        </SwiperSlide>
+      </Swiper>
     </template>
     <template v-else>
       <div v-if="imgStore.items[id]" class="image-wrapper bg-gradient-to-t from-black to-50%"
@@ -118,7 +145,7 @@ export default {
       <span v-if="!settingsStore.hideTileLabel" class="label absolute overflow-hidden whitespace-nowrap"
         :class="`${labelPosition()} ${textAlign()}`">{{ label }}</span>
     </template>
-    <div class="controls hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none"
+    <div class="controls z-[1] hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none"
       :class="controlsPosition()">
       <button class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle" @click.prevent="">
         <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />
@@ -133,7 +160,7 @@ export default {
         <FontAwesomeIcon :icon="['fas', 'edit']" />
       </button>
     </div>
-  </div>
+  </a>
 </template>
 
 <style lang="scss" scoped>
