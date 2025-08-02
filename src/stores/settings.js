@@ -18,7 +18,20 @@ export const useSettingsStore = defineStore('settings', {
     }
   },
   actions: {
-    async setGridWidth(value) { 
+    setState(settings) {
+      this.gridWidth = settings.gridWidth;
+      this.gridGap = settings.gridGap;
+      this.tileCornerRadius = settings.tileCornerRadius;
+      this.tileLabelPosition = settings.tileLabelPosition;
+      this.toolbarPosition = settings.toolbarPosition;
+      this.tileFaviconSize = settings.tileFaviconSize;
+      this.hideTileLabel = settings.hideTileLabel;
+      this.showBookmarksLabel = settings.showBookmarksLabel;
+      this.showRecentlyClosedLabel = settings.showRecentlyClosedLabel;
+      this.showNewTileLabel = settings.showNewTileLabel;
+      this.showSettingsLabel = settings.showSettingsLabel;
+    },
+    async setGridWidth(value) {
       this.gridWidth = value;
       return await chromeStorage.set('gridWidth', value);
     },

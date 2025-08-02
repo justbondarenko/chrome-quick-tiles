@@ -59,46 +59,41 @@ export default defineComponent({
     }
   },
   beforeCreate() {
-    Promise.all([
-      chromeStorage.get('toolbarPosition').then((value) => {
-        this.settings.setToolbarPosition(value ?? 'top');
-      }),
-      chromeStorage.get('gridWidth').then((value) => {
-        this.settings.setGridWidth(value ?? '95');
-      }),
-      chromeStorage.get('gridGap').then((value) => {
-        this.settings.setGridGap(value ?? 15);
-      }),
-      chromeStorage.get('tileCornerRadius').then((value) => {
-        this.settings.setTileCornerRadius(value ?? '10');
-      }),
-      chromeStorage.get('tileFaviconSize').then((value) => {
-        this.settings.setTileFaviconSize(value ?? '24');
-      }),
-      chromeStorage.get('hideTileLabel').then((value) => {
-        this.settings.setHideTileLabel(value ?? true);
-      }),
-      chromeStorage.get('tileLabelPosition').then((value) => {
-        this.settings.setTileLabelPosition(value ?? 'bottom right');
-      }),
-      chromeStorage.get('showBookmarksLabel').then((value) => {
-        this.settings.setLabelFor('bookmarks', value ?? false);
-      }),
-      chromeStorage.get('showRecentlyClosedLabel').then((value) => {
-        this.settings.setLabelFor('bookmarks', value ?? false);
-      }),
-      chromeStorage.get('showNewTileLabel').then((value) => {
-        this.settings.setLabelFor('bookmarks', value ?? false);
-      }),
-      chromeStorage.get('showSettingsLabel').then((value) => {
-        this.settings.setLabelFor('bookmarks', value ?? false);
-      }),
-      chromeStorage.getLocalAll().then((res) => {
-        for (const [key, value] of Object.entries(res)) {
-          this.images.set(key, value);
-        }
-      })
-    ]);
+    const settingsToGet = [
+      'gridWidth',
+      'gridGap',
+      'tileCornerRadius',
+      'tileLabelPosition',
+      'toolbarPosition',
+      'tileFaviconSize',
+      'hideTileLabel',
+      'showBookmarksLabel',
+      'showRecentlyClosedLabel',
+      'showNewTileLabel',
+      'showSettingsLabel',
+    ];
+
+    chromeStorage.get(settingsToGet).then((settings) => {
+      this.settings.setState({
+        gridWidth: settings.gridWidth ?? '95',
+        gridGap: settings.gridGap ?? 15,
+        tileCornerRadius: settings.tileCornerRadius ?? '10',
+        tileLabelPosition: settings.tileLabelPosition ?? 'bottom right',
+        toolbarPosition: settings.toolbarPosition ?? 'top',
+        tileFaviconSize: settings.tileFaviconSize ?? '24',
+        hideTileLabel: settings.hideTileLabel ?? true,
+        showBookmarksLabel: settings.showBookmarksLabel ?? false,
+        showRecentlyClosedLabel: settings.showRecentlyClosedLabel ?? false,
+        showNewTileLabel: settings.showNewTileLabel ?? false,
+        showSettingsLabel: settings.showSettingsLabel ?? false,
+      });
+    });
+
+    chromeStorage.getLocalAll().then((res) => {
+      for (const [key, value] of Object.entries(res)) {
+        this.images.set(key, value);
+      }
+    });
 
     chromeStorage.get('links').then((value) => {
       if (value) {
