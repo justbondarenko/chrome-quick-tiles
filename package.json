@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev:ext": "vite build --watch --mode development",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
