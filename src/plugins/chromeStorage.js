@@ -62,4 +62,8 @@ export const chromeStorage = {
       });
     });
   },
+  // Get runtime URL for favicon and other extension resources
+  getRuntimeURL(path) {
+    return chrome.runtime.getURL(path);
+  },
 };
