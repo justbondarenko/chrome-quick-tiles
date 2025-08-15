@@ -6,6 +6,13 @@ export const chromeStorage = {
       });
     });
   },
+  getMultiple(keys) {
+    return new Promise((resolve) => {
+      chrome.storage.sync.get(keys, (result) => {
+        resolve(result);
+      });
+    });
+  },
   set(key, value) {
     return new Promise((resolve) => {
       chrome.storage.sync.set({ [key]: value }, () => {
