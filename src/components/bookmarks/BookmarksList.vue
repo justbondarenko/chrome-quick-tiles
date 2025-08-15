@@ -1,7 +1,10 @@
 <template>
   <div class="list-wrapper">
     <ul class="flex-nowrap overflow-y-auto">
-      <li class="pointer-events-none"><a>Bookmarks</a></li>
+      <span class="flex flex-row gap-2 p-2 items-center justify-between w-full">
+        <span class="text-base">Bookmarks</span>
+        <a href="chrome://bookmarks" target="_blank" class="text-xs">Manage</a>
+      </span>
       <template v-for="item of tree" :key="item.dateAdded">
         <template v-if="item.children">
           <BookmarkFolder :items="item.children" :title="item.title" />
@@ -14,29 +17,26 @@
   </div>
 </template>
 
-
 <script>
-import BookmarkFolder from './BookmarkFolder.vue'
-import BookmarkItem from './BookmarkItem.vue'
+import BookmarkFolder from "./BookmarkFolder.vue";
+import BookmarkItem from "./BookmarkItem.vue";
 export default {
-  name: 'BookmarksList',
+  name: "BookmarksList",
   components: { BookmarkFolder, BookmarkItem },
   data() {
     return {
       open: false,
-      tree: [] 
-    }
+      tree: [],
+    };
   },
-  methods:{
-    
-  },
+  methods: {},
   mounted() {
     // eslint-disable-next-line
     chrome.bookmarks.getTree((tree) => {
       this.tree = tree[0].children;
-    })
-  }
-}
+    });
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -44,9 +44,8 @@ export default {
   max-height: 85vh;
 }
 
-::v-deep ul, li {
+::v-deep ul,
+li {
   max-width: 100%;
 }
 </style>
-
-

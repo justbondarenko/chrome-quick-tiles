@@ -2,7 +2,9 @@
   <li>
     <a :href="url">
       <FontAwesomeIcon :icon="icon()" />
-      <span class="bookmark-label ml-1 max-w-72 text-ellipsis overflow-hidden">{{ title }}</span>
+      <span class="bookmark-label text-md ml-1 max-w-72 text-ellipsis overflow-hidden">{{
+        title
+      }}</span>
       <span v-if="lastVisit" class="ml-1 opacity-40"> {{ lastVisit }}</span>
     </a>
   </li>
@@ -10,31 +12,31 @@
 
 <script>
 export default {
-  name: 'BookmarkItem',
+  name: "BookmarkItem",
   props: {
     url: {
       type: String,
-      required: true
+      required: true,
     },
     title: {
       type: String,
-      required: true
+      required: true,
     },
     lastVisit: {
       type: String,
-      required: false
-    }
+      required: false,
+    },
   },
   data() {
     return {
-      icons: []
-    }
+      icons: [],
+    };
   },
   methods: {
     baseDomain() {
       try {
         const { hostname } = new URL(this.url);
-        const parts = hostname.split('.');
+        const parts = hostname.split(".");
         return parts.length > 1 ? parts.slice(-2)[0] : parts[0];
       } catch (e) {
         console.error(e);
@@ -43,16 +45,20 @@ export default {
     },
     icon() {
       let base = this.baseDomain();
-      if (base === 'last') { base = 'lastfm' }
-      if (base === 'stackoverflow') { base = 'stack-overflow'}
-      return this.icons.includes(base) ? ['fab', base] : ['far', 'bookmark'];
-    }
+      if (base === "last") {
+        base = "lastfm";
+      }
+      if (base === "stackoverflow") {
+        base = "stack-overflow";
+      }
+      return this.icons.includes(base) ? ["fab", base] : ["far", "bookmark"];
+    },
   },
   async mounted() {
-    const { items } = await import('./icons.json')
+    const { items } = await import("./icons.json");
     this.icons = items;
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">
@@ -60,4 +66,3 @@ export default {
   white-space: nowrap;
 }
 </style>
-

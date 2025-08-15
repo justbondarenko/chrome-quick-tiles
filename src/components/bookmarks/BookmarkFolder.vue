@@ -1,7 +1,7 @@
 <template>
   <li>
     <details>
-      <summary><FontAwesomeIcon :icon="['fas', 'folder']" /> {{ title }}</summary>
+      <summary><FontAwesomeIcon :icon="['fas', 'folder']" />{{ title }}</summary>
       <ul>
         <template v-for="item of items" :key="item.dateAdded">
           <template v-if="item.children">
@@ -16,12 +16,10 @@
   </li>
 </template>
 
-
 <script>
-
-import BookmarkItem from './BookmarkItem.vue'
+import BookmarkItem from "./BookmarkItem.vue";
 export default {
-  name: 'BookmarkFolder',
+  name: "BookmarkFolder",
   components: { BookmarkItem },
   props: {
     title: {
@@ -30,20 +28,15 @@ export default {
     },
     items: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       open: false,
-      tree: [] 
-    }
+      tree: [],
+    };
   },
-  methods:{
-    
-  },
-  
-}
+  methods: {},
+};
 </script>
-
-
