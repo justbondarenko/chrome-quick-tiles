@@ -1,4 +1,4 @@
-import './index.css';
+import './assets/main.scss';
 import 'animate.css';
 import "vue-advanced-cropper/dist/style.css";
 

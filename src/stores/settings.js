@@ -18,6 +18,20 @@ export const useSettingsStore = defineStore('settings', {
     }
   },
   actions: {
+    // Batch set multiple settings at once for better performance
+    async setMultipleSettings(settings) {
+      // Update state in one operation
+      Object.assign(this, settings);
+      
+      // Batch storage operation - much more efficient
+      const storageData = {};
+      Object.keys(settings).forEach(key => {
+        storageData[key] = settings[key];
+      });
+      
+      return await chromeStorage.setMultiple(storageData);
+    },
+    
     async setGridWidth(value) { 
       this.gridWidth = value;
       return await chromeStorage.set('gridWidth', value);

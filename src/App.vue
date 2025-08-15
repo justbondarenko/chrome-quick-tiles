@@ -37,20 +37,22 @@ export default defineComponent({
       ]);
 
       // Set all settings with fallback values
-      this.settings.setToolbarPosition(settings.toolbarPosition ?? "top");
-      this.settings.setGridWidth(settings.gridWidth ?? "95");
-      this.settings.setGridGap(settings.gridGap ?? 15);
-      this.settings.setTileCornerRadius(settings.tileCornerRadius ?? "10");
-      this.settings.setTileFaviconSize(settings.tileFaviconSize ?? "24");
-      this.settings.setHideTileLabel(settings.hideTileLabel ?? true);
-      this.settings.setTileLabelPosition(settings.tileLabelPosition ?? "bottom right");
-      this.settings.setLabelFor("bookmarks", settings.showBookmarksLabel ?? false);
-      this.settings.setLabelFor(
-        "recentlyClosed",
-        settings.showRecentlyClosedLabel ?? false
-      );
-      this.settings.setLabelFor("newTile", settings.showNewTileLabel ?? false);
-      this.settings.setLabelFor("settings", settings.showSettingsLabel ?? false);
+      const settingsToSet = {
+        toolbarPosition: settings.toolbarPosition ?? "top",
+        gridWidth: settings.gridWidth ?? "95",
+        gridGap: settings.gridGap ?? 15,
+        tileCornerRadius: settings.tileCornerRadius ?? "10",
+        tileFaviconSize: settings.tileFaviconSize ?? "24",
+        hideTileLabel: settings.hideTileLabel ?? true,
+        tileLabelPosition: settings.tileLabelPosition ?? "bottom right",
+        showBookmarksLabel: settings.showBookmarksLabel ?? false,
+        showRecentlyClosedLabel: settings.showRecentlyClosedLabel ?? false,
+        showNewTileLabel: settings.showNewTileLabel ?? false,
+        showSettingsLabel: settings.showSettingsLabel ?? false,
+      };
+
+      // Batch set all settings at once - much more efficient
+      await this.settings.setMultipleSettings(settingsToSet);
 
       // Load images and links in parallel
       const [localImages, links] = await Promise.all([
@@ -92,7 +94,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="app flex w-100 h-screen" :class="[flexOrientation()]">
+  <div class="app flex w-full h-screen" :class="[flexOrientation()]">
     <ToolbarComponent />
     <div class="grow p-6">
       <TilesGrid />

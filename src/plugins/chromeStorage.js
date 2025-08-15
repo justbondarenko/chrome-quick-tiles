@@ -20,6 +20,13 @@ export const chromeStorage = {
       });
     });
   },
+  setMultiple(data) {
+    return new Promise((resolve) => {
+      chrome.storage.sync.set(data, () => {
+        resolve();
+      });
+    });
+  },
   setLocal(key, value) {
     return new Promise((resolve) => {
       chrome.storage.local.set({ [key]: value }, () => {
