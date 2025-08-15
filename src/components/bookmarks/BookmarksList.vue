@@ -3,7 +3,7 @@
     <ul class="flex-nowrap overflow-y-auto">
       <span class="flex flex-row gap-2 p-2 items-center justify-between w-full">
         <span class="text-base">Bookmarks</span>
-        <a href="chrome://bookmarks" target="_blank" class="text-xs">Manage</a>
+        <a href="chrome://bookmarks" class="text-xs">Manage</a>
       </span>
       <template v-for="item of tree" :key="item.dateAdded">
         <template v-if="item.children">

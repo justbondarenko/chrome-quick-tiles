@@ -1,10 +1,10 @@
 <template>
-  <div class="flex gap-4 p-6">
-    <div class="ml-0 mr-2 flex flex-row gap-4">
+  <div class="flex gap-4 px-6 pt-4 pb-1">
+    <div class="ml-0 mr-2 flex flex-row items-center gap-4">
       <BookmarksDrawer />
       <RecentsDrawer />
       <!-- TODO: REMOVE -->
-      <span>Tiles Changed: {{ buildTimestamp }}</span>
+      <span>Last Changes: {{ buildTimestamp }}</span>
     </div>
     <div class="mr-0 ml-auto flex flex-row gap-4">
       <TileAdd :key="addTileKey" @saveTile="saveTile" />

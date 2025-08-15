@@ -94,9 +94,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="app flex w-full h-screen" :class="[flexOrientation()]">
+  <div class="app flex w-full h-screen gap-4" :class="[flexOrientation()]">
     <ToolbarComponent />
-    <div class="grow p-6 flex flex-col justify-start items-start">
+    <div class="grow p-4 flex flex-col justify-start items-start overflow-auto">
       <TilesGrid />
     </div>
   </div>
