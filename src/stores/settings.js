@@ -41,7 +41,7 @@ export const useSettingsStore = defineStore('settings', {
           gridGap: storedSettings.gridGap ?? 15,
           tileCornerRadius: storedSettings.tileCornerRadius ?? '10',
           tileFaviconSize: storedSettings.tileFaviconSize ?? '24',
-          hideTileLabel: storedSettings.hideTileLabel ?? true,
+          hideTileLabel: storedSettings.hideTileLabel ?? false,
           tileLabelPosition: storedSettings.tileLabelPosition ?? 'bottom right',
           showBookmarksLabel: storedSettings.showBookmarksLabel ?? false,
           showRecentlyClosedLabel: storedSettings.showRecentlyClosedLabel ?? false,
