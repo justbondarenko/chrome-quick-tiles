@@ -15,8 +15,8 @@ export const useSettingsStore = defineStore('settings', {
       showRecentlyClosedLabel: true,
       showNewTileLabel: false,
       showSettingsLabel: false,
-      // Track initialization status
       isInitialized: false,
+      reorderEnabled: false,
     }
   },
   
@@ -24,7 +24,7 @@ export const useSettingsStore = defineStore('settings', {
     // Initialize store by loading settings from storage
     async initializeStore() {
       if (this.isInitialized) return;
-      
+
       try {
         // Load all settings in one batch operation
         const storedSettings = await chromeStorage.getMultiple([
@@ -58,7 +58,7 @@ export const useSettingsStore = defineStore('settings', {
         this.setDefaultValues();
       }
     },
-    
+
     // Set default values when initialization fails
     setDefaultValues() {
       Object.assign(this, {
@@ -86,17 +86,17 @@ export const useSettingsStore = defineStore('settings', {
     async setMultipleSettings(settings) {
       // Update state in one operation
       Object.assign(this, settings);
-      
+
       // Batch storage operation - much more efficient
       const storageData = {};
       Object.keys(settings).forEach(key => {
         storageData[key] = settings[key];
       });
-      
+
       return await chromeStorage.setMultiple(storageData);
     },
-    
-    async setGridWidth(value) { 
+
+    async setGridWidth(value) {
       this.gridWidth = value;
       return await chromeStorage.set('gridWidth', value);
     },
@@ -159,7 +159,7 @@ export const useSettingsStore = defineStore('settings', {
           await chromeStorage.set('showSettingsLabel', this.showSettingsLabel);
           break;
         default:
-          return 
+          return
       }
     },
     async setLabelFor(key, value) {
@@ -181,9 +181,11 @@ export const useSettingsStore = defineStore('settings', {
           await chromeStorage.set('showSettingsLabel', value);
           break;
         default:
-          return 
+          return
       }
+    },
+    async toggleReorderEnabled() {
+      this.reorderEnabled = !this.reorderEnabled;
     }
-
   }
 })

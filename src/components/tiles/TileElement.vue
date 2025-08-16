@@ -43,6 +43,9 @@ export default {
     };
   },
   computed: {
+    reorderEnabled() {
+      return this.settingsStore.reorderEnabled;
+    },
     // Cache favicon URL to avoid reconstruction on every render
     faviconUrl() {
       if (!this.url || !this.settingsStore.tileFaviconSize) {
@@ -110,7 +113,17 @@ export default {
 </script>
 
 <template>
-  <a class="btn tile p-1 group" :class="[size]" :href="url" :style="style()">
+  <a
+    class="btn tile p-1 group"
+    :class="[
+      size,
+      {
+        'cursor-move': reorderEnabled,
+      },
+    ]"
+    :href="url"
+    :style="style()"
+  >
     <img
       v-if="settingsStore.tileFaviconSize && url"
       :src="faviconUrl"
@@ -139,12 +152,6 @@ export default {
       class="controls hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none"
       :class="controlsPosition()"
     >
-      <button
-        class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle"
-        @click.prevent=""
-      >
-        <font-awesome-icon :icon="['fas', 'up-down-left-right']" />
-      </button>
       <button
         class="btn btn-ghost btn-square btn-xs hover:scale-110"
         @click.prevent="changeSize()"

@@ -25,6 +25,9 @@ import {
   faGear,
   faPlus,
   faSquarePlus,
+  faLock,
+  faLockOpen,
+  faFolderOpen,
 } from '@fortawesome/free-solid-svg-icons'
 
 // Regular icons (far) - UI elements
@@ -37,9 +40,11 @@ import { faGithub, faInstagram, faLinkedin } from '@fortawesome/free-brands-svg-
 
 /* add icons to the library */
 library.add(
-  // Solid icons
-  faClockRotateLeft,
+  faLock,
+  faLockOpen,
+  faFolderOpen,
   faFolder,
+  faClockRotateLeft,
   faEnvelope,
   faDownload,
   faUpload,

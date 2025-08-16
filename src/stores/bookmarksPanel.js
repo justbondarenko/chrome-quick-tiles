@@ -21,7 +21,6 @@ export const useBookmarksPanelStore = defineStore('bookmarksPanel', {
     async initialize() {
       try {
         const savedOpenFolders = await chromeStorage.get('bookmarksOpenFolders');
-        console.log('Retrieved from storage:', savedOpenFolders, 'Type:', typeof savedOpenFolders, 'Is Array:', Array.isArray(savedOpenFolders));
 
         // Handle the case where chrome storage returns an object with numeric keys instead of an array
         let processedOpenFolders = [];
@@ -33,14 +32,12 @@ export const useBookmarksPanelStore = defineStore('bookmarksPanel', {
             // If it's an object with numeric keys, convert it to an array
             const keys = Object.keys(savedOpenFolders).sort((a, b) => parseInt(a) - parseInt(b));
             processedOpenFolders = keys.map(key => savedOpenFolders[key]);
-            console.log('Converted object to array:', processedOpenFolders);
           }
         }
 
         // Ensure we always have an array
         this.openFolders = processedOpenFolders;
 
-        console.log('Final openFolders state:', this.openFolders);
       } catch (error) {
         console.error('Failed to load bookmarks panel state:', error);
         this.openFolders = [];
@@ -79,8 +76,6 @@ export const useBookmarksPanelStore = defineStore('bookmarksPanel', {
 
     // Check if a folder is currently open
     isFolderOpen(folderId) {
-      console.log('isFolderOpen called with folderId:', folderId, 'openFolders:', this.openFolders, 'Type:', typeof this.openFolders);
-
       this.ensureArray();
       return this.openFolders.includes(folderId);
     },

@@ -18,6 +18,11 @@ export default {
       drag: false,
     };
   },
+  computed: {
+    reorderEnabled() {
+      return this.settingsStore.reorderEnabled;
+    },
+  },
   methods: {
     style: function () {
       return `gap:${this.settingsStore.gridGap}px;max-width:${this.settingsStore.gridWidth}%;`;
@@ -48,13 +53,18 @@ export default {
   <draggable
     v-if="itemsStore.items.length"
     v-model="itemsStore.items"
+    :disabled="!reorderEnabled"
     tag="div"
     group="tiles"
-    handle=".move-handle"
     ghost-class="tile-ghost"
     dragClass="tile-drag"
     item-key="id"
-    class="tiles-grid flex overflow-auto flex-wrap mx-auto p-4"
+    :class="[
+      'tiles-grid flex overflow-auto flex-wrap mx-auto p-4 rounded-xl transition-colors duration-300',
+      {
+        'bg-slate-100 outline-slate-300 outline-3 outline-dashed outline-offset-2': reorderEnabled,
+      },
+    ]"
     :style="style()"
     @start="drag = true"
     @end="drag = false"

@@ -7,6 +7,14 @@
       <span>Last Changes: {{ buildTimestamp }}</span>
     </div>
     <div class="mr-0 ml-auto flex flex-row gap-4">
+      <button class="btn" @click="settingsStore.toggleReorderEnabled()">
+        <font-awesome-icon
+          :icon="{
+            prefix: 'fas',
+            iconName: reorderEnabled ? 'lock-open' : 'lock',
+          }"
+        />
+      </button>
       <TileAdd :key="addTileKey" @saveTile="saveTile" />
       <SettingsSidebar />
     </div>
@@ -37,6 +45,9 @@ export default {
     };
   },
   computed: {
+    reorderEnabled() {
+      return this.settingsStore.reorderEnabled;
+    },
     buildTimestamp() {
       if (typeof __BUILD_TIMESTAMP__ !== "undefined") {
         const date = new Date(__BUILD_TIMESTAMP__);
