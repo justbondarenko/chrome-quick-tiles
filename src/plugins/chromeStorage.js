@@ -1,3 +1,5 @@
+/* global chrome */
+
 export const chromeStorage = {
   get(key) {
     return new Promise((resolve) => {

@@ -7,7 +7,11 @@
       </span>
       <template v-for="item of tree" :key="item.dateAdded">
         <template v-if="item.children">
-          <BookmarkFolder :items="item.children" :title="item.title" />
+          <BookmarkFolder
+            :items="item.children"
+            :title="item.title"
+            :folder-id="item.id"
+          />
         </template>
         <template v-if="item.url">
           <BookmarkItem :url="item.url" :title="item.title" />
@@ -20,6 +24,8 @@
 <script>
 import BookmarkFolder from "./BookmarkFolder.vue";
 import BookmarkItem from "./BookmarkItem.vue";
+import { useBookmarksPanelStore } from "@/stores/bookmarksPanel";
+
 export default {
   name: "BookmarksList",
   components: { BookmarkFolder, BookmarkItem },
@@ -30,7 +36,11 @@ export default {
     };
   },
   methods: {},
-  mounted() {
+  async mounted() {
+    // Initialize the bookmarks panel store
+    const bookmarksPanelStore = useBookmarksPanelStore();
+    await bookmarksPanelStore.initialize();
+
     // eslint-disable-next-line
     chrome.bookmarks.getTree((tree) => {
       this.tree = tree[0].children;

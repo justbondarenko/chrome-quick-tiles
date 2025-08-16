@@ -1,11 +1,15 @@
 <template>
   <li>
-    <details>
-      <summary><font-awesome-icon :icon="['fas', 'folder']" />{{ title }}</summary>
+    <details :open="isOpen" @toggle="handleToggle">
+      <summary><FontAwesomeIcon :icon="['fas', 'folder']" />{{ title }}</summary>
       <ul>
         <template v-for="item of items" :key="item.dateAdded">
           <template v-if="item.children">
-            <BookmarkFolder :items="item.children" :title="item.title" />
+            <BookmarkFolder
+              :items="item.children"
+              :title="item.title"
+              :folder-id="item.id"
+            />
           </template>
           <template v-if="item.url">
             <BookmarkItem :url="item.url" :title="item.title" />
@@ -18,6 +22,8 @@
 
 <script>
 import BookmarkItem from "./BookmarkItem.vue";
+import { useBookmarksPanelStore } from "@/stores/bookmarksPanel";
+
 export default {
   name: "BookmarkFolder",
   components: { BookmarkItem },
@@ -30,13 +36,27 @@ export default {
       type: Object,
       required: true,
     },
+    folderId: {
+      type: String,
+      required: true,
+    },
   },
-  data() {
-    return {
-      open: false,
-      tree: [],
-    };
+  computed: {
+    isOpen() {
+      const bookmarksPanelStore = useBookmarksPanelStore();
+      return bookmarksPanelStore.isFolderOpen(this.folderId);
+    },
   },
-  methods: {},
+  methods: {
+    async handleToggle(event) {
+      const bookmarksPanelStore = useBookmarksPanelStore();
+      const isOpen = event.target.open;
+      if (isOpen) {
+        await bookmarksPanelStore.addOpenFolder(this.folderId);
+      } else {
+        await bookmarksPanelStore.removeOpenFolder(this.folderId);
+      }
+    },
+  },
 };
 </script>
