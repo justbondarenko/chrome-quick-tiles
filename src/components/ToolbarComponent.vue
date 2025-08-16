@@ -1,17 +1,21 @@
 <template>
   <div class="flex gap-4 px-6 pt-4 pb-1">
-    <div class="ml-0 mr-2 flex flex-row items-center gap-4">
+    <div class="ml-0 mr-2 flex flex-row items-center gap-4 w-fit">
       <BookmarksDrawer />
       <RecentsDrawer />
-      <!-- TODO: REMOVE -->
-      <span>Last Changes: {{ buildTimestamp }}</span>
     </div>
-    <div class="mr-0 ml-auto flex flex-row gap-4">
-      <button class="btn" @click="settingsStore.toggleReorderEnabled()">
+    <div class="flex flex-row gap-4 grow items-center justify-around">
+      <span v-if="gridModeEnabled" class="text-xl font-semibold">Edit Mode Enabled</span>
+      <template v-else>
+        <span>Last Code Changes: {{ buildTimestamp }}</span>
+      </template>
+    </div>
+    <div class="flex flex-row gap-4 w-fit">
+      <button class="btn" @click="settingsStore.toggleGridEditMode()">
         <font-awesome-icon
           :icon="{
             prefix: 'fas',
-            iconName: reorderEnabled ? 'lock-open' : 'lock',
+            iconName: gridModeEnabled ? 'lock-open' : 'lock',
           }"
         />
       </button>
@@ -45,8 +49,8 @@ export default {
     };
   },
   computed: {
-    reorderEnabled() {
-      return this.settingsStore.reorderEnabled;
+    gridModeEnabled() {
+      return this.settingsStore.gridModeEnabled;
     },
     buildTimestamp() {
       if (typeof __BUILD_TIMESTAMP__ !== "undefined") {

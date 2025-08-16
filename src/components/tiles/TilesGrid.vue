@@ -19,8 +19,8 @@ export default {
     };
   },
   computed: {
-    reorderEnabled() {
-      return this.settingsStore.reorderEnabled;
+    gridModeEnabled() {
+      return this.settingsStore.gridModeEnabled;
     },
   },
   methods: {
@@ -53,7 +53,7 @@ export default {
   <draggable
     v-if="itemsStore.items.length"
     v-model="itemsStore.items"
-    :disabled="!reorderEnabled"
+    :disabled="!gridModeEnabled"
     tag="div"
     group="tiles"
     ghost-class="tile-ghost"

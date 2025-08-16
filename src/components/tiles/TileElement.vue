@@ -43,8 +43,8 @@ export default {
     };
   },
   computed: {
-    reorderEnabled() {
-      return this.settingsStore.reorderEnabled;
+    gridModeEnabled() {
+      return this.settingsStore.gridModeEnabled;
     },
     // Cache favicon URL to avoid reconstruction on every render
     faviconUrl() {
@@ -118,7 +118,7 @@ export default {
     :class="[
       size,
       {
-        'cursor-move': reorderEnabled,
+        'cursor-move': gridModeEnabled,
       },
     ]"
     :href="url"
@@ -149,7 +149,8 @@ export default {
       >{{ label }}</span
     >
     <div
-      class="controls hover:bg-base-100 p-1 rounded-lg absolute invisible pointer-events-none"
+      v-if="gridModeEnabled"
+      class="tile-controls absolute"
       :class="controlsPosition()"
     >
       <button
@@ -162,15 +163,15 @@ export default {
       </button>
       <button
         class="btn btn-ghost btn-square btn-xs hover:scale-110"
-        @click.prevent="$emit('remove')"
-      >
-        <font-awesome-icon :icon="['fas', 'trash']" />
-      </button>
-      <button
-        class="btn btn-ghost btn-square btn-xs hover:scale-110"
         @click.prevent="$emit('edit')"
       >
         <font-awesome-icon :icon="['fas', 'edit']" />
+      </button>
+      <button
+        class="btn btn-ghost btn-square btn-xs hover:scale-110 text-red-600"
+        @click.prevent="$emit('remove')"
+      >
+        <font-awesome-icon :icon="['fas', 'trash']" />
       </button>
     </div>
   </a>
@@ -189,22 +190,6 @@ $base: 128px;
   &:hover {
     transform: scale(1.05);
     transition: all 0.3s ease-out;
-    > .controls {
-      width: 30px;
-      visibility: visible;
-      transition-delay: 0.75s;
-      pointer-events: auto;
-      display: flex;
-      flex-direction: row-reverse;
-      gap: 1px;
-      flex-wrap: nowrap;
-      align-items: flex-end;
-      overflow: hidden;
-      transition: width 0.5s ease-in-out, left 0.5s ease-in-out;
-      &:hover {
-        width: fit-content;
-      }
-    }
   }
 
   > .image-wrapper {
@@ -254,6 +239,18 @@ $base: 128px;
 
   .bottom {
     bottom: 10px;
+  }
+
+  .tile-controls {
+    z-index: 100;
+    display: flex;
+    flex-direction: row;
+    gap: 2px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 4px;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.703);
   }
 }
 

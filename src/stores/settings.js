@@ -184,8 +184,8 @@ export const useSettingsStore = defineStore('settings', {
           return
       }
     },
-    async toggleReorderEnabled() {
-      this.reorderEnabled = !this.reorderEnabled;
+    async toggleGridEditMode() {
+      this.gridModeEnabled = !this.gridModeEnabled;
     }
   }
 })
