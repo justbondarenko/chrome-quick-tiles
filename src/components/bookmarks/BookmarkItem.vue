@@ -4,7 +4,7 @@
       <img
         v-if="faviconUrl"
         :src="faviconUrl"
-        class="favicon w-4 h-4 mr-2 rounded-sm"
+        class="favicon w-4 h-4 mr-2 rounded-sm relative"
         alt="favicon"
         @error="handleFaviconError"
       />
@@ -15,7 +15,7 @@
       <span v-if="lastVisit" class="ml-1 opacity-40">{{ lastVisit }}</span>
 
       <button
-        class="btn btn-xs btn-square btn-ghost invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-100 delay-300"
+        class="absolute right-4 top-1/2 -translate-y-1/2 btn btn-xs btn-square invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-100 delay-300"
         @click.prevent.stop="addTile"
       >
         <font-awesome-icon :icon="['fas', 'plus']" class="fa-xs" />
