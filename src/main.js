@@ -13,12 +13,7 @@ import Vue3ColorPicker from "vue3-colorpicker";
 import "vue3-colorpicker/style.css";
 
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import { far } from '@fortawesome/free-regular-svg-icons'
-import { fab } from '@fortawesome/free-brands-svg-icons'
-
-library.add(fas, far, fab);
+import './plugins/fontawesome';
 
 const app = createApp(App);
 
@@ -29,6 +24,6 @@ app.use(pinia);
 
 app.use(Vue3ColorPicker);
 
-app.component('FontAwesomeIcon', FontAwesomeIcon);
+app.component('font-awesome-icon', FontAwesomeIcon);
 
 app.mount('#app');

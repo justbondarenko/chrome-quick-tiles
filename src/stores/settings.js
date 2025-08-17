@@ -15,9 +15,74 @@ export const useSettingsStore = defineStore('settings', {
       showRecentlyClosedLabel: true,
       showNewTileLabel: false,
       showSettingsLabel: false,
+      // Track initialization status
+      isInitialized: false,
     }
   },
+  
   actions: {
+    // Initialize store by loading settings from storage
+    async initializeStore() {
+      console.log('initializeStore');
+      if (this.isInitialized) return;
+      
+      try {
+        // Load all settings in one batch operation
+        const storedSettings = await chromeStorage.getMultiple([
+          'toolbarPosition', 'gridWidth', 'gridGap', 
+          'tileCornerRadius', 'tileFaviconSize', 'hideTileLabel',
+          'tileLabelPosition', 'showBookmarksLabel', 
+          'showRecentlyClosedLabel', 'showNewTileLabel', 'showSettingsLabel'
+        ]);
+
+        // Set all settings with fallback values
+        const settings = {
+          toolbarPosition: storedSettings.toolbarPosition ?? 'top',
+          gridWidth: storedSettings.gridWidth ?? '95',
+          gridGap: storedSettings.gridGap ?? 15,
+          tileCornerRadius: storedSettings.tileCornerRadius ?? '10',
+          tileFaviconSize: storedSettings.tileFaviconSize ?? '24',
+          hideTileLabel: storedSettings.hideTileLabel ?? true,
+          tileLabelPosition: storedSettings.tileLabelPosition ?? 'bottom right',
+          showBookmarksLabel: storedSettings.showBookmarksLabel ?? false,
+          showRecentlyClosedLabel: storedSettings.showRecentlyClosedLabel ?? false,
+          showNewTileLabel: storedSettings.showNewTileLabel ?? false,
+          showSettingsLabel: storedSettings.showSettingsLabel ?? false,
+        };
+
+        // Update state in one operation
+        Object.assign(this, settings);
+        this.isInitialized = true;
+
+      } catch (error) {
+        console.error('Failed to initialize settings store:', error);
+        this.setDefaultValues();
+      }
+    },
+    
+    // Set default values when initialization fails
+    setDefaultValues() {
+      Object.assign(this, {
+        toolbarPosition: 'top',
+        gridWidth: '95',
+        gridGap: 15,
+        tileCornerRadius: '10',
+        tileFaviconSize: '24',
+        hideTileLabel: true,
+        tileLabelPosition: 'bottom right',
+        showBookmarksLabel: false,
+        showRecentlyClosedLabel: false,
+        showNewTileLabel: false,
+        showSettingsLabel: false,
+      });
+      this.isInitialized = true;
+    },
+    
+    // Reset store to default values (Pinia standard pattern)
+    $reset() {
+      this.setDefaultValues();
+    },
+    
     // Batch set multiple settings at once for better performance
     async setMultipleSettings(settings) {
       // Update state in one operation

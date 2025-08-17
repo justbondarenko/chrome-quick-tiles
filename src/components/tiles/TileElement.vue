@@ -143,13 +143,13 @@ export default {
         class="btn btn-ghost btn-square btn-xs hover:scale-110 cursor-grab move-handle"
         @click.prevent=""
       >
-        <FontAwesomeIcon :icon="['fas', 'up-down-left-right']" />
+        <font-awesome-icon :icon="['fas', 'up-down-left-right']" />
       </button>
       <button
         class="btn btn-ghost btn-square btn-xs hover:scale-110"
         @click.prevent="changeSize()"
       >
-        <FontAwesomeIcon
+        <font-awesome-icon
           :icon="['fas', size === 's' ? 'chevron-right' : 'chevron-left']"
         />
       </button>
@@ -157,13 +157,13 @@ export default {
         class="btn btn-ghost btn-square btn-xs hover:scale-110"
         @click.prevent="$emit('remove')"
       >
-        <FontAwesomeIcon :icon="['fas', 'trash']" />
+        <font-awesome-icon :icon="['fas', 'trash']" />
       </button>
       <button
         class="btn btn-ghost btn-square btn-xs hover:scale-110"
         @click.prevent="$emit('edit')"
       >
-        <FontAwesomeIcon :icon="['fas', 'edit']" />
+        <font-awesome-icon :icon="['fas', 'edit']" />
       </button>
     </div>
   </a>

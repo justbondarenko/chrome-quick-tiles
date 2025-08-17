@@ -1,7 +1,7 @@
 <template>
   <li>
     <details>
-      <summary><FontAwesomeIcon :icon="['fas', 'folder']" />{{ title }}</summary>
+      <summary><font-awesome-icon :icon="['fas', 'folder']" />{{ title }}</summary>
       <ul>
         <template v-for="item of items" :key="item.dateAdded">
           <template v-if="item.children">

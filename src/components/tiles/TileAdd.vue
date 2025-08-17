@@ -3,7 +3,7 @@
     <input id="new-tile-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
       <label for="new-tile-drawer" class="btn drawer-button">
-        <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'plus' }" />
+        <font-awesome-icon :icon="{ prefix: 'fas', iconName: 'plus' }" />
         <template v-if="settingsStore.showNewTileLabel">Add link</template>
       </label>
     </div>
@@ -55,7 +55,7 @@
           </div>
         </div>
         <button class="btn btn-success btn-outline mt-4" @click="save" :disabled="!url">
-          <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'floppy-disk' }" /> Save
+          <font-awesome-icon :icon="{ prefix: 'fas', iconName: 'floppy-disk' }" /> Save
         </button>
       </div>
     </div>

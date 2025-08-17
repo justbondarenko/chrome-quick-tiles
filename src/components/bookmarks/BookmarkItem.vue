@@ -1,7 +1,7 @@
 <template>
   <li>
     <a :href="url">
-      <FontAwesomeIcon :icon="icon()" />
+      <font-awesome-icon :icon="['far', 'bookmark']" />
       <span class="bookmark-label text-md ml-1 max-w-72 text-ellipsis overflow-hidden">{{
         title
       }}</span>
@@ -43,20 +43,6 @@ export default {
         return null;
       }
     },
-    icon() {
-      let base = this.baseDomain();
-      if (base === "last") {
-        base = "lastfm";
-      }
-      if (base === "stackoverflow") {
-        base = "stack-overflow";
-      }
-      return this.icons.includes(base) ? ["fab", base] : ["far", "bookmark"];
-    },
-  },
-  async mounted() {
-    const { items } = await import("./icons.json");
-    this.icons = items;
   },
 };
 </script>

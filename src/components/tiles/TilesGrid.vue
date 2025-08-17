@@ -90,7 +90,7 @@ export default {
     <p class="lead text-center">
       Click
       <button class="btn btn-square btn-sm pointer-events-none mx-1">
-        <FontAwesomeIcon :icon="{ prefix: 'fas', iconName: 'plus' }" />
+        <font-awesome-icon :icon="{ prefix: 'fas', iconName: 'plus' }" />
       </button>
       button in {{ settingsStore.toolbarPosition }} right corner of your screen<br />to
       add first bookmark.
