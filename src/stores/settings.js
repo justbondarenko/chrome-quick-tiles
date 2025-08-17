@@ -23,7 +23,6 @@ export const useSettingsStore = defineStore('settings', {
   actions: {
     // Initialize store by loading settings from storage
     async initializeStore() {
-      console.log('initializeStore');
       if (this.isInitialized) return;
       
       try {
