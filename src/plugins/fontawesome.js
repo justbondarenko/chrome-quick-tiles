@@ -23,7 +23,8 @@ import {
   faXmarkCircle,
   faFloppyDisk,
   faGear,
-  faPlus
+  faPlus,
+  faSquarePlus,
 } from '@fortawesome/free-solid-svg-icons'
 
 // Regular icons (far) - UI elements
@@ -59,6 +60,7 @@ library.add(
   
   // Regular icons
   faBookmark,
+  faSquarePlus,
   
   // Brand
   faInstagram,

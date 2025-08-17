@@ -1,5 +1,5 @@
 <template>
-  <li>
+  <li class="group">
     <a :href="url">
       <img
         v-if="faviconUrl"
@@ -13,12 +13,20 @@
         title
       }}</span>
       <span v-if="lastVisit" class="ml-1 opacity-40">{{ lastVisit }}</span>
+
+      <button
+        class="btn btn-xs btn-square btn-ghost invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-100 delay-300"
+        @click.prevent.stop="addTile"
+      >
+        <font-awesome-icon :icon="['fas', 'plus']" class="fa-xs" />
+      </button>
     </a>
   </li>
 </template>
 
 <script>
 import { chromeStorage } from "@/plugins/chromeStorage";
+import { useItemsStore } from "@/stores/items";
 
 export default {
   name: "BookmarkItem",
@@ -39,6 +47,7 @@ export default {
   data() {
     return {
       faviconLoadError: false,
+      items: useItemsStore(),
     };
   },
   computed: {
@@ -79,6 +88,15 @@ export default {
         console.error(e);
         return null;
       }
+    },
+    addTile() {
+      this.items.addItem({
+        url: this.url,
+        label: this.title,
+        fontColor: "#000000",
+        bgColor: "#ffffff",
+        size: "s",
+      });
     },
   },
 };
