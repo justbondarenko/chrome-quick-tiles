@@ -30,3 +30,6 @@ coverage
 *.tsbuildinfo
 dist.zip
 dist-*.zip
+
+.cursor
+.vscode

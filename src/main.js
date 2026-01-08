@@ -15,7 +15,7 @@ import "vue3-colorpicker/style.css";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import './plugins/fontawesome';
 import PrimeVue from 'primevue/config';
-import Lara from '@primeuix/themes/lara';
+import MyPreset from '@/assets/primevue/theme';
 
 const app = createApp(App);
 
@@ -28,7 +28,7 @@ app.use(Vue3ColorPicker);
 
 app.use(PrimeVue, {
   theme: {
-    preset: Lara
+    preset: MyPreset
   }
 });
 
