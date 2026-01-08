@@ -60,4 +60,9 @@ export default {
   border-radius: 15px;
   padding: 15px;
 }
+
+.drawer-side {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
 </style>

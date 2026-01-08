@@ -6,9 +6,6 @@
     </div>
     <div class="flex flex-row gap-4 grow items-center justify-around">
       <span v-if="gridModeEnabled" class="text-xl font-semibold">Edit Mode Enabled</span>
-      <template v-else>
-        <span>Last Code Changes: {{ buildTimestamp }}</span>
-      </template>
     </div>
     <div class="flex flex-row gap-4 w-fit">
       <button class="btn" @click="settingsStore.toggleGridEditMode()">
