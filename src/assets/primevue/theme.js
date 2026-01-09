@@ -1,7 +1,7 @@
 import { definePreset } from '@primeuix/themes'
-import Aura from '@primeuix/themes/aura'
+import Lara from '@primeuix/themes/lara'
 
-const MyPreset = definePreset(Aura, {
+const MyPreset = definePreset(Lara, {
   semantic: {
     surface: {
       0: '#ffffff',
