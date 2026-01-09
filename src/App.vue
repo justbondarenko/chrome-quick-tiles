@@ -8,14 +8,13 @@
 </template>
 
 <script setup>
-import { onBeforeMount, computed, onMounted } from 'vue'
+import { onBeforeMount, computed } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
 import { useImageStore } from '@/stores/image'
 import ToolbarComponent from './components/ToolbarComponent.vue'
 import TilesGrid from '@/components/tiles/TilesGrid.vue'
 import { chromeStorage } from './plugins/chromeStorage'
-import MyPreset from '@/assets/primevue/theme';
 
 const settingsStore = useSettingsStore()
 const itemsStore = useItemsStore()

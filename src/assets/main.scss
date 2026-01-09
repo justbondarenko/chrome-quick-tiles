@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+#app, html, body {
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing:antialiased !important;
+  font-optical-sizing: auto;
+}
+
 html {
   width: 100dvw;
   height: 100dvh;
