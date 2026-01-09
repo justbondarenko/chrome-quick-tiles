@@ -1,191 +1,252 @@
 <template>
-  <div class="flex flex-col gap-2 w-full">
-    <div class="flex flex-col">
-      <div class="flex flex-col w-100">
-        <div class="label">
-          <span class="label-text">URL</span>
-        </div>
-        <input type="text" placeholder="https://" class="input input-bordered w-full" v-model="innerUrl" />
+  <div class="flex flex-col gap-4 w-full">
+    <div class="flex flex-col gap-4">
+      <div class="flex flex-col w-full">
+        <label for="tile-edit-url-input" class="text-sm font-medium mb-1">URL</label>
+        <InputText
+          id="tile-edit-url-input"
+          type="text"
+          placeholder="https://"
+          class="w-full"
+          v-model="innerUrl"
+        />
       </div>
-      <div class="flex flex-col w-100">
-        <div class="label">
-          <span class="label-text">Label / Page title</span>
-        </div>
-        <input type="text" placeholder="Page title" class="input input-bordered w-full" v-model="innerLabel"
-          :disabled="!innerUrl" />
+      <div class="flex flex-col w-full">
+        <label for="tile-edit-label-input" class="text-sm font-medium mb-1">Label / Page title</label>
+        <InputText
+          id="tile-edit-label-input"
+          type="text"
+          placeholder="Page title"
+          class="w-full"
+          v-model="innerLabel"
+          :disabled="!innerUrl"
+        />
       </div>
-      <label class="label cursor-pointer mt-2">
-        <span class="label-text">Use background image</span>
-        <input type="checkbox" :checked="useImageBg" v-model="useImageBg" class="checkbox" />
-      </label>
-        <template v-if="useImageBg">
-          <label class="form-control w-full max-w-100">
-            <div class="label">
-              <span><i class="fa-solid fa-triangle-exclamation mr-2 mx-2" />Images are saved locally and are not synced between devices.</span>
-            </div>
-            <input id="bgImageFileUpload" type="file" accept="image/*" class="file-input file-input-bordered file-input-md w-full max-w-100" @change="onFile($event.target.files[0])"/>
-          </label>
-          <div v-if="file" class="cropper-wrapper relative">
-            <div class="cropper-btns z-10 p-3 rounded-md flex absolute bottom-3 right-3">
-              <div class="join">
-                <button class="join-item btn btn-sm" @click="rotate(-90)"><i class="fa-solid fa-rotate-left"/></button>
-                <button class="join-item btn btn-sm" @click="rotate(90)"><i class="fa-solid fa-rotate-right"/></button>
-              </div>
-              <div class="divider divider-horizontal" />
-              <div class="join">
-                <button class="join-item btn btn-sm" @click="zoom(1.5)"><i class="fa-solid fa-magnifying-glass-plus"/></button>
-                <button class="join-item btn btn-sm" @click="zoom(0.5)"><i class="fa-solid fa-magnifying-glass-minus"/></button>
-              </div>
-            </div>
+      <div class="flex items-center gap-2">
+        <Checkbox
+          id="use-image-bg"
+          v-model="useImageBg"
+          :binary="true"
+        />
+        <label for="use-image-bg" class="text-sm font-medium cursor-pointer">Use background image</label>
+      </div>
+      <template v-if="useImageBg">
+        <div class="flex flex-col gap-2">
+          <Message severity="warn" icon="fa-solid fa-triangle-exclamation">Images are saved locally and are not synced between devices.</Message>
 
-            <Cropper
-              ref="cropper"
-              :src="file.src"
-              class="cropper mt-2"
-              :stencil-props="{
-                movable: true,
-                resizable: true
-              }"
-              @change="cropperChange"
+          <div class="flex gap-2">
+            <Button
+              label="Choose Image"
+              severity="secondary"
+              icon="fa-solid fa-image"
+              @click="fileInputRef?.click()"
+              class="flex-1"
+            />
+            <input
+              ref="fileInputRef"
+              type="file"
+              accept="image/*"
+              class="hidden"
+              @change="onFile($event.target.files[0])"
+            />
+          </div>
+        </div>
+        <div v-if="file" class="cropper-wrapper relative">
+          <div class="cropper-btns z-10 p-3 rounded-md flex gap-2 absolute bottom-3 right-3 bg-surface-900 bg-opacity-75">
+            <Button
+              icon="fa-solid fa-rotate-left"
+              size="small"
+              severity="secondary"
+              @click="rotate(-90)"
+              aria-label="Rotate left"
+            />
+            <Button
+              icon="fa-solid fa-rotate-right"
+              size="small"
+              severity="secondary"
+              @click="rotate(90)"
+              aria-label="Rotate right"
+            />
+            <div class="w-px bg-surface-600 mx-1" />
+            <Button
+              icon="fa-solid fa-magnifying-glass-plus"
+              size="small"
+              severity="secondary"
+              @click="zoom(1.5)"
+              aria-label="Zoom in"
+            />
+            <Button
+              icon="fa-solid fa-magnifying-glass-minus"
+              size="small"
+              severity="secondary"
+              @click="zoom(0.5)"
+              aria-label="Zoom out"
+            />
+          </div>
+
+          <Cropper
+            ref="cropper"
+            :src="file.src"
+            class="cropper mt-2"
+            :stencil-props="{
+              movable: true,
+              resizable: true
+            }"
+            @change="cropperChange"
+          />
+        </div>
+      </template>
+      <div class="color-pickers flex justify-between px-1 mt-2 w-full">
+        <template v-if="!useImageBg">
+          <div class="flex flex-row gap-2 items-center w-1/2 h-12">
+            <span class="text-sm font-medium">Background</span>
+            <ColorPicker
+              format="hex"
+              :pure-color="{}"
+              picker-type="fk"
+              shape="circle"
+              round-history
+              disable-alpha
+              lang="En"
+              v-model:pureColor="innerBgColor"
             />
           </div>
         </template>
-        <div class="color-pickers flex justify-between px-1 mt-2 w-100">
-          <template v-if="!useImageBg">
-          <div class="flex flex-row gap-2 items-center w-1/2 h-12">
-            <span class="label-text">Background</span>
-            <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha
-              lang="En" v-model:pureColor="innerBgColor" />
-          </div>
-          </template>
-          <div class="flex flex-row gap-2 items-center w-1/2 h-12">
-            <span class="label-text">Label</span>
-            <ColorPicker format="hex" :pure-color="{}" picker-type="fk" shape="circle" round-history disable-alpha
-              lang="En" v-model:pureColor="innerFontColor" />
-          </div>
+        <div class="flex flex-row gap-2 items-center w-1/2 h-12">
+          <span class="text-sm font-medium">Label</span>
+          <ColorPicker
+            format="hex"
+            :pure-color="{}"
+            picker-type="fk"
+            shape="circle"
+            round-history
+            disable-alpha
+            lang="En"
+            v-model:pureColor="innerFontColor"
+          />
         </div>
-      <div class="flex w-100">
-        <button class="btn btn-ghost mt-4 ml-0 mr-2" @click="$emit('close')">
-          <i class="fa-solid fa-xmark-circle" /> Close
-        </button>
-        <button class="btn btn-success mt-4 mr-0 ml-auto" @click="save" :disabled="!(!!innerUrl)">
-          <i class="fa-solid fa-floppy-disk" /> Save
-        </button>
+      </div>
+      <div class="flex gap-2 mt-4">
+        <Button
+          label="Close"
+          severity="secondary"
+          icon="fa-solid fa-xmark-circle"
+          @click="$emit('close')"
+          class="flex-1"
+        />
+        <Button
+          label="Save"
+          severity="success"
+          icon="fa-solid fa-floppy-disk"
+          @click="save"
+          :disabled="!innerUrl"
+          class="flex-1"
+        />
       </div>
     </div>
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, onMounted } from 'vue'
 import { useItemsStore } from '@/stores/items'
 import { useImageStore } from '@/stores/image'
-import { chromeStorage } from '@/plugins/chromeStorage';
-import { Cropper } from "vue-advanced-cropper";
+import { chromeStorage } from '@/plugins/chromeStorage'
+import { Cropper } from 'vue-advanced-cropper'
+import InputText from 'primevue/inputtext'
+import Button from 'primevue/button'
+import Checkbox from 'primevue/checkbox'
+import Message from 'primevue/message'
 
+const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  },
+  label: {
+    type: String,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  },
+  bgColor: {
+    type: String,
+  },
+  fontColor: {
+    type: String,
+  },
+  size: {
+    type: String,
+    required: true
+  },
+})
 
-export default {
-  components: { Cropper },
-  props: {
-    id: {
-      type: String,
-      required: true
-    },
-    label: {
-      type: String,
-      required: true
-    },
-    url: {
-      type: String,
-      required: true
-    },
-    bgColor: {
-      type: String,
-    },
-    fontColor: {
-      type: String,
-    },
-    size: {
-      type: String,
-      required: true
-    },
-  },
-  data() {
-    return {
-      itemsStore: useItemsStore(),
-      imageStore: useImageStore(),
-      innerLabel: this.label,
-      innerUrl: this.url,
-      innerFontColor: this.fontColor,
-      innerBgColor: this.bgColor,
-      useImageBg: false,
-      innerBgImg64: '',
-      imageBgFile: null,
-      file: null,
-    };
-  },
-  mounted() {
-    chromeStorage.getLocal(this.id).then((img) => {
-      if (img) {
-        this.useImageBg = !!img
-        this.innerBgImg64 = img
-      }
-    });
-  },
-  methods: {
-    save() {
-      this.itemsStore.update(this.id, {
-        label: this.innerLabel,
-        url: this.innerUrl,
-        fontColor: this.innerFontColor,
-        bgColor: this.innerBgColor,
-      })
+const emit = defineEmits(['close'])
 
-      if (this.useImageBg) {
-        this.imageStore.set(this.id, this.innerBgImg64);
-        console.log('BG Image set');
-      } else {
-        this.imageStore.remove(this.id);
-        console.log('BG Image removed');
-      }
-      this.$emit('close');                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-    },
-    imageUrlToBase64: async function (url) {
-      const data = await fetch(url);
-      const blob = await data.blob();
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = () => {
-          const base64data = reader.result;
-          resolve(base64data);
-        };
-        reader.onerror = reject;
-      });
-    },
-    getBase64: function (file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-      })
-    },
-    onFile(file) {
-      const blob = URL.createObjectURL(file);
-      this.file = {
-        src: blob,
-        type: file.type,
-      };
-    },
-    cropperChange(result) {
-      this.innerBgImg64 = result.canvas.toDataURL(this.file.type)
-    },
-    zoom(factor) {
-			this.$refs.cropper.zoom(factor);;
-		},
-		rotate(angle) {
-			this.$refs.cropper.rotate(angle);
-		},
+const itemsStore = useItemsStore()
+const imageStore = useImageStore()
+
+const innerLabel = ref(props.label)
+const innerUrl = ref(props.url)
+const innerFontColor = ref(props.fontColor)
+const innerBgColor = ref(props.bgColor)
+const useImageBg = ref(false)
+const innerBgImg64 = ref('')
+const file = ref(null)
+const fileInputRef = ref(null)
+const cropper = ref(null)
+
+onMounted(() => {
+  chromeStorage.getLocal(props.id).then((img) => {
+    if (img) {
+      useImageBg.value = !!img
+      innerBgImg64.value = img
+    }
+  })
+})
+
+const save = () => {
+  itemsStore.update(props.id, {
+    label: innerLabel.value,
+    url: innerUrl.value,
+    fontColor: innerFontColor.value,
+    bgColor: innerBgColor.value,
+  })
+
+  if (useImageBg.value) {
+    imageStore.set(props.id, innerBgImg64.value)
+    console.log('BG Image set')
+  } else {
+    imageStore.remove(props.id)
+    console.log('BG Image removed')
+  }
+  emit('close')
+}
+
+const onFile = (selectedFile) => {
+  if (!selectedFile) return
+  const blob = URL.createObjectURL(selectedFile)
+  file.value = {
+    src: blob,
+    type: selectedFile.type,
+  }
+}
+
+const cropperChange = (result) => {
+  innerBgImg64.value = result.canvas.toDataURL(file.value.type)
+}
+
+const zoom = (factor) => {
+  if (cropper.value) {
+    cropper.value.zoom(factor)
+  }
+}
+
+const rotate = (angle) => {
+  if (cropper.value) {
+    cropper.value.rotate(angle)
   }
 }
 </script>
