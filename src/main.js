@@ -1,37 +1,37 @@
-import './assets/main.scss';
-import 'animate.css';
-import "vue-advanced-cropper/dist/style.css";
+import './assets/main.scss'
+import './assets/fontawesome/scss/fontawesome.scss'
+import './assets/fontawesome/scss/regular.scss'
+import './assets/fontawesome/scss/solid.scss'
+import './assets/fontawesome/scss/brands.scss'
+import 'animate.css'
+import 'vue-advanced-cropper/dist/style.css'
 
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import App from './App.vue';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
 
-import axios from 'axios';
-import VueAxios from 'vue-axios';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
-import Vue3ColorPicker from "vue3-colorpicker";
-import "vue3-colorpicker/style.css";
+import Vue3ColorPicker from 'vue3-colorpicker'
+import 'vue3-colorpicker/style.css'
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import './plugins/fontawesome';
-import PrimeVue from 'primevue/config';
-import MyPreset from '@/assets/primevue/theme';
+import PrimeVue from 'primevue/config'
+import MyPreset from '@/assets/primevue/theme'
 
-const app = createApp(App);
+const app = createApp(App)
 
-app.use(VueAxios, axios);
+app.use(VueAxios, axios)
 
-const pinia = createPinia();
-app.use(pinia);
+const pinia = createPinia()
+app.use(pinia)
 
-app.use(Vue3ColorPicker);
+app.use(Vue3ColorPicker)
 
 app.use(PrimeVue, {
   theme: {
     preset: MyPreset
   }
-});
+})
 
-app.component('font-awesome-icon', FontAwesomeIcon);
-
-app.mount('#app');
+app.mount('#app')
