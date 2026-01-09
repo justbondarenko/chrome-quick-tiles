@@ -6,65 +6,42 @@
     </div>
     <div class="flex flex-row gap-4 grow items-center justify-around">
       <span v-if="gridModeEnabled" class="text-xl font-semibold">Edit Mode Enabled</span>
+      <span>TEST</span>
     </div>
     <div class="flex flex-row gap-4 w-fit">
-      <button class="btn" @click="settingsStore.toggleGridEditMode()">
-        <i :class="`fa-solid fa-${gridModeEnabled ? 'lock-open' : 'lock'}`" />
-      </button>
+      <Button
+        severity="secondary"
+        @click="settingsStore.toggleGridEditMode()"
+        class="flex-shrink-0"
+      >
+        <template #icon>
+          <i :class="`fa-solid ${gridModeEnabled ? 'fa-lock-open' : 'fa-lock'} fa-fw`" />
+        </template>
+      </Button>
       <TileAdd :key="addTileKey" @saveTile="saveTile" />
       <SettingsSidebar />
     </div>
   </div>
 </template>
 
-<script>
-/* global __BUILD_TIMESTAMP__ */
-import BookmarksDrawer from "./bookmarks/BookmarksDrawer.vue";
-import RecentsDrawer from "./recents/RecentsDrawer.vue";
-import SettingsSidebar from "./settings/SettingsSidebar.vue";
-import TileAdd from "./tiles/TileAdd.vue";
-import { useItemsStore } from "@/stores/items";
-import { useSettingsStore } from "@/stores/settings";
+<script setup>
+import { ref, computed } from 'vue'
+import { useItemsStore } from '@/stores/items'
+import { useSettingsStore } from '@/stores/settings'
+import Button from 'primevue/button'
+import BookmarksDrawer from './BookmarksDrawer.vue'
+import RecentsDrawer from './RecentsDrawer.vue'
+import SettingsSidebar from './settings/SettingsSidebar.vue'
+import TileAdd from './tiles/TileAdd.vue'
+const itemsStore = useItemsStore()
+const settingsStore = useSettingsStore()
+const addTileKey = ref(0)
 
-export default {
-  components: {
-    SettingsSidebar,
-    TileAdd,
-    BookmarksDrawer,
-    RecentsDrawer,
-  },
-  data() {
-    return {
-      itemsStore: useItemsStore(),
-      settingsStore: useSettingsStore(),
-      addTileKey: 0,
-    };
-  },
-  computed: {
-    gridModeEnabled() {
-      return this.settingsStore.gridModeEnabled;
-    },
-    buildTimestamp() {
-      if (typeof __BUILD_TIMESTAMP__ !== "undefined") {
-        const date = new Date(__BUILD_TIMESTAMP__);
-        return date.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        });
-      }
-      return "Unknown";
-    },
-  },
-  methods: {
-    saveTile(value) {
-      this.itemsStore.addItem(value).then(() => this.addTileKey++);
-    },
-  },
-};
+const gridModeEnabled = computed(() => settingsStore.gridModeEnabled)
+
+const saveTile = (value) => {
+  itemsStore.addItem(value).then(() => addTileKey.value++)
+}
 </script>
 
 <style lang="scss"></style>
