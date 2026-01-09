@@ -57,6 +57,7 @@
           Favicon size: {{ settingsStore.tileFaviconSize ? `${settingsStore.tileFaviconSize}px` : 'Hide' }}
         </span>
         <SelectButton
+          :allowEmpty="false"
           v-model="tileFaviconSize"
           :options="faviconSizes"
           optionLabel="label"

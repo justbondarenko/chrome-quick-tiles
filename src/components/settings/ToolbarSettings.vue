@@ -1,8 +1,10 @@
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-      <span class="font-medium mb-1 whitespace-nowrap">Toolbar position:</span>
+      <splabel for="toolbar-position" class="font-medium mb-1 whitespace-nowrap">Toolbar position:</splabel>
       <SelectButton
+        id="toolbar-position"
+        :allowEmpty="false"
         v-model="toolbarPosition"
         :options="toolbarPositions"
         optionLabel="label"

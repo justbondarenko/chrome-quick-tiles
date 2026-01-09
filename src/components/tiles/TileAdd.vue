@@ -49,6 +49,7 @@
               <label for="tile-size-select" class="text-sm font-medium mb-1">Size</label>
               <SelectButton
                 id="tile-size-select"
+                :allowEmpty="false"
                 v-model="size"
                 :options="sizeOptions"
                 optionLabel="label"

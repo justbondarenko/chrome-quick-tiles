@@ -1,14 +1,21 @@
 <template>
-  <div class="app flex w-full h-screen gap-4" :class="[computedFlexOrientation]">
-    <ToolbarComponent />
-    <div class="grow p-4 flex flex-col justify-start items-start overflow-auto">
+  <div class="app w-screen h-screen relative" >
+    <ToolbarComponent class="absolute left-0 w-full" :class="{
+      'top-0 px-6 pt-4 pb-1': settingsStore.toolbarPosition === 'top',
+      'bottom-0 px-6 pb-4 pt-1': settingsStore.toolbarPosition === 'bottom',
+    }"/>
+    <div class="w-full h-full p-6 flex flex-col items-start overflow-auto py-[65px]" :class="{
+      'justify-start': settingsStore.gridAlign === 'start',
+      'justify-center': settingsStore.gridAlign === 'center',
+      'justify-end': settingsStore.gridAlign === 'end',
+    }">
       <TilesGrid />
     </div>
   </div>
 </template>
 
 <script setup>
-import { onBeforeMount, computed } from 'vue'
+import { onBeforeMount } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
 import { useImageStore } from '@/stores/image'
@@ -39,10 +46,6 @@ onBeforeMount(async () => {
     console.error('Failed to load app data:', error)
   }
 })
-
-const computedFlexOrientation = computed(() => {
-  return settingsStore.toolbarPosition === 'top' ? 'flex-col' : 'flex-col-reverse'
-});
 </script>
 
 <style scoped></style>

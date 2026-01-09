@@ -1,5 +1,5 @@
 <template>
-  <div class="flex gap-4 px-6 pt-4 pb-1">
+  <div class="flex gap-4">
     <div class="ml-0 mr-2 flex flex-row items-center gap-4 w-fit">
       <BookmarksDrawer />
       <RecentsDrawer />
