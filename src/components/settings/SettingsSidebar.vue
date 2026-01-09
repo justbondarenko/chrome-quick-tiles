@@ -1,68 +1,77 @@
 <template>
-  <div class="drawer drawer-end">
-    <input id="settings-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content">
-      <label for="settings-drawer" class="btn drawer-button flex flex-nowrap">
-        <i class="fa-solid fa-gear" />
-        <span v-if="settingsStore.showSettingsLabel" class="whitespace-nowrap">Settings</span>
-      </label>
-    </div>
-    <div class="drawer-side z-50">
-      <label for="settings-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-      <div class="p-4 w-fit h-full max-h-screen overflow-auto bg-base-200 text-base-content flex flex-col">
-        <p class="prose-2xl">Settings</p>
-        <div class="divider" />
-        <div class="settings-wrapper flex flex-col gap-4 h-full">
-          <GridSettings :settings-store="settingsStore" />
-          <ToolbarSettings :settings-store="settingsStore" />
-          <TileSettings :settings-store="settingsStore" />
-          <ExportImport :settings-store="settingsStore" />
-        </div>
-        <MyContacts :settings-store="settingsStore" class="mt-auto" />
+  <Button
+    severity="secondary"
+    icon="fa-solid fa-gear"
+    :label="settingsStore.showSettingsLabel ? 'Settings' : undefined"
+    @click="visible = true"
+    class="flex flex-nowrap"
+  />
+  <Drawer v-model:visible="visible" header="Settings" position="right" class="!w-96">
+    <div class="flex flex-col gap-4 h-full">
+      <div class="settings-wrapper flex flex-col gap-4 flex-1 overflow-y-auto">
+        <Accordion :value="[]" multiple>
+          <AccordionPanel value="0">
+            <AccordionHeader>
+              <span class="text-xl font-medium">Page settings</span>
+            </AccordionHeader>
+            <AccordionContent>
+              <GridSettings :settings-store="settingsStore" />
+            </AccordionContent>
+          </AccordionPanel>
+          <AccordionPanel value="1">
+            <AccordionHeader>
+              <span class="text-xl font-medium">Toolbar settings</span>
+            </AccordionHeader>
+            <AccordionContent>
+              <ToolbarSettings :settings-store="settingsStore" />
+            </AccordionContent>
+          </AccordionPanel>
+          <AccordionPanel value="2">
+            <AccordionHeader>
+              <span class="text-xl font-medium">Tile settings</span>
+            </AccordionHeader>
+            <AccordionContent>
+              <TileSettings :settings-store="settingsStore" />
+            </AccordionContent>
+          </AccordionPanel>
+          <AccordionPanel value="3">
+            <AccordionHeader>
+              <span class="text-xl font-medium">Export & Import settings</span>
+            </AccordionHeader>
+            <AccordionContent>
+              <ExportImport :settings-store="settingsStore" />
+            </AccordionContent>
+          </AccordionPanel>
+        </Accordion>
       </div>
+      <MyContacts :settings-store="settingsStore" class="mt-auto" />
     </div>
-  </div>
+  </Drawer>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
-import GridSettings from './GridSettings.vue';
-import ToolbarSettings from './ToolbarSettings.vue';
-import TileSettings from './TileSettings.vue';
-import ExportImport from './ExportImport.vue';
-import MyContacts from './MyContacts.vue';
+import Button from 'primevue/button'
+import Drawer from 'primevue/drawer'
+import Accordion from 'primevue/accordion'
+import AccordionPanel from 'primevue/accordionpanel'
+import AccordionHeader from 'primevue/accordionheader'
+import AccordionContent from 'primevue/accordioncontent'
+import GridSettings from './GridSettings.vue'
+import ToolbarSettings from './ToolbarSettings.vue'
+import TileSettings from './TileSettings.vue'
+import ExportImport from './ExportImport.vue'
+import MyContacts from './MyContacts.vue'
 
-export default {
-    name: 'SettingsSidebar',
-    setup() {
-    },
-    data() {
-      return {
-          settingsStore: useSettingsStore()
-      };
-    },
-    methods: {
-      onTileCornerRadiusChange(value) {
-          return this.settingsStore.setTileCornerRadius(value);
-      },
-      onTileLabelPosChange(value) {
-          return this.settingsStore.setTileLabelPosition(value);
-      },
-    },
-    components: { GridSettings, ToolbarSettings, TileSettings, ExportImport, MyContacts }
-}
+const settingsStore = useSettingsStore()
+const visible = ref(false)
 </script>
 
-<style lang="scss">
-.page-settings-item {
-  display: flex;
-  flex-direction: column;
-  border-radius: 15px;
-  padding: 15px;
-}
-
-.drawer-side {
-  max-width: 100vw;
-  overflow-x: hidden;
+<style lang="scss" scoped>
+.settings-wrapper {
+  :deep(.p-accordion-content) {
+    padding: 1rem;
+  }
 }
 </style>

@@ -1,57 +1,81 @@
-<script>
-
-export default {
-  name: 'ToolbarSettings',
-  props: {
-    settingsStore: {
-      required: true
-    }
-  },
-  methods: {
-    onToolbarPositionChange(value) {
-      return this.settingsStore.setToolbarPosition(value ? 'top' : 'bottom');
-    },
-    toolbarPositions() {
-      return ['top', 'bottom']
-    }
-  }
-}
-</script>
-
 <template>
-  <div class="collapse bg-base-100">
-    <input type="radio" name="settings-accordion" />
-    <div class="collapse-title text-xl font-medium">
-      Toolbar settings
+  <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-2">
+      <span class="font-medium mb-1 whitespace-nowrap">Toolbar position:</span>
+      <SelectButton
+        v-model="toolbarPosition"
+        :options="toolbarPositions"
+        optionLabel="label"
+        optionValue="value"
+        @update:modelValue="onToolbarPositionChange"
+      />
     </div>
-    <div class="collapse-content flex flex-col gap-2">
-      <div class="page-settings-item hover:bg-base-200">
-        <label class="mb-1 whitespace-nowrap">Toolbar position:</label>
-        <div class="flex gap-1 items-center">
-          <div class="join w-fit">
-            <input v-for="option of toolbarPositions()" :key="option" class="join-item btn btn-sm"  type="radio" name="size-options" :aria-label="option.toUpperCase()" :checked="settingsStore.toolbarPosition === option" @click="settingsStore.setToolbarPosition(option)" />
-          </div>
+    <div class="flex flex-col gap-2">
+      <span class="font-medium mb-1 whitespace-nowrap">Labels</span>
+      <div class="flex flex-col gap-3">
+        <div class="flex items-center justify-between">
+          <label for="bookmarks-label" class="cursor-pointer">Bookmarks</label>
+          <ToggleButton
+            id="bookmarks-label"
+            v-model="showBookmarksLabel"
+            onLabel="Show"
+            offLabel="Hide"
+            @update:modelValue="settingsStore.toggleLabelFor('bookmarks')"
+            aria-label="Show bookmarks label"
+          />
         </div>
-      </div>
-      <div class="page-settings-item hover:bg-base-200">
-        <label class="mb-1 whitespace-nowrap">Show labels for:</label>
-        <div class="flex flex-col gap-2">
-          <div class="form-control w-100">
-            <label class="cursor-pointer label">
-              <span class="label-text">Bookmarks</span> 
-              <input type="checkbox" class="toggle toggle-sm" :checked="settingsStore.showBookmarksLabel"  @input="settingsStore.toggleLabelFor('bookmarks')"/>
-            </label>
-          </div>
-          <div class="form-control w-100">
-            <label class="cursor-pointer label">
-              <span class="label-text">Recently Closed</span> 
-              <input type="checkbox" class="toggle toggle-sm" :checked="settingsStore.showRecentlyClosedLabel" @input="settingsStore.toggleLabelFor('recentlyClosed')"/>
-            </label>
-          </div>
+        <div class="flex items-center justify-between">
+          <label for="recently-closed-label" class="cursor-pointer">Recently Closed</label>
+          <ToggleButton
+            id="recently-closed-label"
+            v-model="showRecentlyClosedLabel"
+            onLabel="Show"
+            offLabel="Hide"
+            @update:modelValue="settingsStore.toggleLabelFor('recentlyClosed')"
+            aria-label="Show recently closed label"
+          />
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script setup>
+import { ref, watch } from 'vue'
+import SelectButton from 'primevue/selectbutton'
+import ToggleButton from 'primevue/togglebutton'
+
+const props = defineProps({
+  settingsStore: {
+    type: Object,
+    required: true
+  }
+})
+
+const toolbarPositions = [
+  { label: 'Top', value: 'top' },
+  { label: 'Bottom', value: 'bottom' }
+]
+
+const toolbarPosition = ref(props.settingsStore.toolbarPosition)
+const showBookmarksLabel = ref(props.settingsStore.showBookmarksLabel)
+const showRecentlyClosedLabel = ref(props.settingsStore.showRecentlyClosedLabel)
+
+watch(() => props.settingsStore.toolbarPosition, (newValue) => {
+  toolbarPosition.value = newValue
+})
+
+watch(() => props.settingsStore.showBookmarksLabel, (newValue) => {
+  showBookmarksLabel.value = newValue
+})
+
+watch(() => props.settingsStore.showRecentlyClosedLabel, (newValue) => {
+  showRecentlyClosedLabel.value = newValue
+})
+
+const onToolbarPositionChange = (value) => {
+  props.settingsStore.setToolbarPosition(value)
+}
+</script>
 
 <style lang="scss" scoped></style>
