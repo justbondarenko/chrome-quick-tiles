@@ -2,7 +2,7 @@
   <li>
     <details :open="isOpen" @toggle="handleToggle">
       <summary>
-        <font-awesome-icon :icon="['fas', isOpen ? 'folder-open' : 'folder']" />{{
+        <i :class="`fa-solid fa-${isOpen ? 'folder-open' : 'folder'}`" />{{
           title
         }}
       </summary>

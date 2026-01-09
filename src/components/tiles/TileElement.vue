@@ -157,21 +157,19 @@ export default {
         class="btn btn-ghost btn-square btn-xs hover:scale-110"
         @click.prevent="changeSize()"
       >
-        <font-awesome-icon
-          :icon="['fas', size === 's' ? 'chevron-right' : 'chevron-left']"
-        />
+        <i :class="`fa-solid fa-${size === 's' ? 'chevron-right' : 'chevron-left'}`" />
       </button>
       <button
         class="btn btn-ghost btn-square btn-xs hover:scale-110"
         @click.prevent="$emit('edit')"
       >
-        <font-awesome-icon :icon="['fas', 'edit']" />
+        <i class="fa-solid fa-edit" />
       </button>
       <button
         class="btn btn-ghost btn-square btn-xs hover:scale-110 text-red-600"
         @click.prevent="$emit('remove')"
       >
-        <font-awesome-icon :icon="['fas', 'trash']" />
+        <i class="fa-solid fa-trash" />
       </button>
     </div>
   </a>

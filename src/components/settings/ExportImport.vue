@@ -110,10 +110,10 @@ export default {
     </div>
     <div class="collapse-content">
       <div class="join w-full">
-        <label for="import" class="btn join-item w-1/2"><font-awesome-icon :icon="['fas', 'download']" /> Import</label>
+        <label for="import" class="btn join-item w-1/2"><i class="fa-solid fa-download" /> Import</label>
         <input id="import" type="file" class="file-input hidden file-input-bordered file-input-sm w-full max-w-xs"
           @input="importSettings" />
-        <button class="btn join-item w-1/2" @click="exportSettings()"> <font-awesome-icon :icon="['fas', 'upload']" />
+        <button class="btn join-item w-1/2" @click="exportSettings()"> <i class="fa-solid fa-upload" />
           Export</button>
       </div>
     </div>

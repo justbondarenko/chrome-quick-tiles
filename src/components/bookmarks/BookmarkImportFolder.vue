@@ -1,13 +1,13 @@
 <template>
   <details class="dropdown">
     <summary class="btn flex-nowrap">
-      <font-awesome-icon :icon="{ prefix: 'fas', iconName: 'folder' }" />Select & import
+      <i class="fa-solid fa-folder" />Select & import
     </summary>
     <ul class="overflow-y-auto p-2 shadow-md menu dropdown-content bg-base-200 rounded-box mt-1">
       <li class="pointer-events-none">All non-empty folders</li>
       <li v-for="item, index in extractFolders()" :key="index" class="w-48" @click="onItemClick(item)">
         <span>
-          <font-awesome-icon :icon="['fas', 'folder']" />
+          <i class="fa-solid fa-folder" />
           <span class="text-ellipsis overflow-hidden whitespace-nowrap">{{ item.title }}</span>
         </span>
       </li>

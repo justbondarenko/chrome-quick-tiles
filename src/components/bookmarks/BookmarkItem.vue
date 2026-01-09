@@ -8,7 +8,7 @@
         alt="favicon"
         @error="handleFaviconError"
       />
-      <font-awesome-icon v-else :icon="['far', 'bookmark']" class="mr-2" />
+      <i v-else class="fa-regular fa-bookmark mr-2" />
       <span class="bookmark-label text-md max-w-72 text-ellipsis overflow-hidden">{{
         title
       }}</span>
@@ -18,7 +18,7 @@
         class="absolute right-4 top-1/2 -translate-y-1/2 btn btn-xs btn-square invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-opacity duration-100 delay-300"
         @click.prevent.stop="addTile"
       >
-        <font-awesome-icon :icon="['fas', 'plus']" class="fa-xs" />
+        <i class="fa-solid fa-plus fa-xs" />
       </button>
     </a>
   </li>

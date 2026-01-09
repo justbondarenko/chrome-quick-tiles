@@ -9,12 +9,7 @@
     </div>
     <div class="flex flex-row gap-4 w-fit">
       <button class="btn" @click="settingsStore.toggleGridEditMode()">
-        <font-awesome-icon
-          :icon="{
-            prefix: 'fas',
-            iconName: gridModeEnabled ? 'lock-open' : 'lock',
-          }"
-        />
+        <i :class="`fa-solid fa-${gridModeEnabled ? 'lock-open' : 'lock'}`" />
       </button>
       <TileAdd :key="addTileKey" @saveTile="saveTile" />
       <SettingsSidebar />

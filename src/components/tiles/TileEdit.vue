@@ -21,20 +21,20 @@
         <template v-if="useImageBg">
           <label class="form-control w-full max-w-100">
             <div class="label">
-              <span><font-awesome-icon :icon="['fas', 'triangle-exclamation']" class="mr-2 mx-2" />Images are saved locally and are not synced between devices.</span>
+              <span><i class="fa-solid fa-triangle-exclamation mr-2 mx-2" />Images are saved locally and are not synced between devices.</span>
             </div>
             <input id="bgImageFileUpload" type="file" accept="image/*" class="file-input file-input-bordered file-input-md w-full max-w-100" @change="onFile($event.target.files[0])"/>
           </label>
           <div v-if="file" class="cropper-wrapper relative">
             <div class="cropper-btns z-10 p-3 rounded-md flex absolute bottom-3 right-3">
               <div class="join">
-                <button class="join-item btn btn-sm" @click="rotate(-90)"><font-awesome-icon :icon="['fas', 'rotate-left']"/></button>
-                <button class="join-item btn btn-sm" @click="rotate(90)"><font-awesome-icon :icon="['fas', 'rotate-right']"/></button>
+                <button class="join-item btn btn-sm" @click="rotate(-90)"><i class="fa-solid fa-rotate-left"/></button>
+                <button class="join-item btn btn-sm" @click="rotate(90)"><i class="fa-solid fa-rotate-right"/></button>
               </div>
               <div class="divider divider-horizontal" />
               <div class="join">
-                <button class="join-item btn btn-sm" @click="zoom(1.5)"><font-awesome-icon :icon="['fas', 'magnifying-glass-plus']"/></button>
-                <button class="join-item btn btn-sm" @click="zoom(0.5)"><font-awesome-icon :icon="['fas', 'magnifying-glass-minus']"/></button>
+                <button class="join-item btn btn-sm" @click="zoom(1.5)"><i class="fa-solid fa-magnifying-glass-plus"/></button>
+                <button class="join-item btn btn-sm" @click="zoom(0.5)"><i class="fa-solid fa-magnifying-glass-minus"/></button>
               </div>
             </div>
 
@@ -66,10 +66,10 @@
         </div>
       <div class="flex w-100">
         <button class="btn btn-ghost mt-4 ml-0 mr-2" @click="$emit('close')">
-          <font-awesome-icon :icon="{ prefix: 'fas', iconName: 'xmark-circle' }" /> Close
+          <i class="fa-solid fa-xmark-circle" /> Close
         </button>
         <button class="btn btn-success mt-4 mr-0 ml-auto" @click="save" :disabled="!(!!innerUrl)">
-          <font-awesome-icon :icon="{ prefix: 'fas', iconName: 'floppy-disk' }" /> Save
+          <i class="fa-solid fa-floppy-disk" /> Save
         </button>
       </div>
     </div>

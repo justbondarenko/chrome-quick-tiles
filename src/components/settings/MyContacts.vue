@@ -3,22 +3,22 @@
     <ul class="menu menu-horizontal bg-base-200 rounded-box">
       <li>
         <a href="https://instagram.com/18.bondarenko" target="_blank">
-          <font-awesome-icon :icon="['fab', 'instagram']" size="xl" />
+          <i class="fa-brands fa-instagram fa-xl" />
         </a>
       </li>
       <li>
         <a href="https://github.com/justbondarenko" target="_blank">
-          <font-awesome-icon :icon="['fab', 'github']" size="xl" />
+          <i class="fa-brands fa-github fa-xl" />
         </a>
       </li>
       <li>
         <a href="https://www.linkedin.com/in/andrii-bondarenko-8974a3b0/" target="_blank">
-          <font-awesome-icon :icon="['fab', 'linkedin']" size="xl" />
+          <i class="fa-brands fa-linkedin fa-xl" />
         </a>
       </li>
       <li>
         <a href="mailto:just.bondarenko@gmail.com" target="_blank">
-          <font-awesome-icon :icon="['fas', 'envelope']" size="xl" />
+          <i class="fa-solid fa-envelope fa-xl" />
         </a>
       </li>
     </ul>
