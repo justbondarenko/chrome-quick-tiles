@@ -1,125 +1,119 @@
 <script>
-import { useSettingsStore } from "@/stores/settings";
-import { useImageStore } from "@/stores/image";
-import { chromeStorage } from "@/plugins/chromeStorage";
-
+import { useSettingsStore } from '@/stores/settings'
+import { useImageStore } from '@/stores/image'
+import { chromeStorage } from '@/plugins/chromeStorage'
+import Button from 'primevue/button'
+import ButtonGroup from 'primevue/buttongroup'
 export default {
-  name: "TileElement",
-  components: {},
+  name: 'TileElement',
+  components: { Button, ButtonGroup },
   props: {
     id: {
       type: String,
-      required: true,
+      required: true
     },
     label: {
       type: String,
-      required: true,
+      required: true
     },
     url: {
       type: String,
-      required: true,
+      required: true
     },
     cornerRadius: {
-      type: String,
+      type: String
     },
     size: {
       type: String,
-      default: "s",
+      default: 's'
     },
     bgColor: {
       type: String,
-      default: "black",
+      default: 'black'
     },
     fontColor: {
       type: String,
-      default: "white",
-    },
+      default: 'white'
+    }
   },
   data() {
     return {
       settingsStore: useSettingsStore(),
       imgStore: useImageStore(),
-      active: false,
-    };
+      active: false
+    }
   },
   computed: {
     gridModeEnabled() {
-      return this.settingsStore.gridModeEnabled;
+      return this.settingsStore.gridModeEnabled
     },
     // Cache favicon URL to avoid reconstruction on every render
     faviconUrl() {
       if (!this.url || !this.settingsStore.tileFaviconSize) {
-        return null;
+        return null
       }
       // Create URL only once and cache it
-      const url = new URL(chromeStorage.getRuntimeURL("/_favicon/"));
-      url.searchParams.set("pageUrl", this.url);
-      url.searchParams.set("size", this.settingsStore.tileFaviconSize);
-      return url.toString();
-    },
+      const url = new URL(chromeStorage.getRuntimeURL('/_favicon/'))
+      url.searchParams.set('pageUrl', this.url)
+      url.searchParams.set('size', this.settingsStore.tileFaviconSize)
+      return url.toString()
+    }
   },
   mounted() {
     // Preload favicon for better performance
-    this.preloadFavicon();
+    this.preloadFavicon()
   },
   methods: {
     // Preload favicon to improve perceived performance
     preloadFavicon() {
       if (this.faviconUrl) {
-        const img = new Image();
-        img.src = this.faviconUrl;
+        const img = new Image()
+        img.src = this.faviconUrl
         img.onload = () => {
           // Favicon loaded successfully
-        };
+        }
         img.onerror = () => {
           // Handle favicon loading errors gracefully
-          console.warn(`Failed to load favicon for: ${this.url}`);
-        };
+          console.warn(`Failed to load favicon for: ${this.url}`)
+        }
       }
     },
     style: function () {
-      const width =
-        this.size === "s" ? 128 : 128 * 2 + Number(this.settingsStore.gridGap);
-      const styles = [
-        `border-radius: ${this.settingsStore.tileCornerRadius}px !important; width: ${width}px;`,
-      ];
-      styles.push(`background-color: ${this.bgColor};`);
-      styles.push(`color: ${this.fontColor};`);
-      return styles.join("");
+      const width = this.size === 's' ? 128 : 128 * 2 + Number(this.settingsStore.gridGap)
+      const styles = [`border-radius: ${this.settingsStore.tileCornerRadius}px !important; width: ${width}px;`]
+      styles.push(`background-color: ${this.bgColor};`)
+      styles.push(`color: ${this.fontColor};`)
+      return styles.join('')
     },
     textAlign() {
-      return this.settingsStore.tileLabelPosition.includes("right")
-        ? "text-right"
-        : "text-left";
+      return this.settingsStore.tileLabelPosition.includes('right') ? 'text-right' : 'text-left'
     },
     labelPosition: function () {
-      return this.settingsStore.tileLabelPosition;
+      return this.settingsStore.tileLabelPosition
     },
     controlsPosition: function () {
-      return ["top right", "top left"].includes(this.settingsStore.tileLabelPosition)
-        ? "bottom right"
-        : "top right";
+      return ['top right', 'top left'].includes(this.settingsStore.tileLabelPosition) ? 'bottom-0.5 right-0.5' : 'top-0.5 right-0.5'
     },
     faviconPosition() {
-      return ["top right", "top left"].includes(this.settingsStore.tileLabelPosition)
-        ? "bottom-3 left-3"
-        : "top-3 left-3";
+      return ['top right', 'top left'].includes(this.settingsStore.tileLabelPosition)
+        ? 'bottom-3 left-3'
+        : 'top-3 left-3'
     },
     changeSize() {
-      this.$emit("setSize", this.size === "s" ? "m" : "s");
-    },
-  },
-};
+      this.$emit('setSize', this.size === 's' ? 'm' : 's')
+    }
+  }
+}
 </script>
 
 <template>
   <a
-    class="btn tile p-1 group"
+    class="cursor-pointer tile p-1 group"
     :class="[
       size,
       {
-        'cursor-move': gridModeEnabled,
-      },
+        'cursor-move': gridModeEnabled
+      }
     ]"
     :href="url"
     :style="style()"
@@ -136,42 +130,25 @@ export default {
       class="image-wrapper bg-gradient-to-t from-black to-50%"
       :style="`border-radius:${this.settingsStore.tileCornerRadius}px`"
     >
-      <img
-        class="w-full h-full"
-        :src="imgStore.items[id]"
-        :alt="`Tile background for ${label}`"
-      />
+      <img class="w-full h-full" :src="imgStore.items[id]" :alt="`Tile background for ${label}`" />
     </div>
     <span
       v-if="!settingsStore.hideTileLabel"
       class="label absolute overflow-hidden whitespace-nowrap"
       :class="`${labelPosition()} ${textAlign()}`"
-      >{{ label }}</span
     >
-    <div
-      v-if="gridModeEnabled"
-      class="tile-controls absolute"
-      :class="controlsPosition()"
-    >
-      <button
-        class="btn btn-ghost btn-square btn-xs hover:scale-110"
+      {{ label }}
+    </span>
+    <ButtonGroup v-if="gridModeEnabled" class="!hidden group-hover:!flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <Button
+        size="small"
+        severity="secondary"
+        :icon="`fa-solid fa-${size === 's' ? 'chevron-right' : 'chevron-left'}`"
         @click.prevent="changeSize()"
-      >
-        <i :class="`fa-solid fa-${size === 's' ? 'chevron-right' : 'chevron-left'}`" />
-      </button>
-      <button
-        class="btn btn-ghost btn-square btn-xs hover:scale-110"
-        @click.prevent="$emit('edit')"
-      >
-        <i class="fa-solid fa-edit" />
-      </button>
-      <button
-        class="btn btn-ghost btn-square btn-xs hover:scale-110 text-red-600"
-        @click.prevent="$emit('remove')"
-      >
-        <i class="fa-solid fa-trash" />
-      </button>
-    </div>
+      />
+      <Button size="small" severity="secondary" icon="fa-solid fa-edit" @click.prevent="$emit('edit')" />
+      <Button size="small" severity="danger" icon="fa-solid fa-trash" @click.prevent="$emit('remove')" />
+    </ButtonGroup>
   </a>
 </template>
 
@@ -179,11 +156,13 @@ export default {
 $base: 128px;
 
 .tile {
-  padding: 10px;
+  padding: 8px;
   color: white;
   position: relative;
   border: none;
-  transition: width 0.2s ease-in-out, left 0.2s ease-in-out;
+  transition:
+    width 0.2s ease-in-out,
+    left 0.2s ease-in-out;
 
   &:hover {
     transform: scale(1.05);
@@ -241,14 +220,6 @@ $base: 128px;
 
   .tile-controls {
     z-index: 100;
-    display: flex;
-    flex-direction: row;
-    gap: 2px;
-    background: rgba(0, 0, 0, 0.1);
-    padding: 4px;
-    border-radius: 8px;
-    backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.703);
   }
 }
 

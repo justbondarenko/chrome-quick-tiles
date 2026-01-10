@@ -31,7 +31,7 @@ app.use(Vue3ColorPicker)
 app.use(PrimeVue, {
   theme: {
     preset: MyPreset
-  }
+  },
 })
 
 app.mount('#app')

@@ -60,10 +60,7 @@ export default {
     dragClass="tile-drag"
     item-key="id"
     :class="[
-      'tiles-grid flex overflow-auto flex-wrap mx-auto p-4 rounded-xl transition-colors duration-300',
-      {
-        'bg-slate-100 outline-slate-300 outline-3 outline-dashed outline-offset-2': reorderEnabled,
-      },
+      'tiles-grid flex overflow-auto flex-wrap mx-auto p-4 rounded-xl transition-colors duration-300'
     ]"
     :style="style()"
     @start="drag = true"

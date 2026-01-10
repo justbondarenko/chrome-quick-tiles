@@ -31,15 +31,15 @@
           v-if="item.url === 'chrome://bookmarks'"
           class="fa-solid fa-up-right-from-square fa-fw ml-2"
         />
-        <button
+        <Button
           v-if="item.url && item.showAddButton"
-          type="button"
-          class="opacity-0 group-hover:opacity-100 transition-opacity btn btn-xs btn-square ml-auto"
+          severity="secondary"
+          size="small"
+          icon="fa-solid fa-plus"
+          class="opacity-0 group-hover:opacity-100 transition-opacity ml-auto"
           @click.prevent="addTile(item)"
           aria-label="Add to tiles"
-        >
-          <i :class="`fa-solid fa-plus`" class="fa-xs fa-fw" />
-        </button>
+        />
         <i v-if="hasSubmenu" class="fa-solid fa-angle-right fa-fw ml-auto"></i>
       </a>
     </template>

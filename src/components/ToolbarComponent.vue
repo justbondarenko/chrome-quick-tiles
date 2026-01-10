@@ -5,8 +5,6 @@
       <RecentsDrawer />
     </div>
     <div class="flex flex-row gap-4 grow items-center justify-around">
-      <span v-if="gridModeEnabled" class="text-xl font-semibold">Edit Mode Enabled</span>
-      <span>TEST</span>
     </div>
     <div class="flex flex-row gap-4 w-fit">
       <Button
@@ -33,6 +31,8 @@ import BookmarksDrawer from './BookmarksDrawer.vue'
 import RecentsDrawer from './RecentsDrawer.vue'
 import SettingsSidebar from './settings/SettingsSidebar.vue'
 import TileAdd from './tiles/TileAdd.vue'
+import Message from 'primevue/message'
+
 const itemsStore = useItemsStore()
 const settingsStore = useSettingsStore()
 const addTileKey = ref(0)

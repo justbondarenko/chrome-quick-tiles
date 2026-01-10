@@ -1,31 +1,44 @@
 <template>
-  <div class="app w-screen h-screen relative" >
-    <ToolbarComponent class="absolute left-0 w-full" :class="{
-      'top-0 px-6 pt-4 pb-1': settingsStore.toolbarPosition === 'top',
-      'bottom-0 px-6 pb-4 pt-1': settingsStore.toolbarPosition === 'bottom',
-    }"/>
-    <div class="w-full h-full p-6 flex flex-col items-start overflow-auto py-[65px]" :class="{
-      'justify-start': settingsStore.gridAlign === 'start',
-      'justify-center': settingsStore.gridAlign === 'center',
-      'justify-end': settingsStore.gridAlign === 'end',
-    }">
+  <div class="app w-screen h-screen relative">
+    <ToolbarComponent
+      class="absolute left-0 w-full"
+      :class="{
+        'top-0 px-6 pt-4 pb-1': settingsStore.toolbarPosition === 'top',
+        'bottom-0 px-6 pb-4 pt-1': settingsStore.toolbarPosition === 'bottom'
+      }"
+    />
+    <Message v-if="gridModeEnabled" class="absolute top-4 left-1/2 -translate-x-1/2" size="small" severity="error" icon="fa-solid fa-pen-to-square" :closable="false">
+        Edit Mode Enabled
+    </Message>
+    <div
+      class="w-full h-full p-6 flex flex-col items-start overflow-auto py-[65px] transition-shadow duration-300"
+      :class="{
+        'justify-start': settingsStore.gridAlign === 'start',
+        'justify-center': settingsStore.gridAlign === 'center',
+        'justify-end': settingsStore.gridAlign === 'end'
+      }"
+      :style="`box-shadow: ${editModeShadow};`"
+    >
       <TilesGrid />
     </div>
+    <Message v-if="gridModeEnabled" class="absolute bottom-4 left-1/2 -translate-x-1/2" size="small" severity="secondary" icon="fa-solid fa-info-circle" :closable="false">Hint: Hover over a tile to see the controls.</Message>
   </div>
 </template>
 
 <script setup>
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, computed } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
 import { useImageStore } from '@/stores/image'
 import ToolbarComponent from './components/ToolbarComponent.vue'
 import TilesGrid from '@/components/tiles/TilesGrid.vue'
 import { chromeStorage } from './plugins/chromeStorage'
+import Message from 'primevue/message'
 
 const settingsStore = useSettingsStore()
 const itemsStore = useItemsStore()
 const imagesStore = useImageStore()
+const gridModeEnabled = computed(() => settingsStore.gridModeEnabled)
 
 onBeforeMount(async () => {
   try {
@@ -45,6 +58,10 @@ onBeforeMount(async () => {
   } catch (error) {
     console.error('Failed to load app data:', error)
   }
+})
+
+const editModeShadow = computed(() => {
+  return gridModeEnabled.value ? 'rgba(220, 38, 38, 0.5) 0px 0px 50px 0px inset' : 'none'
 })
 </script>
 
