@@ -31,6 +31,7 @@
           alt="favicon"
           @error="handleFaviconError(item)"
         />
+        <span v-else-if="item.emoji" class="flex-shrink-0">{{ item.emoji }}</span>
         <i v-else-if="item.icon" :class="item.icon" class="fa-fw" />
         <span class="truncate w-full">{{ item.label }}</span>
         <i v-if="item.url === 'chrome://bookmarks'" class="fa-solid fa-up-right-from-square fa-fw ml-2" />
@@ -45,7 +46,6 @@ import { ref, onMounted } from 'vue'
 import Button from 'primevue/button'
 import TieredMenu from 'primevue/tieredmenu'
 import { useSettingsStore } from '@/stores/settings'
-import { useItemsStore } from '@/stores/items'
 import { chromeStorage } from '@/plugins/chromeStorage'
 
 const settingsStore = useSettingsStore()
@@ -98,13 +98,32 @@ const transformBookmarksToMenuItems = (bookmarks) => {
   return items
 }
 
+const extractEmoji = (text) => {
+  if (!text) return null
+
+  const emojiRegex = /^(\p{Emoji_Presentation}|\p{Emoji}\uFE0F|\p{Emoji}\u200D[\p{Emoji}\u200D]*)/u
+  const match = text.match(emojiRegex)
+  return match ? match[0] : null
+}
+
+const stripEmoji = (text) => {
+  if (!text) return text
+
+  const emojiRegex = /^(\p{Emoji_Presentation}|\p{Emoji}\uFE0F|\p{Emoji}\u200D[\p{Emoji}\u200D]*)\s*/u
+  return text.replace(emojiRegex, '').trim()
+}
+
 const transformBookmarkToMenuItem = (bookmark) => {
   if (bookmark.id === '0') {
     return null
   }
 
+  const title = bookmark.title || 'Untitled'
+  const emoji = extractEmoji(title)
+  const label = emoji ? stripEmoji(title) : title
+
   const item = {
-    label: bookmark.title || 'Untitled',
+    label,
     id: bookmark.id
   }
 
@@ -123,7 +142,12 @@ const transformBookmarkToMenuItem = (bookmark) => {
         }
       ]
     }
-    item.icon = 'fa-solid fa-folder'
+
+    if (emoji) {
+      item.emoji = emoji
+    } else {
+      item.icon = 'fa-solid fa-folder'
+    }
   } else if (bookmark.children && bookmark.children.length === 0) {
     item.items = [
       {
@@ -131,7 +155,12 @@ const transformBookmarkToMenuItem = (bookmark) => {
         isDummy: true
       }
     ]
-    item.icon = 'fa-solid fa-folder'
+
+    if (emoji) {
+      item.emoji = emoji
+    } else {
+      item.icon = 'fa-solid fa-folder'
+    }
   }
   // If it's a bookmark (has URL)
   else if (bookmark.url) {
