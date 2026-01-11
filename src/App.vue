@@ -7,11 +7,18 @@
         'bottom-0 px-6 pb-4 pt-1': settingsStore.toolbarPosition === 'bottom'
       }"
     />
-    <Message v-if="gridModeEnabled" class="absolute top-4 left-1/2 -translate-x-1/2" size="small" severity="error" icon="fa-solid fa-pen-to-square" :closable="false">
-        Edit Mode Enabled
+    <Message
+      v-if="gridModeEnabled"
+      class="absolute top-4 left-1/2 -translate-x-1/2 z-10"
+      size="small"
+      severity="error"
+      icon="fa-solid fa-pen-to-square"
+      :closable="false"
+    >
+      Edit Mode Enabled
     </Message>
     <div
-      class="w-full h-full p-6 flex flex-col items-start overflow-auto py-[65px] transition-shadow duration-300"
+      class="w-full h-full p-6 flex flex-col items-start overflow-auto py-[65px] transition-all duration-300"
       :class="{
         'justify-start': settingsStore.gridAlign === 'start',
         'justify-center': settingsStore.gridAlign === 'center',
@@ -21,7 +28,17 @@
     >
       <TilesGrid />
     </div>
-    <Message v-if="gridModeEnabled" class="absolute bottom-4 left-1/2 -translate-x-1/2" size="small" severity="secondary" icon="fa-solid fa-info-circle" :closable="false">Hint: Hover over a tile to see the controls.</Message>
+    <DropArea @drop="handleDrop" align-x="left" align-y="bottom" :width="300" :height="150" />
+    <Message
+      v-if="gridModeEnabled"
+      class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10"
+      size="small"
+      severity="secondary"
+      icon="fa-solid fa-info-circle"
+      :closable="false"
+    >
+      Hint: Hover over a tile to see the controls, or drag to reorder.
+    </Message>
   </div>
 </template>
 
@@ -32,6 +49,7 @@ import { useItemsStore } from '@/stores/items'
 import { useImageStore } from '@/stores/image'
 import ToolbarComponent from './components/ToolbarComponent.vue'
 import TilesGrid from '@/components/tiles/TilesGrid.vue'
+import DropArea from './components/DropArea.vue'
 import { chromeStorage } from './plugins/chromeStorage'
 import Message from 'primevue/message'
 
@@ -63,6 +81,17 @@ onBeforeMount(async () => {
 const editModeShadow = computed(() => {
   return gridModeEnabled.value ? 'rgba(220, 38, 38, 0.5) 0px 0px 50px 0px inset' : 'none'
 })
+
+const addTile = (url) => {
+  itemsStore.addItem({
+    url,
+    label: '(untitled)'
+  })
+}
+
+const handleDrop = (url) => {
+  addTile(url)
+}
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped></style>

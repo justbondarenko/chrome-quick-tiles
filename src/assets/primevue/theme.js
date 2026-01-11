@@ -1,7 +1,19 @@
 import { definePreset } from '@primeuix/themes'
 import Lara from '@primeuix/themes/lara'
 
+const button = {
+  root: {
+    sm: {
+      paddingX: '0.625rem',
+      paddingY: '0.375rem'
+    }
+  }
+}
+
 const MyPreset = definePreset(Lara, {
+  components: {
+    button
+  },
   semantic: {
     surface: {
       0: '#ffffff',

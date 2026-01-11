@@ -18,6 +18,7 @@ export const useSettingsStore = defineStore('settings', {
       showSettingsLabel: false,
       isInitialized: false,
       reorderEnabled: false,
+      gridModeEnabled: false,
     }
   },
   
@@ -76,6 +77,7 @@ export const useSettingsStore = defineStore('settings', {
         showRecentlyClosedLabel: false,
         showNewTileLabel: false,
         showSettingsLabel: false,
+        gridModeEnabled: false,
       });
       this.isInitialized = true;
     },

@@ -16,8 +16,14 @@
     }"
   >
     <template #item="{ item, props, hasSubmenu }">
-      <span v-if="item.isDummy" class="flex items-center gap-2 p-2 opacity-50">Empty</span>
-      <a v-else v-ripple :href="item.url || undefined" class="flex items-center gap-2 p-2 group" v-bind="props.action">
+      <span v-if="item.isDummy" class="flex items-center gap-2 px-4 py-2.5 opacity-50 select-none disabled">Empty</span>
+      <a
+        v-else
+        v-ripple
+        :href="item.url"
+        class="relative flex items-center gap-2 group w-full max-w-[250px]"
+        v-bind="props.action"
+      >
         <img
           v-if="item.favicon"
           :src="item.favicon"
@@ -26,20 +32,8 @@
           @error="handleFaviconError(item)"
         />
         <i v-else-if="item.icon" :class="item.icon" class="fa-fw" />
-        <span class="flex-1 truncate">{{ item.label }}</span>
-        <i
-          v-if="item.url === 'chrome://bookmarks'"
-          class="fa-solid fa-up-right-from-square fa-fw ml-2"
-        />
-        <Button
-          v-if="item.url && item.showAddButton"
-          severity="secondary"
-          size="small"
-          icon="fa-solid fa-plus"
-          class="opacity-0 group-hover:opacity-100 transition-opacity ml-auto"
-          @click.prevent="addTile(item)"
-          aria-label="Add to tiles"
-        />
+        <span class="truncate w-full">{{ item.label }}</span>
+        <i v-if="item.url === 'chrome://bookmarks'" class="fa-solid fa-up-right-from-square fa-fw ml-2" />
         <i v-if="hasSubmenu" class="fa-solid fa-angle-right fa-fw ml-auto"></i>
       </a>
     </template>
@@ -52,20 +46,15 @@ import Button from 'primevue/button'
 import TieredMenu from 'primevue/tieredmenu'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
-import { useBookmarksPanelStore } from '@/stores/bookmarksPanel'
 import { chromeStorage } from '@/plugins/chromeStorage'
 
 const settingsStore = useSettingsStore()
-const itemsStore = useItemsStore()
-const bookmarksPanelStore = useBookmarksPanelStore()
 
 const menu = ref(null)
 const bookmarksTree = ref([])
 const menuItems = ref([])
 
-// Initialize bookmarks panel store and load bookmarks
 onMounted(async () => {
-  await bookmarksPanelStore.initialize()
   loadBookmarks()
 })
 
@@ -172,18 +161,6 @@ const getFaviconUrl = (url) => {
 const handleFaviconError = (item) => {
   if (item) {
     item.favicon = null
-  }
-}
-
-const addTile = (item) => {
-  if (item.url) {
-    itemsStore.addItem({
-      url: item.url,
-      label: item.label,
-      fontColor: '#000000',
-      bgColor: '#ffffff',
-      size: 's'
-    })
   }
 }
 
