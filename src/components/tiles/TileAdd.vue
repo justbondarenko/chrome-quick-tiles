@@ -2,16 +2,11 @@
   <div>
     <Button
       severity="secondary"
-      icon="fa-solid fa-plus"
+      icon="pi pi-plus"
       :label="settingsStore.showNewTileLabel ? 'Add link' : undefined"
       @click="visible = true"
     />
-    <Drawer
-      v-model:visible="visible"
-      header="New Tile"
-      position="right"
-      class="!w-96"
-    >
+    <Drawer v-model:visible="visible" header="New Tile" position="right" class="!w-96">
       <div class="flex flex-col gap-4 h-full">
         <div class="new-tile-wrapper w-full flex flex-col gap-4 flex-1 overflow-y-auto">
           <TileElement
@@ -88,14 +83,7 @@
           </div>
         </div>
         <div class="mt-auto pt-4 border-t border-surface-600">
-          <Button
-            severity="secondary"
-            icon="fa-solid fa-floppy-disk"
-            label="Save"
-            @click="save"
-            :disabled="!url"
-            class="w-full"
-          />
+          <Button severity="secondary" icon="pi pi-save" label="Save" @click="save" :disabled="!url" class="w-full" />
         </div>
       </div>
     </Drawer>
@@ -174,8 +162,7 @@ const getDominantColor = (imageUrl, callback) => {
       return
     }
 
-    const height = (canvas.height =
-      img.naturalHeight || img.offsetHeight || img.height)
+    const height = (canvas.height = img.naturalHeight || img.offsetHeight || img.height)
     const width = (canvas.width = img.naturalWidth || img.offsetWidth || img.width)
 
     context.drawImage(img, 0, 0)

@@ -1,8 +1,5 @@
 import './assets/main.scss'
-import './assets/fontawesome/scss/fontawesome.scss'
-import './assets/fontawesome/scss/regular.scss'
-import './assets/fontawesome/scss/solid.scss'
-import './assets/fontawesome/scss/brands.scss'
+import 'primeicons/primeicons.css'
 import 'animate.css'
 import 'vue-advanced-cropper/dist/style.css'
 
@@ -31,7 +28,7 @@ app.use(Vue3ColorPicker)
 app.use(PrimeVue, {
   theme: {
     preset: MyPreset
-  },
+  }
 })
 
 app.mount('#app')

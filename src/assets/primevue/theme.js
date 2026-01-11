@@ -1,6 +1,5 @@
 import { definePreset } from '@primeuix/themes'
-import Lara from '@primeuix/themes/lara'
-
+import Aura from '@primeuix/themes/aura'
 const button = {
   root: {
     sm: {
@@ -10,7 +9,7 @@ const button = {
   }
 }
 
-const MyPreset = definePreset(Lara, {
+const MyPreset = definePreset(Aura, {
   components: {
     button
   },

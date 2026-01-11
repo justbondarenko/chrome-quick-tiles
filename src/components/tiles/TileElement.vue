@@ -92,7 +92,9 @@ export default {
       return this.settingsStore.tileLabelPosition
     },
     controlsPosition: function () {
-      return ['top right', 'top left'].includes(this.settingsStore.tileLabelPosition) ? 'bottom-0.5 right-0.5' : 'top-0.5 right-0.5'
+      return ['top right', 'top left'].includes(this.settingsStore.tileLabelPosition)
+        ? 'bottom-0.5 right-0.5'
+        : 'top-0.5 right-0.5'
     },
     faviconPosition() {
       return ['top right', 'top left'].includes(this.settingsStore.tileLabelPosition)
@@ -139,15 +141,19 @@ export default {
     >
       {{ label }}
     </span>
-    <ButtonGroup v-if="gridModeEnabled" class="!hidden group-hover:!flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <ButtonGroup
+      v-if="gridModeEnabled"
+      class="!hidden group-hover:!flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+    >
       <Button
         size="small"
         severity="secondary"
-        :icon="`fa-solid fa-${size === 's' ? 'chevron-right' : 'chevron-left'}`"
+        :icon="`pi ${size === 's' ? 'pi-arrows-h' : 'pi-arrow-down-left-and-arrow-up-right-to-center'}`"
+        :icon-class="size === 's' ? undefined : 'rotate-45'"
         @click.prevent="changeSize()"
       />
-      <Button size="small" severity="secondary" icon="fa-solid fa-edit" @click.prevent="$emit('edit')" />
-      <Button size="small" severity="danger" icon="fa-solid fa-trash" @click.prevent="$emit('remove')" />
+      <Button size="small" severity="secondary" icon="pi pi-pencil" @click.prevent="$emit('edit')" />
+      <Button size="small" severity="danger" icon="pi pi-trash" @click.prevent="$emit('remove')" />
     </ButtonGroup>
   </a>
 </template>

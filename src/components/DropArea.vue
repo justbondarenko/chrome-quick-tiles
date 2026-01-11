@@ -11,10 +11,8 @@
     @drop="handleDrop"
   >
     <div class="text-center p-6 flex flex-col items-center gap-4 justify-center">
-      <i class="fa-solid fa-arrows-to-dot text-4xl text-gray-300" />
-      <p class="text-lg font-semibold text-surface-900">
-        Drag here to add to the grid
-      </p>
+      <i class="pi pi-download text-4xl text-gray-300" />
+      <p class="text-lg text-surface-900">Drag here to add to the grid</p>
     </div>
   </div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <Button
     severity="secondary"
-    icon="fa-solid fa-gear"
+    icon="pi pi-cog"
     :label="settingsStore.showSettingsLabel ? 'Settings' : undefined"
     @click="visible = true"
     class="flex flex-nowrap"

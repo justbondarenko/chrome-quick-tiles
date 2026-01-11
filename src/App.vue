@@ -12,7 +12,7 @@
       class="absolute top-4 left-1/2 -translate-x-1/2"
       size="small"
       severity="error"
-      icon="fa-solid fa-pen-to-square"
+      icon="pi pi-pencil"
       :closable="false"
     >
       Edit Mode Enabled
@@ -29,7 +29,7 @@
       class="absolute bottom-4 left-1/2 -translate-x-1/2 z-10"
       size="small"
       severity="secondary"
-      icon="fa-solid fa-info-circle"
+      icon="pi pi-info-circle"
       :closable="false"
     >
       Hint: Hover over a tile to see the controls, or drag to reorder.

@@ -1,7 +1,7 @@
 <template>
   <Button
     severity="secondary"
-    icon="fa-regular fa-bookmark"
+    icon="pi pi-bookmark"
     @click="toggle"
     :label="settingsStore.showBookmarksLabel ? 'Bookmarks' : undefined"
   />
@@ -32,10 +32,10 @@
           @error="handleFaviconError(item)"
         />
         <span v-else-if="item.emoji" class="flex-shrink-0">{{ item.emoji }}</span>
-        <i v-else-if="item.icon" :class="item.icon" class="fa-fw" />
+        <i v-else-if="item.icon" :class="item.icon" />
         <span class="truncate w-full">{{ item.label }}</span>
-        <i v-if="item.url === 'chrome://bookmarks'" class="fa-solid fa-up-right-from-square fa-fw ml-2" />
-        <i v-if="hasSubmenu" class="fa-solid fa-angle-right fa-fw ml-auto"></i>
+        <i v-if="item.url === 'chrome://bookmarks'" class="pi pi-external-link ml-2" />
+        <i v-if="hasSubmenu" class="pi pi-angle-right ml-auto"></i>
       </a>
     </template>
   </TieredMenu>
@@ -146,7 +146,7 @@ const transformBookmarkToMenuItem = (bookmark) => {
     if (emoji) {
       item.emoji = emoji
     } else {
-      item.icon = 'fa-solid fa-folder'
+      item.icon = 'pi pi-folder'
     }
   } else if (bookmark.children && bookmark.children.length === 0) {
     item.items = [
@@ -159,7 +159,7 @@ const transformBookmarkToMenuItem = (bookmark) => {
     if (emoji) {
       item.emoji = emoji
     } else {
-      item.icon = 'fa-solid fa-folder'
+      item.icon = 'pi pi-folder'
     }
   }
   // If it's a bookmark (has URL)

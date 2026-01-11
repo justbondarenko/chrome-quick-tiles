@@ -4,16 +4,11 @@
       <BookmarksDrawer />
       <RecentsDrawer />
     </div>
-    <div class="flex flex-row gap-4 grow items-center justify-around">
-    </div>
+    <div class="flex flex-row gap-4 grow items-center justify-around"></div>
     <div class="flex flex-row gap-4 w-fit">
-      <Button
-        severity="secondary"
-        @click="settingsStore.toggleGridEditMode()"
-        class="flex-shrink-0"
-      >
+      <Button severity="secondary" @click="settingsStore.toggleGridEditMode()" class="flex-shrink-0">
         <template #icon>
-          <i :class="`fa-solid ${gridModeEnabled ? 'fa-lock-open' : 'fa-lock'} fa-fw`" />
+          <i :class="`pi ${gridModeEnabled ? 'pi-lock-open' : 'pi-lock'}`" />
         </template>
       </Button>
       <TileAdd :key="addTileKey" @saveTile="saveTile" />

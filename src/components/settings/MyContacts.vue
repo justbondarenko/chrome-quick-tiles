@@ -3,7 +3,7 @@
     <div class="flex gap-2">
       <Button
         as="a"
-        icon="fa-brands fa-instagram"
+        icon="pi pi-instagram"
         severity="secondary"
         text
         rounded
@@ -14,7 +14,7 @@
       />
       <Button
         as="a"
-        icon="fa-brands fa-threads"
+        icon="pi pi-comments"
         severity="secondary"
         text
         rounded
@@ -25,7 +25,7 @@
       />
       <Button
         as="a"
-        icon="fa-brands fa-github"
+        icon="pi pi-github"
         severity="secondary"
         text
         rounded
@@ -36,7 +36,7 @@
       />
       <Button
         as="a"
-        icon="fa-brands fa-linkedin"
+        icon="pi pi-linkedin"
         severity="secondary"
         text
         rounded
@@ -47,7 +47,7 @@
       />
       <Button
         as="a"
-        icon="fa-solid fa-envelope"
+        icon="pi pi-envelope"
         severity="secondary"
         text
         rounded

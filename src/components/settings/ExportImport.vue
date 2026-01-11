@@ -1,27 +1,9 @@
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex gap-2">
-      <Button
-        label="Import"
-        severity="secondary"
-        icon="fa-solid fa-download"
-        @click="fileInputRef?.click()"
-        class="flex-1"
-      />
-      <input
-        ref="fileInputRef"
-        type="file"
-        class="hidden"
-        accept=".zip"
-        @change="importSettings"
-      />
-      <Button
-        label="Export"
-        severity="secondary"
-        icon="fa-solid fa-upload"
-        @click="exportSettings"
-        class="flex-1"
-      />
+      <Button label="Import" severity="secondary" icon="pi pi-download" @click="fileInputRef?.click()" class="flex-1" />
+      <input ref="fileInputRef" type="file" class="hidden" accept=".zip" @change="importSettings" />
+      <Button label="Export" severity="secondary" icon="pi pi-upload" @click="exportSettings" class="flex-1" />
     </div>
   </div>
 </template>
@@ -67,30 +49,36 @@ const importSettings = (event) => {
 
   const reader = new FileReader()
   reader.onload = (e) => {
-    JSZip.loadAsync(e.target.result).then((zip) => {
-      zip.forEach((relativePath, zipEntry) => {
-        zipEntry.async('text').then((text) => {
-          const jsonData = JSON.parse(text)
-          switch (relativePath) {
-            case 'images.json':
-              return processImages(jsonData)
-            case 'links.json':
-              return processLinks(jsonData)
-            case 'settings.json':
-              return processSettings(jsonData)
-            default:
-              return
-          }
-        }, (err) => {
-          console.error(err)
+    JSZip.loadAsync(e.target.result).then(
+      (zip) => {
+        zip.forEach((relativePath, zipEntry) => {
+          zipEntry.async('text').then(
+            (text) => {
+              const jsonData = JSON.parse(text)
+              switch (relativePath) {
+                case 'images.json':
+                  return processImages(jsonData)
+                case 'links.json':
+                  return processLinks(jsonData)
+                case 'settings.json':
+                  return processSettings(jsonData)
+                default:
+                  return
+              }
+            },
+            (err) => {
+              console.error(err)
+            }
+          )
         })
-      })
-    }, (err) => {
-      console.error(err)
-    })
+      },
+      (err) => {
+        console.error(err)
+      }
+    )
   }
   reader.readAsArrayBuffer(selectedFile)
-  
+
   // Reset file input
   if (fileInputRef.value) {
     fileInputRef.value.value = ''

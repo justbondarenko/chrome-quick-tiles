@@ -1,7 +1,7 @@
 <template>
   <Button
     severity="secondary"
-    icon="fa-solid fa-clock-rotate-left"
+    icon="pi pi-history"
     @click="toggle"
     :label="settingsStore.showRecentlyClosedLabel ? 'Recently closed' : undefined"
   />
