@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="flex flex-col gap-6">
     <div class="flex flex-col gap-2">
       <label for="grid-width" class="text-sm font-medium mb-1 whitespace-nowrap">
         Grid width: {{ settingsStore.gridWidth }}%
@@ -28,52 +28,35 @@
         @update:modelValue="onGridGapChange"
       />
     </div>
-    <div class="flex flex-row gap-2 items-center">
-      <label for="grid-align" class="text-sm font-medium mb-1 whitespace-nowrap">
-        Align grid
+    <div class="flex flex-col gap-2">
+      <label for="grid-margin" class="text-sm font-medium mb-1 whitespace-nowrap">
+        Grid positioning: {{ settingsStore.gridMargin }}px
       </label>
-      <SelectButton
-        id="grid-align"
-        :allowEmpty="false"
-        v-model="gridAlign"
-        :options="gridAlignOptions"
-        optionLabel="label"
-        optionValue="value"
-        @update:modelValue="onGridAlignChange"
+      <Slider
+        id="grid-margin"
+        v-model="gridMargin"
+        :min="25"
+        :max="600"
+        :step="25"
+        class="w-full"
+        @update:modelValue="onGridMarginChange"
       />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { computed } from 'vue'
 import Slider from 'primevue/slider'
-import SelectButton from 'primevue/selectbutton'
+// import SelectButton from 'primevue/selectbutton'
+
 import { useSettingsStore } from '@/stores/settings'
 
 const settingsStore = useSettingsStore()
 
-const gridWidth = ref(Number(settingsStore.gridWidth))
-const gridGap = ref(Number(settingsStore.gridGap))
-const gridAlign = ref(settingsStore.gridAlign)
-
-const gridAlignOptions = [
-  { label: 'Top', value: 'start' },
-  { label: 'Center', value: 'center' },
-  { label: 'Bottom', value: 'end' }
-]
-
-watch(() => settingsStore.gridAlign, (newValue) => {
-  gridAlign.value = newValue
-})
-
-watch(() => settingsStore.gridWidth, (newValue) => {
-  gridWidth.value = Number(newValue)
-})
-
-watch(() => settingsStore.gridGap, (newValue) => {
-  gridGap.value = Number(newValue)
-})
+const gridWidth = computed(() => Number(settingsStore.gridWidth))
+const gridGap = computed(() => Number(settingsStore.gridGap))
+const gridMargin = computed(() => Number(settingsStore.gridMargin))
 
 const onGridWidthChange = (value) => {
   settingsStore.setGridWidth(String(value))
@@ -83,8 +66,8 @@ const onGridGapChange = (value) => {
   settingsStore.setGridGap(value)
 }
 
-const onGridAlignChange = (value) => {
-  settingsStore.setGridAlign(value)
+const onGridMarginChange = (value) => {
+  settingsStore.setGridMargin(value)
 }
 </script>
 

@@ -31,7 +31,6 @@ import BookmarksDrawer from './BookmarksDrawer.vue'
 import RecentsDrawer from './RecentsDrawer.vue'
 import SettingsSidebar from './settings/SettingsSidebar.vue'
 import TileAdd from './tiles/TileAdd.vue'
-import Message from 'primevue/message'
 
 const itemsStore = useItemsStore()
 const settingsStore = useSettingsStore()

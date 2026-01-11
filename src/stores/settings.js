@@ -6,7 +6,7 @@ export const useSettingsStore = defineStore('settings', {
     return {
       gridWidth: '',
       gridGap: 0,
-      gridAlign: 'start',
+      gridMargin: 50,
       tileCornerRadius: '',
       tileLabelPosition: '',
       toolbarPosition: '',
@@ -30,7 +30,7 @@ export const useSettingsStore = defineStore('settings', {
       try {
         // Load all settings in one batch operation
         const storedSettings = await chromeStorage.getMultiple([
-          'toolbarPosition', 'gridWidth', 'gridGap', 'gridAlign',
+          'toolbarPosition', 'gridWidth', 'gridGap', 'gridMargin',
           'tileCornerRadius', 'tileFaviconSize', 'hideTileLabel',
           'tileLabelPosition', 'showBookmarksLabel', 
           'showRecentlyClosedLabel', 'showNewTileLabel', 'showSettingsLabel'
@@ -41,7 +41,7 @@ export const useSettingsStore = defineStore('settings', {
           toolbarPosition: storedSettings.toolbarPosition ?? 'top',
           gridWidth: storedSettings.gridWidth ?? '95',
           gridGap: storedSettings.gridGap ?? 15,
-          gridAlign: storedSettings.gridAlign ?? 'start',
+          gridMargin: storedSettings.gridMargin ?? 50,
           tileCornerRadius: storedSettings.tileCornerRadius ?? '10',
           tileFaviconSize: storedSettings.tileFaviconSize ?? '24',
           hideTileLabel: storedSettings.hideTileLabel ?? false,
@@ -68,7 +68,7 @@ export const useSettingsStore = defineStore('settings', {
         toolbarPosition: 'top',
         gridWidth: '95',
         gridGap: 15,
-        gridAlign: 'start',
+        gridMargin: 50,
         tileCornerRadius: '10',
         tileFaviconSize: '24',
         hideTileLabel: true,
@@ -109,9 +109,9 @@ export const useSettingsStore = defineStore('settings', {
       this.gridGap = value;
       return await chromeStorage.set('gridGap', value);
     },
-    async setGridAlign(value) {
-      this.gridAlign = value;
-      return await chromeStorage.set('gridAlign', value);
+    async setGridMargin(value) {
+      this.gridMargin = value;
+      return await chromeStorage.set('gridMargin', value);
     },
     async setTileCornerRadius(value) {
       this.tileCornerRadius = value;

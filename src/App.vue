@@ -1,10 +1,10 @@
 <template>
   <div class="app w-screen h-screen relative">
     <ToolbarComponent
-      class="absolute left-0 w-full"
+      class="absolute left-0 w-full px-6"
       :class="{
-        'top-0 px-6 pt-4 pb-1': settingsStore.toolbarPosition === 'top',
-        'bottom-0 px-6 pb-4 pt-1': settingsStore.toolbarPosition === 'bottom'
+        'top-0 pt-6 pb-3': settingsStore.toolbarPosition === 'top',
+        'bottom-0 pb-6 pt-3': settingsStore.toolbarPosition === 'bottom'
       }"
     />
     <Message
@@ -18,12 +18,7 @@
       Edit Mode Enabled
     </Message>
     <div
-      class="w-full h-full p-6 flex flex-col items-start overflow-auto py-[65px] transition-all duration-300"
-      :class="{
-        'justify-start': settingsStore.gridAlign === 'start',
-        'justify-center': settingsStore.gridAlign === 'center',
-        'justify-end': settingsStore.gridAlign === 'end'
-      }"
+      class="w-full h-full p-6 flex flex-col items-start justify-start overflow-auto py-[65px] transition-all duration-300"
       :style="`box-shadow: ${editModeShadow};`"
     >
       <TilesGrid />

@@ -1,48 +1,3 @@
-<script setup>
-import { ref, computed } from 'vue';
-import draggable from 'vuedraggable';
-import TileElement from './TileElement.vue';
-import TileEdit from './TileEdit.vue';
-import Dialog from 'primevue/dialog';
-import { useSettingsStore } from '@/stores/settings';
-import { useItemsStore } from '@/stores/items';
-
-const settingsStore = useSettingsStore();
-const itemsStore = useItemsStore();
-
-const itemToEdit = ref(null);
-const removing = ref(null);
-const drag = ref(false);
-
-const gridModeEnabled = computed(() => settingsStore.gridModeEnabled);
-
-const editModalVisible = computed(() => !!itemToEdit.value);
-
-const style = () => {
-  return `gap:${settingsStore.gridGap}px;max-width:${settingsStore.gridWidth}%;`;
-};
-
-const setSize = (item, size) => {
-  itemsStore.setSize(item, size);
-};
-
-const remove = (item) => {
-  removing.value = item.id;
-  setTimeout(() => {
-    itemsStore.remove(item);
-    removing.value = null;
-  }, 300);
-};
-
-const edit = (id) => {
-  itemToEdit.value = itemsStore.getItemById(id);
-};
-
-const closeEditModal = () => {
-  itemToEdit.value = null;
-};
-</script>
-
 <template>
   <draggable
     v-if="itemsStore.items.length"
@@ -103,6 +58,51 @@ const closeEditModal = () => {
     />
   </Dialog>
 </template>
+
+<script setup>
+import { ref, computed } from 'vue';
+import draggable from 'vuedraggable';
+import TileElement from './TileElement.vue';
+import TileEdit from './TileEdit.vue';
+import Dialog from 'primevue/dialog';
+import { useSettingsStore } from '@/stores/settings';
+import { useItemsStore } from '@/stores/items';
+
+const settingsStore = useSettingsStore();
+const itemsStore = useItemsStore();
+
+const itemToEdit = ref(null);
+const removing = ref(null);
+const drag = ref(false);
+
+const gridModeEnabled = computed(() => settingsStore.gridModeEnabled);
+
+const editModalVisible = computed(() => !!itemToEdit.value);
+
+const style = () => {
+  return `gap:${settingsStore.gridGap}px;max-width:${settingsStore.gridWidth}%;margin-top:${settingsStore.gridMargin}px;`;
+};
+
+const setSize = (item, size) => {
+  itemsStore.setSize(item, size);
+};
+
+const remove = (item) => {
+  removing.value = item.id;
+  setTimeout(() => {
+    itemsStore.remove(item);
+    removing.value = null;
+  }, 300);
+};
+
+const edit = (id) => {
+  itemToEdit.value = itemsStore.getItemById(id);
+};
+
+const closeEditModal = () => {
+  itemToEdit.value = null;
+};
+</script>
 
 <style lang="scss" scoped>
 .tiles-grid {
