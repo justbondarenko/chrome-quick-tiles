@@ -1,7 +1,10 @@
 <template>
   <div class="flex flex-col gap-4">
     <div class="flex flex-col gap-2">
-      <splabel for="toolbar-position" class="font-medium mb-1 whitespace-nowrap">Toolbar position:</splabel>
+      <label for="toolbar-position" class="font-medium mb-1 whitespace-nowrap inline-flex items-center gap-2">
+        <i class="pi pi-arrows-v" />
+        Toolbar position:
+      </label>
       <SelectButton
         id="toolbar-position"
         :allowEmpty="false"
@@ -12,11 +15,14 @@
         @update:modelValue="onToolbarPositionChange"
       />
     </div>
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 mt-4">
       <span class="font-medium mb-1 whitespace-nowrap">Labels</span>
       <div class="flex flex-col gap-3">
         <div class="flex items-center justify-between">
-          <label for="bookmarks-label" class="cursor-pointer">Bookmarks</label>
+          <label for="bookmarks-label" class="cursor-pointer inline-flex items-center gap-2">
+            <i class="pi pi-bookmark" />
+            Bookmarks
+          </label>
           <ToggleButton
             id="bookmarks-label"
             v-model="showBookmarksLabel"
@@ -27,7 +33,10 @@
           />
         </div>
         <div class="flex items-center justify-between">
-          <label for="recently-closed-label" class="cursor-pointer">Recently Closed</label>
+          <label for="recently-closed-label" class="cursor-pointer inline-flex items-center gap-2">
+            <i class="pi pi-history" />
+            Recently Closed
+          </label>
           <ToggleButton
             id="recently-closed-label"
             v-model="showRecentlyClosedLabel"
@@ -63,17 +72,26 @@ const toolbarPosition = ref(props.settingsStore.toolbarPosition)
 const showBookmarksLabel = ref(props.settingsStore.showBookmarksLabel)
 const showRecentlyClosedLabel = ref(props.settingsStore.showRecentlyClosedLabel)
 
-watch(() => props.settingsStore.toolbarPosition, (newValue) => {
-  toolbarPosition.value = newValue
-})
+watch(
+  () => props.settingsStore.toolbarPosition,
+  (newValue) => {
+    toolbarPosition.value = newValue
+  }
+)
 
-watch(() => props.settingsStore.showBookmarksLabel, (newValue) => {
-  showBookmarksLabel.value = newValue
-})
+watch(
+  () => props.settingsStore.showBookmarksLabel,
+  (newValue) => {
+    showBookmarksLabel.value = newValue
+  }
+)
 
-watch(() => props.settingsStore.showRecentlyClosedLabel, (newValue) => {
-  showRecentlyClosedLabel.value = newValue
-})
+watch(
+  () => props.settingsStore.showRecentlyClosedLabel,
+  (newValue) => {
+    showRecentlyClosedLabel.value = newValue
+  }
+)
 
 const onToolbarPositionChange = (value) => {
   props.settingsStore.setToolbarPosition(value)

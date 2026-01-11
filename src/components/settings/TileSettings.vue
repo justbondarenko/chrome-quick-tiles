@@ -9,8 +9,8 @@
       url="http://google.com"
       :corner-radius="settingsStore.tileCornerRadius + 'px'"
     />
-    
-    <div class="flex flex-col gap-4">
+
+    <div class="flex flex-col gap-6">
       <div class="flex items-center justify-between">
         <label for="hide-labels" class="cursor-pointer">Label</label>
         <ToggleButton
@@ -22,9 +22,12 @@
           aria-label="Hide tile labels"
         />
       </div>
-      
-      <div v-if="!settingsStore.hideTileLabel" class="flex flex-col gap-2">
-        <span class="font-medium mb-1">Label position:</span>
+
+      <div v-if="!settingsStore.hideTileLabel" class="flex flex-col gap-3">
+        <span class="font-medium mb-1 whitespace-nowrap inline-flex items-center gap-2">
+          <i class="pi pi-th-large" />
+          Label position:
+        </span>
         <div class="grid grid-cols-2 gap-2">
           <Button
             v-for="position in labelPositions"
@@ -37,9 +40,10 @@
           />
         </div>
       </div>
-      
-      <div class="flex flex-col gap-2">
-        <span class="font-medium mb-1 whitespace-nowrap">
+
+      <div class="flex flex-col gap-3">
+        <span class="font-medium mb-1 whitespace-nowrap inline-flex items-center gap-2">
+          <i class="pi pi-expand" />
           Tile corner radius: {{ settingsStore.tileCornerRadius }}px
         </span>
         <Slider
@@ -51,9 +55,10 @@
           @update:modelValue="onTileCornerRadiusChange"
         />
       </div>
-      
-      <div class="flex flex-col gap-2">
-        <span class="font-medium mb-1 whitespace-nowrap">
+
+      <div class="flex flex-col gap-3">
+        <span class="font-medium mb-1 whitespace-nowrap inline-flex items-center gap-3">
+          <i class="pi pi-image" />
           Favicon size: {{ settingsStore.tileFaviconSize ? `${settingsStore.tileFaviconSize}px` : 'Hide' }}
         </span>
         <SelectButton

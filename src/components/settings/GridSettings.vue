@@ -1,7 +1,8 @@
 <template>
-  <div class="flex flex-col gap-6">
-    <div class="flex flex-col gap-2">
-      <label for="grid-width" class="text-sm font-medium mb-1 whitespace-nowrap">
+  <div class="flex flex-col gap-6 pb-3">
+    <div class="flex flex-col gap-3">
+      <label for="grid-width" class="font-medium mb-1 whitespace-nowrap inline-flex items-center gap-2">
+        <i class="pi pi-arrows-h" />
         Grid width: {{ settingsStore.gridWidth }}%
       </label>
       <Slider
@@ -14,8 +15,9 @@
         @update:modelValue="onGridWidthChange"
       />
     </div>
-    <div class="flex flex-col gap-2">
-      <label for="grid-gap" class="text-sm font-medium mb-1 whitespace-nowrap">
+    <div class="flex flex-col gap-3">
+      <label for="grid-gap" class="font-medium mb-1 whitespace-nowrap inline-flex items-center gap-2">
+        <i class="pi pi-th-large" />
         Grid gap: {{ settingsStore.gridGap }}px
       </label>
       <Slider
@@ -28,8 +30,9 @@
         @update:modelValue="onGridGapChange"
       />
     </div>
-    <div class="flex flex-col gap-2">
-      <label for="grid-margin" class="text-sm font-medium mb-1 whitespace-nowrap">
+    <div class="flex flex-col gap-3">
+      <label for="grid-margin" class="font-medium mb-1 whitespace-nowrap inline-flex items-center gap-2">
+        <i class="pi pi-arrows-v" />
         Grid positioning: {{ settingsStore.gridMargin }}px
       </label>
       <Slider
