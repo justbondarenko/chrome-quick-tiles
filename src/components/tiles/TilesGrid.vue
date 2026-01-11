@@ -1,51 +1,45 @@
-<script>
-import draggable from "vuedraggable";
-import TileElement from "./TileElement.vue";
-import TileEdit from "./TileEdit.vue";
-import { useSettingsStore } from "@/stores/settings";
-import { useItemsStore } from "@/stores/items";
+<script setup>
+import { ref, computed } from 'vue';
+import draggable from 'vuedraggable';
+import TileElement from './TileElement.vue';
+import TileEdit from './TileEdit.vue';
+import Dialog from 'primevue/dialog';
+import { useSettingsStore } from '@/stores/settings';
+import { useItemsStore } from '@/stores/items';
 
-export default {
-  name: "TilesGrid",
-  components: { TileElement, TileEdit, draggable },
-  data() {
-    return {
-      settingsStore: useSettingsStore(),
-      itemsStore: useItemsStore(),
-      showEdit: false,
-      itemToEdit: null,
-      removing: null,
-      drag: false,
-    };
-  },
-  computed: {
-    gridModeEnabled() {
-      return this.settingsStore.gridModeEnabled;
-    },
-  },
-  methods: {
-    style: function () {
-      return `gap:${this.settingsStore.gridGap}px;max-width:${this.settingsStore.gridWidth}%;`;
-    },
-    setSize(item, size) {
-      this.itemsStore.setSize(item, size);
-    },
-    remove(item) {
-      this.removing = item.id;
-      setTimeout(() => {
-        this.itemsStore.remove(item);
-        this.removing = null;
-      }, 300);
-    },
-    edit(id) {
-      this.itemToEdit = this.itemsStore.getItemById(id);
-      this.showEdit = id;
-    },
-    closeEditModal() {
-      this.showEdit = null;
-      this.itemToEdit = null;
-    },
-  },
+const settingsStore = useSettingsStore();
+const itemsStore = useItemsStore();
+
+const itemToEdit = ref(null);
+const removing = ref(null);
+const drag = ref(false);
+
+const gridModeEnabled = computed(() => settingsStore.gridModeEnabled);
+
+const editModalVisible = computed(() => !!itemToEdit.value);
+
+const style = () => {
+  return `gap:${settingsStore.gridGap}px;max-width:${settingsStore.gridWidth}%;`;
+};
+
+const setSize = (item, size) => {
+  itemsStore.setSize(item, size);
+};
+
+const remove = (item) => {
+  removing.value = item.id;
+  setTimeout(() => {
+    itemsStore.remove(item);
+    removing.value = null;
+  }, 300);
+};
+
+const edit = (id) => {
+  itemToEdit.value = itemsStore.getItemById(id);
+};
+
+const closeEditModal = () => {
+  itemToEdit.value = null;
 };
 </script>
 
@@ -88,21 +82,26 @@ export default {
       />
     </template>
   </draggable>
-  <input type="checkbox" id="my_modal_6" class="modal-toggle" :checked="showEdit" />
-  <div class="modal" role="dialog">
-    <div class="modal-box">
-      <TileEdit
-        v-if="itemToEdit"
-        :id="itemToEdit.id"
-        :label="itemToEdit.label"
-        :url="itemToEdit.url"
-        :bg-color="itemToEdit.bgColor"
-        :font-color="itemToEdit.fontColor"
-        :size="itemToEdit.size"
-        @close="closeEditModal"
-      />
-    </div>
-  </div>
+
+  <Dialog
+    v-model:visible="editModalVisible"
+    modal
+    :style="{ width: '90vw', maxWidth: '600px' }"
+    :closable="false"
+  >
+    <template #header>
+      <h3 class="text-lg font-semibold">Edit Tile</h3>
+    </template>
+    <TileEdit
+      :id="itemToEdit.id"
+      :label="itemToEdit.label"
+      :url="itemToEdit.url"
+      :bg-color="itemToEdit.bgColor"
+      :font-color="itemToEdit.fontColor"
+      :size="itemToEdit.size"
+      @close="closeEditModal"
+    />
+  </Dialog>
 </template>
 
 <style lang="scss" scoped>
