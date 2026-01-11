@@ -6,9 +6,9 @@
     @click="visible = true"
     class="flex flex-nowrap"
   />
-  <Drawer v-model:visible="visible" header="Settings" position="right" class="!w-96">
+  <Drawer v-model:visible="visible" header="Settings" position="right" class="!w-[30rem]">
     <div class="flex flex-col gap-4 h-full">
-      <div class="settings-wrapper flex flex-col gap-4 flex-1 overflow-y-auto">
+      <div class="settings-wrapper flex flex-col gap-4 flex-1 overflow-y-auto overflow-x-hidden">
         <Accordion :value="[]" multiple>
           <AccordionPanel value="0">
             <AccordionHeader>
@@ -70,6 +70,8 @@ const visible = ref(false)
 
 <style lang="scss" scoped>
 .settings-wrapper {
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
   :deep(.p-accordion-content) {
     padding: 1rem;
   }

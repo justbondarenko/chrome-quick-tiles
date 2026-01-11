@@ -112,7 +112,7 @@ export default {
     :class="[
       size,
       {
-        'cursor-move': gridModeEnabled
+        '!cursor-move': gridModeEnabled
       }
     ]"
     :href="url"
@@ -134,7 +134,7 @@ export default {
     </div>
     <span
       v-if="!settingsStore.hideTileLabel"
-      class="label absolute overflow-hidden whitespace-nowrap"
+      class="label absolute overflow-hidden whitespace-nowrap text-ellipsis truncate"
       :class="`${labelPosition()} ${textAlign()}`"
     >
       {{ label }}

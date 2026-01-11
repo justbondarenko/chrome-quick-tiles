@@ -9,7 +9,7 @@
     />
     <Message
       v-if="gridModeEnabled"
-      class="absolute top-4 left-1/2 -translate-x-1/2 z-10"
+      class="absolute top-4 left-1/2 -translate-x-1/2"
       size="small"
       severity="error"
       icon="fa-solid fa-pen-to-square"
