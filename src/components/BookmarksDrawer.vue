@@ -42,34 +42,25 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import Button from 'primevue/button'
 import TieredMenu from 'primevue/tieredmenu'
 import { useSettingsStore } from '@/stores/settings'
+import { useBookmarksStore } from '@/stores/bookmarks'
 import { chromeStorage } from '@/plugins/chromeStorage'
 
 const settingsStore = useSettingsStore()
+const bookmarksStore = useBookmarksStore()
 
 const menu = ref(null)
-const bookmarksTree = ref([])
-const menuItems = ref([])
 
-onMounted(async () => {
-  loadBookmarks()
+const menuItems = computed(() => {
+  return transformBookmarksToMenuItems(bookmarksStore.bookmarksTree)
 })
-
-const loadBookmarks = () => {
-  // eslint-disable-next-line
-  chrome.bookmarks.getTree((tree) => {
-    bookmarksTree.value = tree[0].children || []
-    menuItems.value = transformBookmarksToMenuItems(bookmarksTree.value)
-  })
-}
 
 const transformBookmarksToMenuItems = (bookmarks) => {
   const items = []
 
-  // Transform bookmarks tree
   bookmarks.forEach((bookmark) => {
     const item = transformBookmarkToMenuItem(bookmark)
     if (item) {
@@ -77,7 +68,6 @@ const transformBookmarksToMenuItems = (bookmarks) => {
     }
   })
 
-  // Add "Manage" link at the bottom
   if (items.length > 0) {
     items.push(
       {
@@ -161,30 +151,15 @@ const transformBookmarkToMenuItem = (bookmark) => {
     } else {
       item.icon = 'pi pi-folder'
     }
-  }
-  // If it's a bookmark (has URL)
-  else if (bookmark.url) {
+  } else if (bookmark.url) {
     item.url = bookmark.url
-    item.favicon = getFaviconUrl(bookmark.url)
+    item.favicon = chromeStorage.getFaviconUrl(bookmark.url)
     item.showAddButton = true
   } else {
-    // Skip items without URL or children
     return null
   }
 
   return item
-}
-
-const getFaviconUrl = (url) => {
-  try {
-    const faviconUrl = new URL(chromeStorage.getRuntimeURL('/_favicon/'))
-    faviconUrl.searchParams.set('pageUrl', url)
-    faviconUrl.searchParams.set('size', '24')
-    return faviconUrl.toString()
-  } catch (error) {
-    console.error('Error generating favicon URL:', error)
-    return null
-  }
 }
 
 const handleFaviconError = (item) => {

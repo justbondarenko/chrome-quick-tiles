@@ -42,6 +42,7 @@ import { onBeforeMount, computed } from 'vue'
 import { useSettingsStore } from '@/stores/settings'
 import { useItemsStore } from '@/stores/items'
 import { useImageStore } from '@/stores/image'
+import { useBookmarksStore } from '@/stores/bookmarks'
 import ToolbarComponent from './components/ToolbarComponent.vue'
 import TilesGrid from '@/components/tiles/TilesGrid.vue'
 import DropArea from './components/DropArea.vue'
@@ -51,11 +52,12 @@ import Message from 'primevue/message'
 const settingsStore = useSettingsStore()
 const itemsStore = useItemsStore()
 const imagesStore = useImageStore()
+const bookmarksStore = useBookmarksStore()
 const gridModeEnabled = computed(() => settingsStore.gridModeEnabled)
 
 onBeforeMount(async () => {
   try {
-    await settingsStore.initializeStore()
+    await Promise.all([settingsStore.initializeStore(), bookmarksStore.initializeStore()])
 
     const [localImages, links] = await Promise.all([chromeStorage.getLocalAll(), chromeStorage.get('links')])
 

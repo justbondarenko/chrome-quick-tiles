@@ -4,7 +4,9 @@
       <BookmarksDrawer />
       <RecentsDrawer />
     </div>
-    <div class="flex flex-row gap-4 grow items-center justify-around"></div>
+    <div class="flex flex-row gap-4 grow items-center justify-around">
+      <Search v-if="!gridModeEnabled" />
+    </div>
     <div class="flex flex-row gap-4 w-fit">
       <Button severity="secondary" @click="settingsStore.toggleGridEditMode()" class="flex-shrink-0">
         <template #icon>
@@ -26,6 +28,7 @@ import BookmarksDrawer from './BookmarksDrawer.vue'
 import RecentsDrawer from './RecentsDrawer.vue'
 import SettingsSidebar from './settings/SettingsSidebar.vue'
 import TileAdd from './tiles/TileAdd.vue'
+import Search from './Search.vue'
 
 const itemsStore = useItemsStore()
 const settingsStore = useSettingsStore()

@@ -14,6 +14,7 @@ import Vue3ColorPicker from 'vue3-colorpicker'
 import 'vue3-colorpicker/style.css'
 
 import PrimeVue from 'primevue/config'
+import FocusTrap from 'primevue/focustrap'
 import MyPreset from '@/assets/primevue/theme'
 
 const app = createApp(App)
@@ -30,5 +31,7 @@ app.use(PrimeVue, {
     preset: MyPreset
   }
 })
+
+app.directive('focustrap', FocusTrap)
 
 app.mount('#app')
