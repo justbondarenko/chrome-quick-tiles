@@ -6,9 +6,23 @@ export const chromeStorage = {
       });
     });
   },
+  getMultiple(keys) {
+    return new Promise((resolve) => {
+      chrome.storage.sync.get(keys, (result) => {
+        resolve(result);
+      });
+    });
+  },
   set(key, value) {
     return new Promise((resolve) => {
       chrome.storage.sync.set({ [key]: value }, () => {
+        resolve();
+      });
+    });
+  },
+  setMultiple(data) {
+    return new Promise((resolve) => {
+      chrome.storage.sync.set(data, () => {
         resolve();
       });
     });
@@ -54,5 +68,9 @@ export const chromeStorage = {
         resolve();
       });
     });
+  },
+  // Get runtime URL for favicon and other extension resources
+  getRuntimeURL(path) {
+    return chrome.runtime.getURL(path);
   },
 };

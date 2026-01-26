@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "QuickTiles",
   "description": "Quick Tiles Home Page for Chromium browsers",
-  "version": "2024.1.1",
+  "version": "2025.08.15",
   "chrome_url_overrides": {
     "newtab": "index.html"
   },

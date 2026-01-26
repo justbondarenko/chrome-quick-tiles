@@ -3,7 +3,7 @@
     <input id="settings-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
       <label for="settings-drawer" class="btn drawer-button flex flex-nowrap">
-        <FontAwesomeIcon :icon="{prefix: 'fas', iconName: 'gear'}" />
+        <font-awesome-icon :icon="{prefix: 'fas', iconName: 'gear'}" />
         <span v-if="settingsStore.showSettingsLabel" class="whitespace-nowrap">Settings</span>
       </label>
     </div>
